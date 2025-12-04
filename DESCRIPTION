@@ -1,11 +1,44 @@
 Package: mwanaApp
-Title: What the Package Does (One Line, Title Case)
+Title: mwana Shiny application
 Version: 0.0.0.9000
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+    person(given = "Tomás", 
+            family = "Zaba",
+           role = c("aut", "cre", "cph"), 
+           email = "tomas.zaba@outlook.com", 
+           comment = c(ORCID = "0000-0002-7079-3574")
+    )
+Description: Seamless workflow for data plausibility check and wasting prevalence analysis; 
+    A simplified workflow of mwana package for non-R users.
+License: GPL (>= 3)
 Encoding: UTF-8
+LazyData: true
+Language: en-GB
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
+URL: https://github.com/mphimo/mwanaApp, https://mphimo.github.io/mwanaApp/
+BugReports: https://github.com/mphimo/mwanaApp/issues
+Imports: 
+    dplyr (>= 1.1.4),
+    rlang (>= 1.1.6),
+    shiny (>= 1.11.1),
+    shinycssloaders (>= 1.1.0),
+    bslib (>= 0.9.0),
+    openxlsx (>= 4.2.8.1),
+    DT (>= 0.34.0),
+    htmltools (>= 0.5.8.1)
+Suggests: 
+    covr (>= 3.6.4),
+    knitr (>= 1.50),
+    rmarkdown (>= 2.30),
+    quarto (>= 1.4.4),
+    shinytest2 (>= 0.4.1),
+    spelling (>= 2.3.1),
+    testthat (>= 3.0.0)
+Remotes:
+    nutriverse/mwana
+Config/testthat/edition: 3
+Depends: 
+    R (>= 4.1.0)
+VignetteBuilder: quarto
+BuildVignettes: true
