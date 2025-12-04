@@ -210,7 +210,7 @@ module_server_prevalence <- function(id, data) {
                 },
                 "muac" = {
                   data() |>
-                    dplyr::mutate(muac = recode_muac(.data$muac, "mm")) |>
+                    dplyr::mutate(muac = mwana::recode_muac(.data$muac, "mm")) |>
                     mod_prevalence_call_muac_prev_estimator(
                       wts = input$wts,
                       oedema = input$oedema,
@@ -222,7 +222,7 @@ module_server_prevalence <- function(id, data) {
                 },
                 "combined" = {
                   data() |>
-                    dplyr::mutate(muac = recode_muac(.data$muac, "mm")) |>
+                    dplyr::mutate(muac = mwana::recode_muac(.data$muac, "mm")) |>
                     mod_prevalence_call_combined_prev_estimator(
                       wts = input$wts,
                       oedema = input$oedema,
@@ -239,7 +239,7 @@ module_server_prevalence <- function(id, data) {
                   shiny::req(input$muac)
 
                   data() |>
-                    dplyr::mutate(muac = recode_muac(.data$muac, "mm")) |>
+                    dplyr::mutate(muac = mwana::recode_muac(.data$muac, "mm")) |>
                     mod_prevalence_call_prev_estimator_screening(
                       muac = input$muac,
                       oedema = input$oedema,

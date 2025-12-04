@@ -181,7 +181,7 @@ module_server_wrangling <- function(id, data) {
                     weight = !!rlang::sym(input$weight),
                     height = !!rlang::sym(input$height)
                   ) |>
-                  mw_wrangle_wfhz(
+                  mwana::mw_wrangle_wfhz(
                     sex = .data$sex,
                     .recode_sex = TRUE,
                     weight = .data$weight,
@@ -193,14 +193,14 @@ module_server_wrangling <- function(id, data) {
 
                 data() |>
                   dplyr::mutate(
-                    muac = recode_muac(x = !!rlang::sym(input$muac), .to = "cm")
+                    muac = mwana::recode_muac(x = !!rlang::sym(input$muac), .to = "cm")
                   ) |>
                   dplyr::rename(
                     age = !!rlang::sym(input$age),
                     sex = !!rlang::sym(input$sex)
                   ) |>
-                  mw_wrangle_age(dos = NULL, dob = NULL, age = .data$age) |>
-                  mw_wrangle_muac(
+                  mwana::mw_wrangle_age(dos = NULL, dob = NULL, age = .data$age) |>
+                  mwana::mw_wrangle_muac(
                     sex = .data$sex,
                     .recode_sex = TRUE,
                     age = .data$age,
@@ -217,7 +217,7 @@ module_server_wrangling <- function(id, data) {
                     sex = !!rlang::sym(input$sex),
                     muac = !!rlang::sym(input$muac)
                   ) |>
-                  mw_wrangle_muac(
+                  mwana::mw_wrangle_muac(
                     sex = .data$sex,
                     .recode_sex = TRUE,
                     age = NULL,
@@ -234,7 +234,7 @@ module_server_wrangling <- function(id, data) {
 
                 data() |>
                   dplyr::mutate(
-                    muac = recode_muac(x = !!rlang::sym(input$muac), .to = "cm")
+                    muac = mwana::recode_muac(x = !!rlang::sym(input$muac), .to = "cm")
                   ) |>
                   dplyr::rename(
                     age = !!rlang::sym(input$age),
@@ -242,14 +242,14 @@ module_server_wrangling <- function(id, data) {
                     weight = !!rlang::sym(input$weight),
                     height = !!rlang::sym(input$height)
                   ) |>
-                  mw_wrangle_wfhz(
+                  mwana::mw_wrangle_wfhz(
                     sex = .data$sex,
                     .recode_sex = TRUE,
                     weight = .data$weight,
                     height = .data$height
                   ) |>
-                  mw_wrangle_age(dos = NULL, dob = NULL, age = .data$age) |>
-                  mw_wrangle_muac(
+                  mwana::mw_wrangle_age(dos = NULL, dob = NULL, age = .data$age) |>
+                  mwana::mw_wrangle_muac(
                     sex = .data$sex,
                     .recode_sex = FALSE,
                     age = .data$age,
