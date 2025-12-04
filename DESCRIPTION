@@ -1,5 +1,5 @@
 Package: mwanaApp
-Title: mwana Shiny application
+Title: mwana GUI
 Version: 0.0.0.9000
 Authors@R: 
     person(given = "Tomás", 
@@ -8,8 +8,8 @@ Authors@R:
            email = "tomas.zaba@outlook.com", 
            comment = c(ORCID = "0000-0002-7079-3574")
     )
-Description: Seamless workflow for data plausibility check and wasting prevalence analysis; 
-    A simplified workflow of mwana package for non-R users.
+Description: A seamless graphical interface to the mwana R package for data 
+    wrangling, plausibility checks, and prevalence estimation.
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true

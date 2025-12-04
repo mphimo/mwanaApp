@@ -83,18 +83,9 @@ ui <- tagList(
                   style = "display: flex; flex-direction: column;",
                 tags$h3(
                   style = "marging: 0; font-weight: bold;",
-                  "Seamless workflow for data plausibility check and
-                wasting prevalence analysis"
-                ),
-
-                #### Underlying subtitle ----
-              tags$h4(
-                style = "margin: 0; font-weight: normal; line-height: 1.2;",
-                "
-                A simplified workflow of", tags$code("mwana"), "package for non-R
-                users
-                "
-              )
+                  "A seamless graphical interface to the mwana R package for data 
+                  wrangling, plausibility checks, and prevalence estimation"
+                )
             ),
 
                 ##### Right side: logo ----
