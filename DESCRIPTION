@@ -9,7 +9,7 @@ Authors@R:
            comment = c(ORCID = "0000-0002-7079-3574")
     )
 Description: A seamless graphical interface to the mwana R package for data 
-    wrangling, plausibility checks, and prevalence estimation.
+   wrangling, plausibility checks, and prevalence estimation.
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
@@ -38,7 +38,7 @@ Suggests:
     spelling (>= 2.3.1),
     testthat (>= 3.0.0)
 Remotes:
-    nutriverse/mwana
+    nutriverse/mwana@dev
 Config/testthat/edition: 3
 Depends: 
     R (>= 4.1.0)
