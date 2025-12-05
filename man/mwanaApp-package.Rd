@@ -4,9 +4,9 @@
 \name{mwanaApp-package}
 \alias{mwanaApp}
 \alias{mwanaApp-package}
-\title{mwanaApp: mwana Shiny application}
+\title{mwanaApp: mwana GUI}
 \description{
-Seamless workflow for data plausibility check and wasting prevalence analysis; A simplified workflow of mwana package for non-R users.
+A seamless graphical interface to the mwana R package for data wrangling, plausibility checks, and prevalence estimation.
 }
 \seealso{
 Useful links:
