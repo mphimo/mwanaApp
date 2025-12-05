@@ -1,0 +1,9 @@
+bibentry(
+  bibtype  = "Manual",
+  header   = "To cite mwanaApp in publications use:",
+  title    = "mwanaApp: A seamless graphical interface to the mwana R package for data wrangling, plausibility checks, and prevalence estimation",
+  author   = person("Tomás Zaba"),
+  year     = 2025,
+  note     = "R package version 0.0.1",
+  url      = "https://github.com/mphimo/mwanaApp.git"
+)
