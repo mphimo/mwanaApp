@@ -43,5 +43,4 @@ jobs:
 
       - uses: rstudio/shinytest2/actions/test-app@actions/v1
         with:
-          app-dir: |
-            mwanaApp/inst/app
+          app-dir: "."
