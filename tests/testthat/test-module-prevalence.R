@@ -31,7 +31,7 @@ testthat::test_that(
 
     #### Read data ----
     data <- read.csv(
-      file = system.file("app", "anthro-01.csv", package = "mwana"),
+      file = testthat::test_path("fixtures", "anthro-01.csv"),
       check.names = FALSE
     )
     tempfile <- tempfile(fileext = ".csv")
@@ -127,7 +127,7 @@ testthat::test_that(
 
     #### Read data ----
     data <- read.csv(
-      file = system.file("app", "anthro-01.csv", package = "mwana"),
+      file = testthat::test_path("fixtures", "anthro-01.csv"),
       check.names = FALSE
     )
     tempfile <- tempfile(fileext = ".csv")
@@ -225,7 +225,7 @@ testthat::test_that(
 
     #### Read data ----
     data <- read.csv(
-      file = system.file("app", "anthro-01.csv", package = "mwana"),
+      file = testthat::test_path("fixtures", "anthro-01.csv"),
       check.names = FALSE
     )
     tempfile <- tempfile(fileext = ".csv")
@@ -327,7 +327,7 @@ testthat::test_that(
 
     #### Read data ----
     data <- read.csv(
-      file = system.file("app", "anthro-01.csv", package = "mwana"),
+      file = testthat::test_path("fixtures", "anthro-01.csv"),
       check.names = FALSE
     )
     tempfile <- tempfile(fileext = ".csv")
@@ -427,7 +427,7 @@ testthat::test_that(
 
     #### Read data ----
     data <- read.csv(
-      file = system.file("app", "anthro-01.csv", package = "mwana"),
+      file = testthat::test_path("fixtures", "anthro-01.csv"),
       check.names = FALSE
     )
     tempfile <- tempfile(fileext = ".csv")

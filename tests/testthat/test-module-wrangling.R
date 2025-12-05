@@ -28,7 +28,7 @@ testthat::test_that(desc = "Server data wrangling works as expected for WFHZ", {
   ### Upload data ----
   #### Read data ----
   data <- read.csv(
-    file = system.file("app", "anthro-01.csv", package = "mwana"),
+    file = testthat::test_path("fixtures", "anthro-01.csv"),
     check.names = FALSE
   )
   tempfile <- tempfile(fileext = ".csv")
@@ -98,7 +98,7 @@ testthat::test_that(desc = "Server data wrangling works as expected for MFAZ", {
   ### Upload data ----
   #### Read data ----
   data <- read.csv(
-    file = system.file("app", "anthro-01.csv", package = "mwana"),
+    file = testthat::test_path("fixtures", "anthro-01.csv"),
     check.names = FALSE
   )
   tempfile <- tempfile(fileext = ".csv")
@@ -169,7 +169,7 @@ testthat::test_that(
 
     #### Read data ----
     data <- read.csv(
-      file = system.file("app", "anthro-01.csv", package = "mwana"),
+      file = testthat::test_path("fixtures", "anthro-01.csv"),
       check.names = FALSE
     )
     tempfile <- tempfile(fileext = ".csv")
@@ -238,7 +238,7 @@ testthat::test_that(
     ### Upload data ----
     #### Read data ----
     data <- read.csv(
-      file = system.file("app", "anthro-01.csv", package = "mwana"),
+      file = testthat::test_path("fixtures", "anthro-01.csv"),
       check.names = FALSE
     )
     tempfile <- tempfile(fileext = ".csv")
