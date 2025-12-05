@@ -378,35 +378,35 @@ ui <- tagList(
 
     nav_panel(
       title = "Data Upload",
-      mwana:::module_ui_upload(id = "upload_data")
+      mwanaApp:::module_ui_upload(id = "upload_data")
     ),
 
     ## ---- Tab 4: Data Wrangling ------------------------------------------------
 
     bslib::nav_panel(
       title = "Data Wrangling",
-      mwana:::module_ui_wrangling(id = "wrangle_data")
+      mwanaApp:::module_ui_wrangling(id = "wrangle_data")
     ),
 
     ## ---- Tab 5: Plausibility Check --------------------------------------------
 
     nav_panel(
       title = "Plausibility Check",
-      mwana:::module_ui_plausibility_check(id = "plausible")
+      mwanaApp:::module_ui_plausibility_check(id = "plausible")
     ),
 
     ## ---- Tab 6: Prevalence Analysis -------------------------------------------
 
     nav_panel(
       title = "Prevalence Analysis",
-      mwana:::module_ui_prevalence(id = "prevalence")
+      mwanaApp:::module_ui_prevalence(id = "prevalence")
     ),
 
     ## ---- Tab 3: IPC Check -----------------------------------------------------
 
     nav_panel(
       title = "IPC Check",
-      mwana:::module_ui_ipccheck(id = "ipc_check")
+      mwanaApp:::module_ui_ipccheck(id = "ipc_check")
     )
   )
 )
