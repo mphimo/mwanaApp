@@ -26,9 +26,11 @@ The app is divided in five easy-to-navigate tabs:
 
 ## Installation
 
-``` r
-# install.packages("remotes")  # To install package remotes
+The App can be installed from GitHub:
 
+``` r
+# First install remotes package with: install.package("remotes")
+# The install mwana package from GitHub with: 
 remotes::install_github(repo = "mphimo/mwanaApp", dependencies = TRUE)
 ```
 
@@ -39,7 +41,7 @@ command in R console:
 run_mwana_app()
 ```
 
-The app can be cited using the suggested citation below:
+The app can be cited in this way:
 
 ``` r
 citation("mwanaApp")

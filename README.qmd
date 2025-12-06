@@ -24,13 +24,14 @@ The app is divided in five easy-to-navigate tabs:
 
 ## Installation  
 
+The App can be installed from GitHub:
 ```{r}
 #| label: instalation
 #| echo: true
 #| eval: false
 
-# install.packages("remotes")  # To install package remotes
-
+# First install remotes package with: install.package("remotes")
+# The install mwana package from GitHub with: 
 remotes::install_github(repo = "mphimo/mwanaApp", dependencies = TRUE)
 ```
 
