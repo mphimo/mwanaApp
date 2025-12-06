@@ -40,7 +40,7 @@ ui <- tagList(
       ),
 
       ### Right side: app version ----
-      tags$span("v.1.0.0",
+      tags$span("v0.2.3",
         id = "app-version",
         style = "font-size: 12.5px; color:  rgba(255, 255, 255, 0.4);
         position: fixed; top: 40px; right: 20px;"
