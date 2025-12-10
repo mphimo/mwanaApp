@@ -1,0 +1,46 @@
+Package: mwanaApp
+Title: mwana GUI
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Tomás", 
+            family = "Zaba",
+           role = c("aut", "cre", "cph"), 
+           email = "tomas.zaba@outlook.com", 
+           comment = c(ORCID = "0000-0002-7079-3574")
+    )
+Description: A seamless graphical interface to the mwana R package for data 
+   wrangling, plausibility checks, and prevalence estimation.
+License: GPL (>= 3)
+Encoding: UTF-8
+LazyData: true
+Language: en-GB
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.3
+URL: https://github.com/mphimo/mwanaApp, https://mphimo.github.io/mwanaApp/
+BugReports: https://github.com/mphimo/mwanaApp/issues
+Imports: 
+    dplyr (>= 1.1.4),
+    mwana (>= 0.2.3),
+    rlang,
+    shiny (>= 1.11.1),
+    shinycssloaders (>= 1.1.0),
+    bslib (>= 0.9.0),
+    openxlsx (>= 4.2.8.1),
+    DT,
+    htmltools (>= 0.5.8.1),
+    scales (>= 1.4.0),
+    shinytest2 (>= 0.4.1)
+Suggests: 
+    covr (>= 3.6.4),
+    knitr (>= 1.50),
+    rmarkdown (>= 2.30),
+    quarto (>= 1.4.4),
+    spelling (>= 2.3.1),
+    testthat (>= 3.0.0)
+Remotes:
+    mphimo/mwana
+Config/testthat/edition: 3
+Depends: 
+    R (>= 4.1.0)
+VignetteBuilder: quarto
+BuildVignettes: true
