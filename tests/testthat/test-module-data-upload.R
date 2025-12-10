@@ -56,7 +56,7 @@ testthat::test_that("Data upload tab works as expected", {
   ")[1:12] |> as.character(),
     expected = c(
       "area", "dos", "cluster", "team", "sex",
-      "dob", "age", "age_cat", "weight", "height", "edema", "muac"
+      "dob", "age", "age_cat", "weight", "height", "oedema", "muac"
     )
   )
 
