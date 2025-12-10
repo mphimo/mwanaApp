@@ -598,28 +598,28 @@ mod_prevalence_call_wfhz_prev_estimator <- function(
       mwana::mw_estimate_prevalence_wfhz(
         df = df,
         wt = !!rlang::sym(wts),
-        edema = !!rlang::sym(oedema),
+        oedema = !!rlang::sym(oedema),
         !!rlang::sym(area1), !!rlang::sym(area2), !!rlang::sym(area3)
       )
     } else if (!nzchar(wts) && nzchar(oedema)) {
       mwana::mw_estimate_prevalence_wfhz(
         df = df,
         wt = NULL,
-        edema = !!rlang::sym(oedema),
+        oedema = !!rlang::sym(oedema),
         !!rlang::sym(area1), !!rlang::sym(area2), !!rlang::sym(area3)
       )
     } else if (nzchar(wts) && !nzchar(oedema)) {
       mwana::mw_estimate_prevalence_wfhz(
         df = df,
         wt = !!rlang::sym(wts),
-        edema = NULL,
+        oedema = NULL,
         !!rlang::sym(area1), !!rlang::sym(area2), !!rlang::sym(area3)
       )
     } else {
       mwana::mw_estimate_prevalence_wfhz(
         df = df,
         wt = NULL,
-        edema = NULL,
+        oedema = NULL,
         !!rlang::sym(area1), !!rlang::sym(area2), !!rlang::sym(area3)
       )
     }
@@ -628,28 +628,28 @@ mod_prevalence_call_wfhz_prev_estimator <- function(
       mwana::mw_estimate_prevalence_wfhz(
         df = df,
         wt = !!rlang::sym(wts),
-        edema = !!rlang::sym(oedema),
+        oedema = !!rlang::sym(oedema),
         !!rlang::sym(area1), !!rlang::sym(area2)
       )
     } else if (!nzchar(wts) && nzchar(oedema)) {
       mwana::mw_estimate_prevalence_wfhz(
         df = df,
         wt = NULL,
-        edema = !!rlang::sym(oedema),
+        oedema = !!rlang::sym(oedema),
         !!rlang::sym(area1), !!rlang::sym(area2)
       )
     } else if (nzchar(wts) && !nzchar(oedema)) {
       mwana::mw_estimate_prevalence_wfhz(
         df = df,
         wt = !!rlang::sym(wts),
-        edema = NULL,
+        oedema = NULL,
         !!rlang::sym(area1), !!rlang::sym(area2)
       )
     } else {
       mwana::mw_estimate_prevalence_wfhz(
         df = df,
         wt = NULL,
-        edema = NULL,
+        oedema = NULL,
         !!rlang::sym(area1), !!rlang::sym(area2)
       )
     }
@@ -658,28 +658,28 @@ mod_prevalence_call_wfhz_prev_estimator <- function(
       mwana::mw_estimate_prevalence_wfhz(
         df = df,
         wt = !!rlang::sym(wts),
-        edema = !!rlang::sym(oedema),
+        oedema = !!rlang::sym(oedema),
         !!rlang::sym(area1)
       )
     } else if (!nzchar(wts) && nzchar(oedema)) {
       mwana::mw_estimate_prevalence_wfhz(
         df = df,
         wt = NULL,
-        edema = !!rlang::sym(oedema),
+        oedema = !!rlang::sym(oedema),
         !!rlang::sym(area1)
       )
     } else if (nzchar(wts) && !nzchar(oedema)) {
       mwana::mw_estimate_prevalence_wfhz(
         df = df,
         wt = !!rlang::sym(wts),
-        edema = NULL,
+        oedema = NULL,
         !!rlang::sym(area1)
       )
     } else {
       mwana::mw_estimate_prevalence_wfhz(
         df = df,
         wt = NULL,
-        edema = NULL,
+        oedema = NULL,
         !!rlang::sym(area1)
       )
     }
@@ -704,28 +704,28 @@ mod_prevalence_call_muac_prev_estimator <- function(
       mwana::mw_estimate_prevalence_muac(
         df = df,
         wt = !!rlang::sym(wts),
-        edema = !!rlang::sym(oedema),
+        oedema = !!rlang::sym(oedema),
         !!rlang::sym(area1), !!rlang::sym(area2), !!rlang::sym(area3)
       )
     } else if (!nzchar(wts) && nzchar(oedema)) {
       mwana::mw_estimate_prevalence_muac(
         df = df,
         wt = NULL,
-        edema = !!rlang::sym(oedema),
+        oedema = !!rlang::sym(oedema),
         !!rlang::sym(area1), !!rlang::sym(area2), !!rlang::sym(area3)
       )
     } else if (nzchar(wts) && !nzchar(oedema)) {
       mwana::mw_estimate_prevalence_muac(
         df = df,
         wt = !!rlang::sym(wts),
-        edema = NULL,
+        oedema = NULL,
         !!rlang::sym(area1), !!rlang::sym(area2), !!rlang::sym(area3)
       )
     } else {
       mwana::mw_estimate_prevalence_muac(
         df = df,
         wt = NULL,
-        edema = NULL,
+        oedema = NULL,
         !!rlang::sym(area1), !!rlang::sym(area2), !!rlang::sym(area3)
       )
     }
@@ -734,28 +734,28 @@ mod_prevalence_call_muac_prev_estimator <- function(
       mwana::mw_estimate_prevalence_muac(
         df = df,
         wt = !!rlang::sym(wts),
-        edema = !!rlang::sym(oedema),
+        oedema = !!rlang::sym(oedema),
         !!rlang::sym(area1), !!rlang::sym(area2)
       )
     } else if (!nzchar(wts) && nzchar(oedema)) {
       mwana::mw_estimate_prevalence_muac(
         df = df,
         wt = NULL,
-        edema = !!rlang::sym(oedema),
+        oedema = !!rlang::sym(oedema),
         !!rlang::sym(area1), !!rlang::sym(area2)
       )
     } else if (nzchar(wts) && !nzchar(oedema)) {
       mwana::mw_estimate_prevalence_muac(
         df = df,
         wt = !!rlang::sym(wts),
-        edema = NULL,
+        oedema = NULL,
         !!rlang::sym(area1), !!rlang::sym(area2)
       )
     } else {
       mwana::mw_estimate_prevalence_muac(
         df = df,
         wt = NULL,
-        edema = NULL,
+        oedema = NULL,
         !!rlang::sym(area1), !!rlang::sym(area2)
       )
     }
@@ -764,28 +764,28 @@ mod_prevalence_call_muac_prev_estimator <- function(
       mwana::mw_estimate_prevalence_muac(
         df = df,
         wt = !!rlang::sym(wts),
-        edema = !!rlang::sym(oedema),
+        oedema = !!rlang::sym(oedema),
         !!rlang::sym(area1)
       )
     } else if (!nzchar(wts) && nzchar(oedema)) {
       mwana::mw_estimate_prevalence_muac(
         df = df,
         wt = NULL,
-        edema = !!rlang::sym(oedema),
+        oedema = !!rlang::sym(oedema),
         !!rlang::sym(area1)
       )
     } else if (nzchar(wts) && !nzchar(oedema)) {
       mwana::mw_estimate_prevalence_muac(
         df = df,
         wt = !!rlang::sym(wts),
-        edema = NULL,
+        oedema = NULL,
         !!rlang::sym(area1)
       )
     } else {
       mwana::mw_estimate_prevalence_muac(
         df = df,
         wt = NULL,
-        edema = NULL,
+        oedema = NULL,
         !!rlang::sym(area1)
       )
     }
@@ -810,28 +810,28 @@ mod_prevalence_call_combined_prev_estimator <- function(
       mwana::mw_estimate_prevalence_combined(
         df = df,
         wt = !!rlang::sym(wts),
-        edema = !!rlang::sym(oedema),
+        oedema = !!rlang::sym(oedema),
         !!rlang::sym(area1), !!rlang::sym(area2), !!rlang::sym(area3)
       )
     } else if (!nzchar(wts) && nzchar(oedema)) {
       mwana::mw_estimate_prevalence_combined(
         df = df,
         wt = NULL,
-        edema = !!rlang::sym(oedema),
+        oedema = !!rlang::sym(oedema),
         !!rlang::sym(area1), !!rlang::sym(area2), !!rlang::sym(area3)
       )
     } else if (nzchar(wts) && !nzchar(oedema)) {
       mwana::mw_estimate_prevalence_combined(
         df = df,
         wt = !!rlang::sym(wts),
-        edema = NULL,
+        oedema = NULL,
         !!rlang::sym(area1), !!rlang::sym(area2), !!rlang::sym(area3)
       )
     } else {
       mwana::mw_estimate_prevalence_combined(
         df = df,
         wt = NULL,
-        edema = NULL,
+        oedema = NULL,
         !!rlang::sym(area1), !!rlang::sym(area2), !!rlang::sym(area3)
       )
     }
@@ -840,28 +840,28 @@ mod_prevalence_call_combined_prev_estimator <- function(
       mwana::mw_estimate_prevalence_combined(
         df = df,
         wt = !!rlang::sym(wts),
-        edema = !!rlang::sym(oedema),
+        oedema = !!rlang::sym(oedema),
         !!rlang::sym(area1), !!rlang::sym(area2)
       )
     } else if (!nzchar(wts) && nzchar(oedema)) {
       mwana::mw_estimate_prevalence_combined(
         df = df,
         wt = NULL,
-        edema = !!rlang::sym(oedema),
+        oedema = !!rlang::sym(oedema),
         !!rlang::sym(area1), !!rlang::sym(area2)
       )
     } else if (nzchar(wts) && !nzchar(oedema)) {
       mwana::mw_estimate_prevalence_combined(
         df = df,
         wt = !!rlang::sym(wts),
-        edema = NULL,
+        oedema = NULL,
         !!rlang::sym(area1), !!rlang::sym(area2)
       )
     } else {
       mwana::mw_estimate_prevalence_combined(
         df = df,
         wt = NULL,
-        edema = NULL,
+        oedema = NULL,
         !!rlang::sym(area1), !!rlang::sym(area2)
       )
     }
@@ -870,28 +870,28 @@ mod_prevalence_call_combined_prev_estimator <- function(
       mwana::mw_estimate_prevalence_combined(
         df = df,
         wt = !!rlang::sym(wts),
-        edema = !!rlang::sym(oedema),
+        oedema = !!rlang::sym(oedema),
         !!rlang::sym(area1)
       )
     } else if (!nzchar(wts) && nzchar(oedema)) {
       mwana::mw_estimate_prevalence_combined(
         df = df,
         wt = NULL,
-        edema = !!rlang::sym(oedema),
+        oedema = !!rlang::sym(oedema),
         !!rlang::sym(area1)
       )
     } else if (nzchar(wts) && !nzchar(oedema)) {
       mwana::mw_estimate_prevalence_combined(
         df = df,
         wt = !!rlang::sym(wts),
-        edema = NULL,
+        oedema = NULL,
         !!rlang::sym(area1)
       )
     } else {
       mwana::mw_estimate_prevalence_combined(
         df = df,
         wt = NULL,
-        edema = NULL,
+        oedema = NULL,
         !!rlang::sym(area1)
       )
     }
@@ -917,14 +917,14 @@ mod_prevalence_call_prev_estimator_screening <- function(
       mwana::mw_estimate_prevalence_screening(
         df = df,
         muac = !!rlang::sym(muac),
-        edema = !!rlang::sym(oedema),
+        oedema = !!rlang::sym(oedema),
         !!rlang::sym(area1), !!rlang::sym(area2), !!rlang::sym(area3)
       )
     } else {
       mwana::mw_estimate_prevalence_screening(
         df = df,
         muac = !!rlang::sym(muac),
-        edema = NULL,
+        oedema = NULL,
         !!rlang::sym(area1), !!rlang::sym(area2), !!rlang::sym(area3)
       )
     }
@@ -933,14 +933,14 @@ mod_prevalence_call_prev_estimator_screening <- function(
       mwana::mw_estimate_prevalence_screening(
         df = df,
         muac = !!rlang::sym(muac),
-        edema = !!rlang::sym(oedema),
+        oedema = !!rlang::sym(oedema),
         !!rlang::sym(area1), !!rlang::sym(area2)
       )
     } else {
       mwana::mw_estimate_prevalence_screening(
         df = df,
         muac = !!rlang::sym(muac),
-        edema = NULL,
+        oedema = NULL,
         !!rlang::sym(area1), !!rlang::sym(area2)
       )
     }
@@ -949,14 +949,14 @@ mod_prevalence_call_prev_estimator_screening <- function(
       mwana::mw_estimate_prevalence_screening(
         df = df,
         muac = !!rlang::sym(muac),
-        edema = !!rlang::sym(oedema),
+        oedema = !!rlang::sym(oedema),
         !!rlang::sym(area1)
       )
     } else {
       mwana::mw_estimate_prevalence_screening(
         df = df,
         muac = !!rlang::sym(muac),
-        edema = NULL,
+        oedema = NULL,
         !!rlang::sym(area1)
       )
     }
@@ -982,7 +982,7 @@ mod_prevalence_call_prev_estimator_screening2 <- function(
         df = df,
         age_cat = !!rlang::sym(age_cat),
         muac = !!rlang::sym(muac),
-        edema = !!rlang::sym(oedema),
+        oedema = !!rlang::sym(oedema),
         !!rlang::sym(area1), !!rlang::sym(area2), !!rlang::sym(area3)
       )
     } else {
@@ -990,7 +990,7 @@ mod_prevalence_call_prev_estimator_screening2 <- function(
         df = df,
         age_cat = !!rlang::sym(age_cat),
         muac = !!rlang::sym(muac),
-        edema = NULL,
+        oedema = NULL,
         !!rlang::sym(area1), !!rlang::sym(area2), !!rlang::sym(area3)
       )
     }
@@ -1000,7 +1000,7 @@ mod_prevalence_call_prev_estimator_screening2 <- function(
         df = df,
         age_cat = !!rlang::sym(age_cat),
         muac = !!rlang::sym(muac),
-        edema = !!rlang::sym(oedema),
+        oedema = !!rlang::sym(oedema),
         !!rlang::sym(area1), !!rlang::sym(area2)
       )
     } else {
@@ -1008,7 +1008,7 @@ mod_prevalence_call_prev_estimator_screening2 <- function(
         df = df,
         age_cat = !!rlang::sym(age_cat),
         muac = !!rlang::sym(muac),
-        edema = NULL,
+        oedema = NULL,
         !!rlang::sym(area1), !!rlang::sym(area2)
       )
     }
@@ -1018,7 +1018,7 @@ mod_prevalence_call_prev_estimator_screening2 <- function(
         df = df,
         age_cat = !!rlang::sym(age_cat),
         muac = !!rlang::sym(muac),
-        edema = !!rlang::sym(oedema),
+        oedema = !!rlang::sym(oedema),
         !!rlang::sym(area1)
       )
     } else {
@@ -1026,7 +1026,7 @@ mod_prevalence_call_prev_estimator_screening2 <- function(
         df = df,
         age_cat = !!rlang::sym(age_cat),
         muac = !!rlang::sym(muac),
-        edema = NULL,
+        oedema = NULL,
         !!rlang::sym(area1)
       )
     }

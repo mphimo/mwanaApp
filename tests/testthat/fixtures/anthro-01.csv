@@ -1,4 +1,4 @@
-area,dos,cluster,team,sex,dob,age,age_cat,weight,height,edema,muac
+area,dos,cluster,team,sex,dob,age,age_cat,weight,height,"oedema",muac
 District E,04/12/2023,1,3,m,NA,59,24-59,15.6,109.2,n,146
 District E,04/12/2023,1,3,m,NA,8,6-23,7.5,68.6,n,127
 District E,04/12/2023,1,3,m,NA,19,6-23,9.7,79.5,n,142
