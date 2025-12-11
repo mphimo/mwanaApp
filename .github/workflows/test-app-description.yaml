@@ -5,7 +5,7 @@ on:
     branches: [main, master]
   pull_request:
 
-name: Test app w/ DESCRIPTION
+name: Test app
 
 jobs:
   test-app:
