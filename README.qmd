@@ -6,7 +6,7 @@ format: gfm
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/mphimo/mwanaApp/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/mphimo/mwanaApp/actions/workflows/R-CMD-check.yaml)
-![check-app](https://github.com/mphimo/mwanaApp/actions/workflows/check-app.yml/badge.svg)
+[![Check App workflow status](https://github.com/mphimo/mwanaApp/actions/workflows/check-app.yml/badge.svg)](https://github.com/mphimo/mwanaApp/actions/workflows/check-app.yml)
 [![Codecov test coverage](https://codecov.io/gh/mphimo/mwanaApp/graph/badge.svg)](https://app.codecov.io/gh/mphimo/mwanaApp)
 <!-- badges: end -->
 
