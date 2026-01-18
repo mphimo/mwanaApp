@@ -210,7 +210,7 @@ module_server_prevalence <- function(id, data) {
                 },
                 "muac" = {
                   data() |>
-                    dplyr::mutate(muac = mwana::recode_muac(.data$muac, "mm")) |>
+                    dplyr::mutate(muac = mwana::recode_muac(.data[[input$muac]], "mm")) |>
                     mod_prevalence_call_muac_prev_estimator(
                       wts = input$wts,
                       oedema = input$oedema,
@@ -222,7 +222,7 @@ module_server_prevalence <- function(id, data) {
                 },
                 "combined" = {
                   data() |>
-                    dplyr::mutate(muac = mwana::recode_muac(.data$muac, "mm")) |>
+                    dplyr::mutate(muac = mwana::recode_muac(.data[[input$muac]], "mm")) |>
                     mod_prevalence_call_combined_prev_estimator(
                       wts = input$wts,
                       oedema = input$oedema,
@@ -238,16 +238,20 @@ module_server_prevalence <- function(id, data) {
                 "yes" = {
                   shiny::req(input$muac)
 
-                  data() |>
-                    dplyr::mutate(muac = mwana::recode_muac(.data$muac, "mm")) |>
-                    mod_prevalence_call_prev_estimator_screening(
-                      muac = input$muac,
-                      oedema = input$oedema,
-                      area1 = input$area1,
-                      area2 = input$area2,
-                      area3 = input$area3
-                    ) |>
-                    mod_prevalence_neat_output_screening()
+                  data() |> 
+      dplyr::mutate(
+        muac = mwana::recode_muac(muac, "mm"),
+        oedema = trimws(as.character(oedema))
+      ) |> 
+      mwana::mw_estimate_age_weighted_prev_muac(
+        muac = "muac",
+        has_age = TRUE,
+        age = "age",
+        oedema = "oedema",
+        age_cat = NULL,
+        raw_muac = FALSE, 
+        !!rlang::sym(input$area1)
+      )
                 },
                 "no" = {
                   shiny::req(input$muac, input$age_cat)

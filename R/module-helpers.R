@@ -912,54 +912,29 @@ mod_prevalence_call_combined_prev_estimator <- function(
 mod_prevalence_call_prev_estimator_screening <- function(
     df, muac, oedema = NULL,
     area1, area2, area3) {
-  if (all(nzchar(c(area1, area2, area3)))) {
-    if (nzchar(oedema)) {
-      mwana::mw_estimate_prevalence_screening(
-        df = df,
-        muac = !!rlang::sym(muac),
-        oedema = !!rlang::sym(oedema),
-        !!rlang::sym(area1), !!rlang::sym(area2), !!rlang::sym(area3)
-      )
-    } else {
-      mwana::mw_estimate_prevalence_screening(
-        df = df,
-        muac = !!rlang::sym(muac),
-        oedema = NULL,
-        !!rlang::sym(area1), !!rlang::sym(area2), !!rlang::sym(area3)
-      )
-    }
-  } else if (nzchar(area2) && !nzchar(area3)) {
-    if (nzchar(oedema)) {
-      mwana::mw_estimate_prevalence_screening(
-        df = df,
-        muac = !!rlang::sym(muac),
-        oedema = !!rlang::sym(oedema),
-        !!rlang::sym(area1), !!rlang::sym(area2)
-      )
-    } else {
-      mwana::mw_estimate_prevalence_screening(
-        df = df,
-        muac = !!rlang::sym(muac),
-        oedema = NULL,
-        !!rlang::sym(area1), !!rlang::sym(area2)
-      )
-    }
+  
+  # Build the grouping variables dynamically
+  dots <- list(rlang::sym(area1))
+  if (nzchar(area2)) dots <- c(dots, list(rlang::sym(area2)))
+  if (nzchar(area3)) dots <- c(dots, list(rlang::sym(area3)))
+  
+  # muac is already "muac" (the standardized column name)
+  # oedema should be "oedema" or NULL
+  
+  if (is.null(oedema) || !nzchar(oedema)) {
+    mwana::mw_estimate_prevalence_screening(
+      df = df,
+      muac = muac,      # Pass "muac" string
+      oedema = NULL,
+      !!!dots
+    )
   } else {
-    if (nzchar(oedema)) {
-      mwana::mw_estimate_prevalence_screening(
-        df = df,
-        muac = !!rlang::sym(muac),
-        oedema = !!rlang::sym(oedema),
-        !!rlang::sym(area1)
-      )
-    } else {
-      mwana::mw_estimate_prevalence_screening(
-        df = df,
-        muac = !!rlang::sym(muac),
-        oedema = NULL,
-        !!rlang::sym(area1)
-      )
-    }
+    mwana::mw_estimate_prevalence_screening(
+      df = df,
+      muac = muac,      # Pass "muac" string
+      oedema = oedema,  # Pass "oedema" string
+      !!!dots
+    )
   }
 }
 
@@ -1118,7 +1093,7 @@ mod_prevalence_neat_output_screening <- function(df) {
   if ("gam_n" %in% names(df)) {
     dplyr::rename(
       .data = df,
-      "children (N)" = .data$N,
+      #"children (N)" = .data$N,
       "gam #" = .data$gam_n,
       "gam %" = .data$gam_p,
       "sam #" = .data$sam_n,
@@ -1129,7 +1104,7 @@ mod_prevalence_neat_output_screening <- function(df) {
   } else {
     dplyr::rename(
       .data = df,
-      "children (N)" = .data$N,
+      #"children (N)" = .data$N,
       "gam %" = .data$gam_p,
       "sam %" = .data$sam_p,
       "mam %" = .data$mam_p
