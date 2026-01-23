@@ -238,21 +238,21 @@ module_server_prevalence <- function(id, data) {
                 "yes" = {
                   shiny::req(input$muac)
 
-                  data() |> 
-      dplyr::mutate(
-        muac = mwana::recode_muac(muac, "mm"),
-        oedema = trimws(as.character(oedema))
-      ) |> 
-      mwana::mw_estimate_age_weighted_prev_muac(
-        muac = "muac",
-        has_age = TRUE,
-        age = "age",
-        oedema = "oedema",
-        age_cat = NULL,
-        raw_muac = FALSE, 
-        !!rlang::sym(input$area1)
-      ) |> 
-        mod_prevalence_neat_output_screening()
+                  data() |>
+                    dplyr::mutate(
+                      muac = mwana::recode_muac(muac, "mm"),
+                      oedema = trimws(as.character(oedema))
+                    ) |>
+                    mwana::mw_estimate_age_weighted_prev_muac(
+                      muac = "muac",
+                      has_age = TRUE,
+                      age = "age",
+                      oedema = "oedema",
+                      age_cat = NULL,
+                      raw_muac = FALSE,
+                      !!rlang::sym(input$area1)
+                    ) |>
+                    mod_prevalence_neat_output_screening()
                 },
                 "no" = {
                   shiny::req(input$muac, input$age_cat)

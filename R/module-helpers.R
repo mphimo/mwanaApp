@@ -912,27 +912,26 @@ mod_prevalence_call_combined_prev_estimator <- function(
 mod_prevalence_call_prev_estimator_screening <- function(
     df, muac, oedema = NULL,
     area1, area2, area3) {
-  
   ## Build the grouping variables dynamically ----
   dots <- list(rlang::sym(area1))
   if (nzchar(area2)) dots <- c(dots, list(rlang::sym(area2)))
   if (nzchar(area3)) dots <- c(dots, list(rlang::sym(area3)))
-  
+
   # muac is already "muac" (the standardized column name)
   # oedema should be "oedema" or NULL
-  
+
   if (is.null(oedema) || !nzchar(oedema)) {
     mwana::mw_estimate_prevalence_screening(
       df = df,
-      muac = muac,      # Pass "muac" string
+      muac = muac, # Pass "muac" string
       oedema = NULL,
       !!!dots
     )
   } else {
     mwana::mw_estimate_prevalence_screening(
       df = df,
-      muac = muac,      # Pass "muac" string
-      oedema = oedema,  # Pass "oedema" string
+      muac = muac, # Pass "muac" string
+      oedema = oedema, # Pass "oedema" string
       !!!dots
     )
   }
@@ -1079,53 +1078,52 @@ mod_prevalence_neat_output_survey <- function(
 #'
 #'
 mod_prevalence_neat_output_screening <- function(df) {
-
   ## Get variable names ----
   names <- base::names(df)
-  
+
   if ("u2oedema" %in% names) {
-    df <- df |> 
-      dplyr::select(!dplyr::contains(c("u2", "o2"))) |> 
+    df <- df |>
+      dplyr::select(!dplyr::contains(c("u2", "o2"))) |>
       dplyr::mutate(
         across(
-          .cols = dplyr::contains("am_p"), 
+          .cols = dplyr::contains("am_p"),
           .fns = scales::label_percent(
-            accuracy = 0.1, 
-            suffix = "%", 
+            accuracy = 0.1,
+            suffix = "%",
             decimal.mark = "."
+          )
         )
+      ) |>
+      dplyr::rename(
+        "children (N)" = .data$N,
+        "gam %" = .data$gam_p,
+        "sam %" = .data$sam_p,
+        "mam %" = .data$mam_p
       )
-    ) |> 
-    dplyr::rename(
-      "children (N)" = .data$N,
-      "gam %" = .data$gam_p,
-      "sam %" = .data$sam_p,
-      "mam %" = .data$mam_p
-    )
   } else {
     df <- dplyr::mutate(
-    .data = df,
-    dplyr::across(
-      .cols = dplyr::contains("am_p"),
-      .fns = scales::label_percent(
-        accuracy = 0.1, 
-        suffix = "%", 
-        decimal.mark = "."
+      .data = df,
+      dplyr::across(
+        .cols = dplyr::contains("am_p"),
+        .fns = scales::label_percent(
+          accuracy = 0.1,
+          suffix = "%",
+          decimal.mark = "."
+        )
       )
-    )
-  ) |> 
-    dplyr::rename(
-      "children (N)" = .data$N,
-      "gam #" = .data$gam_n,
-      "gam %" = .data$gam_p,
-      "sam #" = .data$sam_n,
-      "sam %" = .data$sam_p,
-      "mam #" = .data$mam_n,
-      "mam %" = .data$mam_p
-    )  
+    ) |>
+      dplyr::rename(
+        "children (N)" = .data$N,
+        "gam #" = .data$gam_n,
+        "gam %" = .data$gam_p,
+        "sam #" = .data$sam_n,
+        "sam %" = .data$sam_p,
+        "mam #" = .data$mam_n,
+        "mam %" = .data$mam_p
+      )
   }
   df
-  }
+}
 
 
 
