@@ -98,6 +98,7 @@ module_ui_prevalence <- function(id) {
 
 ## ---- Module: Server ---------------------------------------------------------
 
+
 #'
 #'
 #' Module server for prevalence analysis
