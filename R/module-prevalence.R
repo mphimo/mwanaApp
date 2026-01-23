@@ -251,7 +251,8 @@ module_server_prevalence <- function(id, data) {
         age_cat = NULL,
         raw_muac = FALSE, 
         !!rlang::sym(input$area1)
-      )
+      ) |> 
+        mod_prevalence_neat_output_screening()
                 },
                 "no" = {
                   shiny::req(input$muac, input$age_cat)

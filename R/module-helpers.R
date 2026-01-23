@@ -913,7 +913,7 @@ mod_prevalence_call_prev_estimator_screening <- function(
     df, muac, oedema = NULL,
     area1, area2, area3) {
   
-  # Build the grouping variables dynamically
+  ## Build the grouping variables dynamically ----
   dots <- list(rlang::sym(area1))
   if (nzchar(area2)) dots <- c(dots, list(rlang::sym(area2)))
   if (nzchar(area3)) dots <- c(dots, list(rlang::sym(area3)))
@@ -1079,38 +1079,53 @@ mod_prevalence_neat_output_survey <- function(
 #'
 #'
 mod_prevalence_neat_output_screening <- function(df) {
-  df <- dplyr::mutate(
+
+  ## Get variable names ----
+  names <- base::names(df)
+  
+  if ("u2oedema" %in% names) {
+    df <- df |> 
+      dplyr::select(!dplyr::contains(c("u2", "o2"))) |> 
+      dplyr::mutate(
+        across(
+          .cols = dplyr::contains("am_p"), 
+          .fns = scales::label_percent(
+            accuracy = 0.1, 
+            suffix = "%", 
+            decimal.mark = "."
+        )
+      )
+    ) |> 
+    dplyr::rename(
+      "children (N)" = .data$N,
+      "gam %" = .data$gam_p,
+      "sam %" = .data$sam_p,
+      "mam %" = .data$mam_p
+    )
+  } else {
+    df <- dplyr::mutate(
     .data = df,
     dplyr::across(
       .cols = dplyr::contains("am_p"),
       .fns = scales::label_percent(
-        accuracy = 0.1, suffix = "%", decimal.mark = "."
+        accuracy = 0.1, 
+        suffix = "%", 
+        decimal.mark = "."
       )
     )
-  )
-
-  ### Rename based on the existance of column "gam_n" ----
-  if ("gam_n" %in% names(df)) {
+  ) |> 
     dplyr::rename(
-      .data = df,
-      #"children (N)" = .data$N,
+      "children (N)" = .data$N,
       "gam #" = .data$gam_n,
       "gam %" = .data$gam_p,
       "sam #" = .data$sam_n,
       "sam %" = .data$sam_p,
       "mam #" = .data$mam_n,
       "mam %" = .data$mam_p
-    )
-  } else {
-    dplyr::rename(
-      .data = df,
-      #"children (N)" = .data$N,
-      "gam %" = .data$gam_p,
-      "sam %" = .data$sam_p,
-      "mam %" = .data$mam_p
-    )
+    )  
   }
-}
+  df
+  }
 
 
 
