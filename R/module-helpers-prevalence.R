@@ -9,7 +9,8 @@
 #' @keywords internal
 #'
 #'
-mod_prevalence_display_input_variables <- function(vars, source, ns) {
+mod_prevalence_display_input_variables <- function(
+    vars, source, indicator_surv, has_age, ns) {
   ### Base list input vars ----
   inputs <- list(
     shiny::selectInput(
@@ -51,19 +52,46 @@ mod_prevalence_display_input_variables <- function(vars, source, ns) {
 
   #### Conditional inputs depending on source of data ----
   if (source == "survey") {
-    inputs <- c(inputs, list(shiny::selectInput(
-      inputId = ns("wts"),
-      label = shiny::tagList(
-        htmltools::tags$span("Survey weights",
-          style = "font-size: 14px; font-weight: bold;"
-        ),
-        htmltools::tags$div(
-          style = "font-size: 0.85em; color: #6c7574;",
-          "Final survey weights for weighted analysis"
+    inputs <- c(inputs, list(
+      if (indicator_surv == "muac") {
+        #### Display age ----
+        list(
+          shiny::selectInput(
+            inputId = ns("muac"),
+            label = shiny::tagList(
+              htmltools::tags$span("MUAC",
+                style = "font-size: 14px; font-weight: bold;"
+              ),
+              htmltools::tags$span("*", style = "color: red;")
+            ),
+            choices = c("", vars)
+          ),
+          shiny::selectInput(
+            inputId = ns("age"),
+            label = shiny::tagList(
+              htmltools::tags$span("Age (months)",
+                style = "font-size: 14px; font-weight: bold;"
+              ),
+              htmltools::tags$span("*", style = "color: red;")
+            ),
+            choices = c("", vars)
+          )
         )
-      ),
-      choices = c("", vars)
-    )))
+      },
+      shiny::selectInput(
+        inputId = ns("wts"),
+        label = shiny::tagList(
+          htmltools::tags$span("Survey weights",
+            style = "font-size: 14px; font-weight: bold;"
+          ),
+          htmltools::tags$div(
+            style = "font-size: 0.85em; color: #6c7574;",
+            "Final survey weights for weighted analysis"
+          )
+        ),
+        choices = c("", vars)
+      )
+    ))
   }
 
   if (source == "screening") {
@@ -77,30 +105,30 @@ mod_prevalence_display_input_variables <- function(vars, source, ns) {
           htmltools::tags$span("*", style = "color: red;")
         ),
         choices = c("", vars)
-      ),      
-      shiny::selectInput(
-        inputId = ns("age"),
-        label = shiny::tagList(
-          htmltools::tags$span("Age in months",
-            style = "font-size: 14px; font-weight: bold;"
+      ),
+      if (has_age == "yes") {
+        shiny::selectInput(
+          inputId = ns("age"),
+          label = shiny::tagList(
+            htmltools::tags$span("Age (months)",
+              style = "font-size: 14px; font-weight: bold;"
+            ),
+            htmltools::tags$span("*", style = "color: red;")
           ),
-          htmltools::tags$span("*", style = "color: red;")
-        ),
-        choices = c("", vars)
-      ), 
-      shiny::selectInput(
-        inputId = ns("age_cat"),
-        label = shiny::tagList(
-          htmltools::tags$span("Age categories (6-23 and 24-59)",
-            style = "font-size: 14px; font-weight: bold;"
+          choices = c("", vars)
+        )
+      } else {
+        shiny::selectInput(
+          inputId = ns("age_cat"),
+          label = shiny::tagList(
+            htmltools::tags$span("Age categories (6-23 and 24-59)",
+              style = "font-size: 14px; font-weight: bold;"
+            ),
+            htmltools::tags$span("*", style = "color: red;")
           ),
-          htmltools::tags$div(
-            style = "font-size: 0.85em; color: #6c7574;",
-            "Only supply in the absence of age in months"
-          )
-        ),
-        choices = c("", vars)
-      )
+          choices = c("", vars)
+        )
+      }
     ))
   }
 

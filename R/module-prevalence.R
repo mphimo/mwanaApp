@@ -126,7 +126,7 @@ module_server_prevalence <- function(id, data) {
           ##### Options for survey data ----
           "survey" = {
             shiny::radioButtons(
-              inputId = ns("amn_method_survey"),
+              inputId = ns("method_survey"),
               label = htmltools::tags$span("Acute malnutrition based on:",
                 style = "font-size: 14px; font-weight: bold;"
               ),
@@ -143,7 +143,7 @@ module_server_prevalence <- function(id, data) {
           ##### Options for screening data: check if age is available ----
           "screening" = {
             shiny::radioButtons(
-              inputId = ns("age_avail"),
+              inputId = ns("has_age"),
               label = htmltools::tags$span("Is age in months available?",
                 style = "font-size: 14px; font-weight: bold;"
               ),
@@ -161,7 +161,9 @@ module_server_prevalence <- function(id, data) {
         vars <- names(data())
 
         #### Display variables ----
-        mod_prevalence_display_input_variables(vars, input$source, ns)
+        mod_prevalence_display_input_variables(
+          vars, input$source, input$method_survey, input$has_age, ns
+        )
       })
 
       ### Always observe Action button, but branch inside ----
@@ -242,14 +244,14 @@ module_server_prevalence <- function(id, data) {
                     dplyr::mutate(
                       muac = mwana::recode_muac(!!rlang::sym(input$muac), "mm")
                     ) |>
-                      mod_prevalence_call_prev_estimator_screening(
-                        muac = input$muac,
-                        oedema = input$oedema,
-                        area1 = input$area1,
-                        area2 = input$area2,
-                        area3 = input$area3
-                      ) #|>
-                    #mod_prevalence_neat_output_screening()
+                    mod_prevalence_call_prev_estimator_screening(
+                      muac = input$muac,
+                      oedema = input$oedema,
+                      area1 = input$area1,
+                      area2 = input$area2,
+                      area3 = input$area3
+                    ) #|>
+                  # mod_prevalence_neat_output_screening()
                 },
                 "no" = {
                   shiny::req(input$muac, input$age_cat)
