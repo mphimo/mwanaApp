@@ -53,9 +53,9 @@ mod_prevalence_display_input_variables <- function(
   #### Conditional inputs depending on source of data ----
   if (source == "survey") {
     inputs <- c(inputs, list(
-      if (indicator_surv == "muac") {
+      if (isTRUE(indicator_surv == "muac")) {
         #### Display age ----
-        list(
+        shiny::tagList(
           shiny::selectInput(
             inputId = ns("muac"),
             label = shiny::tagList(
@@ -75,10 +75,8 @@ mod_prevalence_display_input_variables <- function(
               htmltools::tags$span("*", style = "color: red;")
             ),
             choices = c("", vars)
-          )
-        )
-      },
-      shiny::selectInput(
+          ),
+          shiny::selectInput(
         inputId = ns("wts"),
         label = shiny::tagList(
           htmltools::tags$span("Survey weights",
@@ -91,6 +89,8 @@ mod_prevalence_display_input_variables <- function(
         ),
         choices = c("", vars)
       )
+        )
+      }
     ))
   }
 
@@ -106,7 +106,7 @@ mod_prevalence_display_input_variables <- function(
         ),
         choices = c("", vars)
       ),
-      if (has_age == "yes") {
+      if (isTRUE(has_age == "yes")) {
         shiny::selectInput(
           inputId = ns("age"),
           label = shiny::tagList(
@@ -266,12 +266,14 @@ mod_prevalence_call_wfhz_prev_estimator <- function(
 #'
 #'
 mod_prevalence_call_muac_prev_estimator <- function(
-    df, wts = NULL, oedema = NULL,
+    df, age, muac, wts = NULL, oedema = NULL,
     area1, area2, area3) {
   if (all(nzchar(c(area1, area2, area3)))) {
     if ((nzchar(wts) && nzchar(oedema))) {
       mwana::mw_estimate_prevalence_muac(
         df = df,
+        age = !!rlang::sym(age),
+        muac = !!rlang::sym(muac),
         wt = !!rlang::sym(wts),
         oedema = !!rlang::sym(oedema),
         !!rlang::sym(area1), !!rlang::sym(area2), !!rlang::sym(area3)
@@ -279,6 +281,8 @@ mod_prevalence_call_muac_prev_estimator <- function(
     } else if (!nzchar(wts) && nzchar(oedema)) {
       mwana::mw_estimate_prevalence_muac(
         df = df,
+                age = !!rlang::sym(age),
+        muac = !!rlang::sym(muac),
         wt = NULL,
         oedema = !!rlang::sym(oedema),
         !!rlang::sym(area1), !!rlang::sym(area2), !!rlang::sym(area3)
@@ -286,6 +290,8 @@ mod_prevalence_call_muac_prev_estimator <- function(
     } else if (nzchar(wts) && !nzchar(oedema)) {
       mwana::mw_estimate_prevalence_muac(
         df = df,
+                age = !!rlang::sym(age),
+        muac = !!rlang::sym(muac),
         wt = !!rlang::sym(wts),
         oedema = NULL,
         !!rlang::sym(area1), !!rlang::sym(area2), !!rlang::sym(area3)
@@ -293,6 +299,8 @@ mod_prevalence_call_muac_prev_estimator <- function(
     } else {
       mwana::mw_estimate_prevalence_muac(
         df = df,
+                age = !!rlang::sym(age),
+        muac = !!rlang::sym(muac),
         wt = NULL,
         oedema = NULL,
         !!rlang::sym(area1), !!rlang::sym(area2), !!rlang::sym(area3)
@@ -302,6 +310,8 @@ mod_prevalence_call_muac_prev_estimator <- function(
     if (all(nzchar(c(wts, oedema)))) {
       mwana::mw_estimate_prevalence_muac(
         df = df,
+                age = !!rlang::sym(age),
+        muac = !!rlang::sym(muac),
         wt = !!rlang::sym(wts),
         oedema = !!rlang::sym(oedema),
         !!rlang::sym(area1), !!rlang::sym(area2)
@@ -309,6 +319,8 @@ mod_prevalence_call_muac_prev_estimator <- function(
     } else if (!nzchar(wts) && nzchar(oedema)) {
       mwana::mw_estimate_prevalence_muac(
         df = df,
+                age = !!rlang::sym(age),
+        muac = !!rlang::sym(muac),
         wt = NULL,
         oedema = !!rlang::sym(oedema),
         !!rlang::sym(area1), !!rlang::sym(area2)
@@ -316,6 +328,8 @@ mod_prevalence_call_muac_prev_estimator <- function(
     } else if (nzchar(wts) && !nzchar(oedema)) {
       mwana::mw_estimate_prevalence_muac(
         df = df,
+                age = !!rlang::sym(age),
+        muac = !!rlang::sym(muac),
         wt = !!rlang::sym(wts),
         oedema = NULL,
         !!rlang::sym(area1), !!rlang::sym(area2)
@@ -323,6 +337,8 @@ mod_prevalence_call_muac_prev_estimator <- function(
     } else {
       mwana::mw_estimate_prevalence_muac(
         df = df,
+                age = !!rlang::sym(age),
+        muac = !!rlang::sym(muac),
         wt = NULL,
         oedema = NULL,
         !!rlang::sym(area1), !!rlang::sym(area2)
@@ -332,6 +348,8 @@ mod_prevalence_call_muac_prev_estimator <- function(
     if (all(nzchar(c(wts, oedema)))) {
       mwana::mw_estimate_prevalence_muac(
         df = df,
+                age = !!rlang::sym(age),
+        muac = !!rlang::sym(muac),
         wt = !!rlang::sym(wts),
         oedema = !!rlang::sym(oedema),
         !!rlang::sym(area1)
@@ -339,6 +357,8 @@ mod_prevalence_call_muac_prev_estimator <- function(
     } else if (!nzchar(wts) && nzchar(oedema)) {
       mwana::mw_estimate_prevalence_muac(
         df = df,
+                age = !!rlang::sym(age),
+        muac = !!rlang::sym(muac),
         wt = NULL,
         oedema = !!rlang::sym(oedema),
         !!rlang::sym(area1)
@@ -346,6 +366,8 @@ mod_prevalence_call_muac_prev_estimator <- function(
     } else if (nzchar(wts) && !nzchar(oedema)) {
       mwana::mw_estimate_prevalence_muac(
         df = df,
+                age = !!rlang::sym(age),
+        muac = !!rlang::sym(muac),
         wt = !!rlang::sym(wts),
         oedema = NULL,
         !!rlang::sym(area1)
@@ -353,6 +375,8 @@ mod_prevalence_call_muac_prev_estimator <- function(
     } else {
       mwana::mw_estimate_prevalence_muac(
         df = df,
+                age = !!rlang::sym(age),
+        muac = !!rlang::sym(muac),
         wt = NULL,
         oedema = NULL,
         !!rlang::sym(area1)
@@ -479,7 +503,7 @@ mod_prevalence_call_combined_prev_estimator <- function(
 #'
 #'
 mod_prevalence_call_prev_estimator_screening <- function(
-    df, muac, oedema = NULL,
+    df, age, muac, oedema = NULL,
     area1, area2, area3) {
   ## Build the grouping variables dynamically ----
   dots <- list(rlang::sym(area1))
@@ -492,15 +516,17 @@ mod_prevalence_call_prev_estimator_screening <- function(
   if (is.null(oedema) || !nzchar(oedema)) {
     mwana::mw_estimate_prevalence_screening(
       df = df,
-      muac = muac, # Pass "muac" string
+              age = !!rlang::sym(age),
+        muac = !!rlang::sym(muac),
       oedema = NULL,
       !!!dots
     )
   } else {
     mwana::mw_estimate_prevalence_screening(
       df = df,
-      muac = muac, # Pass "muac" string
-      oedema = oedema, # Pass "oedema" string
+              age = !!rlang::sym(age),
+        muac = muac,
+      oedema = NULL,
       !!!dots
     )
   }

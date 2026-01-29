@@ -177,7 +177,7 @@ module_server_prevalence <- function(id, data) {
         message <- ""
 
         if (input$source == "screening") {
-          if (input$amn_method_screening == "yes") {
+          if (input$has_age== "yes") {
             if (!nzchar(input$muac)) {
               valid <- FALSE
               message <- "Please supply MUAC variable."
@@ -199,7 +199,7 @@ module_server_prevalence <- function(id, data) {
         tryCatch(
           {
             p <- if (input$source == "survey") {
-              switch(input$amn_method_survey,
+              switch(input$method_survey,
                 "wfhz" = {
                   mod_prevalence_call_wfhz_prev_estimator(
                     df = data(),
@@ -214,8 +214,10 @@ module_server_prevalence <- function(id, data) {
                   data() |>
                     dplyr::mutate(muac = mwana::recode_muac(.data[[input$muac]], "mm")) |>
                     mod_prevalence_call_muac_prev_estimator(
-                      wts = input$wts,
+                      age = input$age,
+                      muac = input$muac,
                       oedema = input$oedema,
+                                            wts = input$wts,
                       area1 = input$area1,
                       area2 = input$area2,
                       area3 = input$area3
@@ -236,16 +238,17 @@ module_server_prevalence <- function(id, data) {
                 }
               )
             } else {
-              switch(input$amn_method_screening,
+              switch(input$has_age,
                 "yes" = {
-                  shiny::req(input$muac)
+                  shiny::req(input$muac, input$age)
 
                   data() |>
                     dplyr::mutate(
                       muac = mwana::recode_muac(!!rlang::sym(input$muac), "mm")
                     ) |>
                     mod_prevalence_call_prev_estimator_screening(
-                      muac = input$muac,
+                      muac = muac,
+                      age = input$age,
                       oedema = input$oedema,
                       area1 = input$area1,
                       area2 = input$area2,
@@ -329,15 +332,15 @@ module_server_prevalence <- function(id, data) {
       output$download_results <- shiny::downloadHandler(
         filename = function() {
           if (input$source == "survey") {
-            if (input$amn_method_survey == "wfhz") {
+            if (input$method_survey == "wfhz") {
               paste0("mwana-amn-prevalence-survey-wfhz_", Sys.Date(), ".xlsx", sep = "")
-            } else if (input$amn_method_survey == "muac") {
+            } else if (input$method_survey == "muac") {
               paste0("mwana-amn-prevalence-survey-muac_", Sys.Date(), ".xlsx", sep = "")
             } else {
               paste0("mwana-amn-prevalence-survey-combined_", Sys.Date(), ".xlsx", sep = "")
             }
           } else {
-            if (input$amn_method_screening == "yes") {
+            if (input$has_age== "yes") {
               paste0("mwana-amn-prevalence-screening-age-avail_", Sys.Date(), ".xlsx", sep = "")
             } else {
               paste0("mwana-amn-prevalence-screening-age-notavail_", Sys.Date(), ".xlsx", sep = "")
