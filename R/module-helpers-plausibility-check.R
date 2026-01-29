@@ -1,0 +1,256 @@
+# ==============================================================================
+#                              Plausibility Checker
+# ==============================================================================
+
+
+#'
+#' Display input variables dynamically, according to UI for screening
+#'
+#' @keywords internal
+#'
+mod_plausibility_display_input_variables <- function(vars, method, ns) {
+  ### Base inputs always shown
+  inputs <- list(
+    shiny::selectInput(
+      inputId = ns("area1"),
+      label = shiny::tagList(
+        htmltools::tags$span("Area 1", style = "font-size: 14px; font-weight: bold;"),
+        htmltools::tags$div(style = "font-size: 0.85em; color: #6c7574;", "(Primary area)")
+      ),
+      choices = c("", vars)
+    ),
+    shiny::selectInput(
+      inputId = ns("area2"),
+      label = shiny::tagList(
+        htmltools::tags$span("Area 2", style = "font-size: 14px; font-weight: bold;"),
+        htmltools::tags$div(style = "font-size: 0.85em; color: #6c7574;", "(Sub-area)")
+      ),
+      choices = c("", vars)
+    ),
+    shiny::selectInput(
+      inputId = ns("area3"),
+      label = shiny::tagList(
+        htmltools::tags$span("Area 3", style = "font-size: 14px; font-weight: bold;"),
+        htmltools::tags$div(style = "font-size: 0.85em; color: #6c7574;", "(Sub-area)")
+      ),
+      choices = c("", vars)
+    ),
+    shiny::selectInput(
+      inputId = ns("sex"),
+      label = shiny::tagList(
+        htmltools::tags$span("Sex", style = "font-size: 14px; font-weight: bold;"),
+        htmltools::tags$span("*", style = "color: red;")
+      ),
+      choices = c("", vars)
+    )
+  )
+
+  ### Conditional inputs depending on method
+  if (method == "wfhz") {
+    inputs <- c(inputs, list(
+      shiny::selectInput(
+        inputId = ns("age"),
+        label = shiny::tagList(
+          htmltools::tags$span("Age (months)",
+            style = "font-size: 14px; font-weight: bold;"
+          ),
+          htmltools::tags$span("*", style = "color: red;")
+        ),
+        choices = c("", vars)
+      ),
+      shiny::selectInput(
+        inputId = ns("weight"),
+        label = shiny::tagList(
+          htmltools::tags$span("Weight (kg)",
+            style = "font-size: 14px; font-weight: bold;"
+          ),
+          htmltools::tags$span("*", style = "color: red;")
+        ),
+        choices = c("", vars)
+      ),
+      shiny::selectInput(
+        inputId = ns("height"),
+        label = shiny::tagList(
+          htmltools::tags$span("Height (cm)",
+            style = "font-size: 14px; font-weight: bold;"
+          ),
+          htmltools::tags$span("*", style = "color: red;")
+        ),
+        choices = c("", vars)
+      )
+    ))
+  } else if (method == "mfaz") {
+    inputs <- c(inputs, list(
+      shiny::selectInput(
+        inputId = ns("age"),
+        label = shiny::tagList(
+          htmltools::tags$span("Age (months)",
+            style = "font-size: 14px; font-weight: bold;"
+          ),
+          htmltools::tags$span("*", style = "color: red;")
+        ),
+        choices = c("", vars)
+      ),
+      shiny::selectInput(
+        inputId = ns("muac"),
+        label = shiny::tagList(
+          htmltools::tags$span("MUAC (cm)",
+            style = "font-size: 14px; font-weight: bold;"
+          ),
+          htmltools::tags$span("*", style = "color: red;")
+        ),
+        choices = c("", vars)
+      )
+    ))
+  } else {
+    inputs <- c(inputs, list(
+      shiny::selectInput(
+        inputId = ns("muac"),
+        label = shiny::tagList(
+          htmltools::tags$span("MUAC (cm)",
+            style = "font-size: 14px; font-weight: bold;"
+          ),
+          htmltools::tags$span("*", style = "color: red;")
+        ),
+        choices = c("", vars)
+      )
+    ))
+  }
+
+  # Always add flags at the end
+  inputs_vars <- c(inputs, list(
+    shiny::selectInput(
+      inputId = ns("flags"),
+      label = shiny::tagList(
+        htmltools::tags$span("Flags", style = "font-size: 14px; font-weight: bold;"),
+        htmltools::tags$span("*", style = "color: red;")
+      ),
+      choices = c("", vars)
+    )
+  ))
+
+  inputs_vars
+}
+
+#'
+#'
+#' Invoke mwana's plausibility checkers dynamically from within module server,
+#' according to user specifications in the UI
+#'
+#'
+#' @keywords internal
+#'
+#'
+#'
+mod_plausibility_call_checker <- function(
+    df, age = NULL, sex, muac = NULL, weight = NULL,
+    height = NULL, flags, area1, area2, area3, .for = c("wfhz", "muac", "mfaz")) {
+  .for <- match.arg(.for)
+
+  if (.for == "wfhz") {
+    if (all(area2 != "", area3 != "")) {
+      mwana::mw_neat_output_wfhz(
+        mwana::mw_plausibility_check_wfhz(
+          df = df,
+          sex = !!rlang::sym(sex),
+          age = !!rlang::sym(age),
+          weight = !!rlang::sym(weight),
+          height = !!rlang::sym(height),
+          flags = !!rlang::sym(flags),
+          !!rlang::sym(area1), !!rlang::sym(area2), !!rlang::sym(area3)
+        )
+      )
+    } else if (area2 != "" && area3 == "") {
+      mwana::mw_neat_output_wfhz(
+        mwana::mw_plausibility_check_wfhz(
+          df = df,
+          sex = !!rlang::sym(sex),
+          age = !!rlang::sym(age),
+          weight = !!rlang::sym(weight),
+          height = !!rlang::sym(height),
+          flags = !!rlang::sym(flags),
+          !!rlang::sym(area1), !!rlang::sym(area2)
+        )
+      )
+    } else {
+      mwana::mw_neat_output_wfhz(
+        mwana::mw_plausibility_check_wfhz(
+          df = df,
+          sex = !!rlang::sym(sex),
+          age = !!rlang::sym(age),
+          weight = !!rlang::sym(weight),
+          height = !!rlang::sym(height),
+          flags = !!rlang::sym(flags),
+          !!rlang::sym(area1)
+        )
+      )
+    }
+  } else if (.for == "mfaz") {
+    if (all(c(area2, area3) != "")) {
+      mwana::mw_neat_output_mfaz(
+        mwana::mw_plausibility_check_mfaz(
+          df = df,
+          sex = !!rlang::sym(sex),
+          muac = !!rlang::sym(muac),
+          age = !!rlang::sym(age),
+          flags = !!rlang::sym(flags),
+          !!rlang::sym(area1), !!rlang::sym(area2), !!rlang::sym(area3)
+        )
+      )
+    } else if (area2 != "" && area3 == "") {
+      mwana::mw_neat_output_mfaz(
+        mwana::mw_plausibility_check_mfaz(
+          df = df,
+          sex = !!rlang::sym(sex),
+          muac = !!rlang::sym(muac),
+          age = !!rlang::sym(age),
+          flags = !!rlang::sym(flags),
+          !!rlang::sym(area1), !!rlang::sym(area2)
+        )
+      )
+    } else {
+      mwana::mw_neat_output_mfaz(
+        mwana::mw_plausibility_check_mfaz(
+          df = df,
+          sex = !!rlang::sym(sex),
+          muac = !!rlang::sym(muac),
+          age = !!rlang::sym(age),
+          flags = !!rlang::sym(flags),
+          !!rlang::sym(area1)
+        )
+      )
+    }
+  } else {
+    if (all(c(area2, area3) != "")) {
+      mwana::mw_neat_output_muac(
+        mwana::mw_plausibility_check_muac(
+          df = df,
+          sex = !!rlang::sym(sex),
+          muac = !!rlang::sym(muac),
+          flags = !!rlang::sym(flags),
+          !!rlang::sym(area1), !!rlang::sym(area2), !!rlang::sym(area3)
+        )
+      )
+    } else if (area2 != "" && area3 == "") {
+      mwana::mw_neat_output_muac(
+        mwana::mw_plausibility_check_muac(
+          df = df,
+          sex = !!rlang::sym(sex),
+          muac = !!rlang::sym(muac),
+          flags = !!rlang::sym(flags),
+          !!rlang::sym(area1), !!rlang::sym(area2)
+        )
+      )
+    } else {
+      mwana::mw_neat_output_muac(
+        mwana::mw_plausibility_check_muac(
+          df = df,
+          sex = !!rlang::sym(sex),
+          muac = !!rlang::sym(muac),
+          flags = !!rlang::sym(flags),
+          !!rlang::sym(area1)
+        )
+      )
+    }
+  }
+}
