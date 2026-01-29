@@ -114,9 +114,7 @@ module_server_plausibility_check <- function(id, data) {
         vars <- base::names(data())
 
         #### Dynamically inputs based on user-defined plausibility method ----
-        mod_plausibility_display_input_variables(
-          vars = vars, method = input$method, ns = ns
-        )
+        mod_plausibility_display_input_variables(vars, input$method, ns)
       })
 
 

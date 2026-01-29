@@ -143,7 +143,7 @@ module_server_prevalence <- function(id, data) {
           ##### Options for screening data: check if age is available ----
           "screening" = {
             shiny::radioButtons(
-              inputId = ns("amn_method_screening"),
+              inputId = ns("age_avail"),
               label = htmltools::tags$span("Is age in months available?",
                 style = "font-size: 14px; font-weight: bold;"
               ),
@@ -160,9 +160,8 @@ module_server_prevalence <- function(id, data) {
         shiny::req(data())
         vars <- names(data())
 
-        mod_prevalence_display_input_variables(
-          vars = vars, source = input$source, ns = ns
-        )
+        #### Display variables ----
+        mod_prevalence_display_input_variables(vars, input$source, ns)
       })
 
       ### Always observe Action button, but branch inside ----
@@ -241,19 +240,16 @@ module_server_prevalence <- function(id, data) {
 
                   data() |>
                     dplyr::mutate(
-                      muac = mwana::recode_muac(muac, "mm"),
-                      oedema = trimws(as.character(oedema))
+                      muac = mwana::recode_muac(!!rlang::sym(input$muac), "mm")
                     ) |>
-                    mwana::mw_estimate_age_weighted_prev_muac(
-                      muac = "muac",
-                      has_age = TRUE,
-                      age = "age",
-                      oedema = "oedema",
-                      age_cat = NULL,
-                      raw_muac = FALSE,
-                      !!rlang::sym(input$area1)
-                    ) |>
-                    mod_prevalence_neat_output_screening()
+                      mod_prevalence_call_prev_estimator_screening(
+                        muac = input$muac,
+                        oedema = input$oedema,
+                        area1 = input$area1,
+                        area2 = input$area2,
+                        area3 = input$area3
+                      ) #|>
+                    #mod_prevalence_neat_output_screening()
                 },
                 "no" = {
                   shiny::req(input$muac, input$age_cat)
