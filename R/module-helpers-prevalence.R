@@ -544,7 +544,7 @@ mod_prevalence_call_prev_estimator_screening <- function(
 #' @keywords internal
 #'
 #'
-mmod_prevalence_call_prev_estimator_screening2 <- function(
+mod_prevalence_call_prev_estimator_screening2 <- function(
     df, age_cat, muac, oedema = NULL,
     area1, area2, area3) {
 

@@ -363,11 +363,12 @@ testthat::test_that(
     app$set_inputs(`prevalence-source` = "screening", wait_ = TRUE)
 
     ### Select the method ----
-    app$set_inputs(`prevalence-amn_method_screening` = "yes", wait_ = FALSE)
+    app$set_inputs(`prevalence-has_age` = "yes", wait_ = FALSE)
     app$set_inputs(`prevalence-area1` = "area", wait_ = FALSE)
     app$set_inputs(`prevalence-area2` = "sex", wait_ = FALSE) ## Assume sex as grouping var
     app$set_inputs(`prevalence-area3` = "", wait_ = FALSE)
     app$set_inputs(`prevalence-muac` = "muac", wait_ = FALSE)
+    app$set_inputs(`prevalence-age` = "age", wait = FALSE)
     app$set_inputs(`prevalence-oedema` = "oedema", wait_ = FALSE)
 
     ### Click on Estime Prevalence button ----
@@ -461,12 +462,12 @@ testthat::test_that(
     app$wait_for_idle(timeout = 40000)
 
     #### Select if age is available ----
-    app$set_inputs("prevalence-amn_method_screening" = "no", wait_ = FALSE)
+    app$set_inputs("prevalence-has_age" = "no", wait_ = FALSE)
 
     #### Select variables ----
-    app$set_inputs("prevalence-age_cat" = "age_cat", wait_ = FALSE)
-    app$set_inputs("prevalence-area1" = "team", wait_ = FALSE)
+    app$set_inputs("prevalence-area1" = "area", wait_ = FALSE)
     app$set_inputs("prevalence-muac" = "muac", wait_ = FALSE)
+    app$set_inputs("prevalence-age_cat" = "age_cat", wait_ = FALSE)
     app$set_inputs("prevalence-oedema" = "oedema", wait_ = FALSE)
 
     #### Click on Estimate Prevalence button ----
