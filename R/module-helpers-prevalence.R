@@ -544,64 +544,35 @@ mod_prevalence_call_prev_estimator_screening <- function(
 #' @keywords internal
 #'
 #'
-mod_prevalence_call_prev_estimator_screening2 <- function(
+mmod_prevalence_call_prev_estimator_screening2 <- function(
     df, age_cat, muac, oedema = NULL,
     area1, area2, area3) {
-  if (all(nzchar(c(area1, area2, area3)))) {
+
+    dots <- list(rlang::sym(area1))
+  if (nzchar(area2)) dots <- c(dots, list(rlang::sym(area2)))
+  if (nzchar(area3)) dots <- c(dots, list(rlang::sym(area3)))
+  
+  df <- dplyr::mutate(df, muac = !!rlang::sym(muac) * 10)
+
+  # Create the call - pass oedema as NULL or as a symbol
     if (nzchar(oedema)) {
-      mwana::mw_estimate_prevalence_screening2(
+      result <- mwana::mw_estimate_prevalence_screening2(
         df = df,
         age_cat = !!rlang::sym(age_cat),
-        muac = !!rlang::sym(muac),
-        oedema = !!rlang::sym(oedema),
-        !!rlang::sym(area1), !!rlang::sym(area2), !!rlang::sym(area3)
+        muac = df$muac,
+        oedema = !!rlang::sym(oedema), 
+        !!!dots
       )
     } else {
-      mwana::mw_estimate_prevalence_screening2(
+      result <- mwana::mw_estimate_prevalence_screening2(
         df = df,
         age_cat = !!rlang::sym(age_cat),
-        muac = !!rlang::sym(muac),
+        muac = df$muac,
         oedema = NULL,
-        !!rlang::sym(area1), !!rlang::sym(area2), !!rlang::sym(area3)
+        !!!dots
       )
     }
-  } else if (nzchar(area2) && !nzchar(area3)) {
-    if (nzchar(oedema)) {
-      mwana::mw_estimate_prevalence_screening2(
-        df = df,
-        age_cat = !!rlang::sym(age_cat),
-        muac = !!rlang::sym(muac),
-        oedema = !!rlang::sym(oedema),
-        !!rlang::sym(area1), !!rlang::sym(area2)
-      )
-    } else {
-      mwana::mw_estimate_prevalence_screening2(
-        df = df,
-        age_cat = !!rlang::sym(age_cat),
-        muac = !!rlang::sym(muac),
-        oedema = NULL,
-        !!rlang::sym(area1), !!rlang::sym(area2)
-      )
-    }
-  } else {
-    if (nzchar(oedema)) {
-      mwana::mw_estimate_prevalence_screening2(
-        df = df,
-        age_cat = !!rlang::sym(age_cat),
-        muac = !!rlang::sym(muac),
-        oedema = !!rlang::sym(oedema),
-        !!rlang::sym(area1)
-      )
-    } else {
-      mwana::mw_estimate_prevalence_screening2(
-        df = df,
-        age_cat = !!rlang::sym(age_cat),
-        muac = !!rlang::sym(muac),
-        oedema = NULL,
-        !!rlang::sym(area1)
-      )
-    }
-  }
+  result
 }
 
 
