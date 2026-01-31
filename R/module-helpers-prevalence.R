@@ -505,90 +505,31 @@ mod_prevalence_call_combined_prev_estimator <- function(
 mod_prevalence_call_prev_estimator_screening <- function(
     df, age, muac, oedema = NULL,
     area1, area2, area3) {
-  
-  # VERY explicit check for empty/null oedema
-  oedema_is_empty <- TRUE
-  
-  if (!is.null(oedema)) {
-    if (!is.na(oedema)) {
-      if (is.character(oedema)) {
-        trimmed <- trimws(oedema)
-        if (nchar(trimmed) > 0) {
-          oedema_is_empty <- FALSE
-        }
-      }
-    }
-  }
-  
-  # Determine if we have a real oedema column
-  has_oedema <- !oedema_is_empty && (oedema %in% names(df))
-  
-  # If oedema is provided and exists, clean it
-  if (has_oedema) {
-    df <- df |> 
-      dplyr::mutate(
-        !!rlang::sym(oedema) := tolower(trimws(.data[[oedema]]))
-      )
-  } else {
-    # Create a dummy oedema column with all "n" values
-    oedema <- ".oedema_dummy"
-    df <- df |> 
-      dplyr::mutate(!!oedema := "n")
-  }
-  
-  # Convert MUAC to mm
-  df <- df |> 
-    dplyr::mutate(!!rlang::sym(muac) := .data[[muac]] * 10)
 
-  # Build grouping expression - also be explicit here
-  by_args <- c()
-  if (!is.null(area1) && !is.na(area1) && nchar(trimws(area1)) > 0) {
-    by_args <- c(by_args, area1)
-  }
-  if (!is.null(area2) && !is.na(area2) && nchar(trimws(area2)) > 0) {
-    by_args <- c(by_args, area2)
-  }
-  if (!is.null(area3) && !is.na(area3) && nchar(trimws(area3)) > 0) {
-    by_args <- c(by_args, area3)
-  }
+    dots <- list(rlang::sym(area1))
+  if (nzchar(area2)) dots <- c(dots, list(rlang::sym(area2)))
+  if (nzchar(area3)) dots <- c(dots, list(rlang::sym(area3)))
   
-  # Create the call - always pass oedema (either real or dummy)
-  if (length(by_args) == 0) {
-    result <- mwana::mw_estimate_prevalence_screening(
-      df = df,
-      age = !!rlang::sym(age),
-      muac = !!rlang::sym(muac),
-      oedema = !!rlang::sym(oedema)
-    )
-  } else if (length(by_args) == 1) {
-    result <- mwana::mw_estimate_prevalence_screening(
-      df = df,
-      age = !!rlang::sym(age),
-      muac = !!rlang::sym(muac),
-      oedema = !!rlang::sym(oedema),
-      !!rlang::sym(by_args[1])
-    )
-  } else if (length(by_args) == 2) {
-    result <- mwana::mw_estimate_prevalence_screening(
-      df = df,
-      age = !!rlang::sym(age),
-      muac = !!rlang::sym(muac),
-      oedema = !!rlang::sym(oedema),
-      !!rlang::sym(by_args[1]),
-      !!rlang::sym(by_args[2])
-    )
-  } else {
-    result <- mwana::mw_estimate_prevalence_screening(
-      df = df,
-      age = !!rlang::sym(age),
-      muac = !!rlang::sym(muac),
-      oedema = !!rlang::sym(oedema),
-      !!rlang::sym(by_args[1]),
-      !!rlang::sym(by_args[2]),
-      !!rlang::sym(by_args[3])
-    )
-  }
-  
+  df <- dplyr::mutate(df, muac = !!rlang::sym(muac) * 10)
+
+  # Create the call - pass oedema as NULL or as a symbol
+    if (nzchar(oedema)) {
+      result <- mwana::mw_estimate_prevalence_screening(
+        df = df,
+        age = !!rlang::sym(age),
+        muac = df$muac,
+        oedema = !!rlang::sym(oedema), 
+        !!!dots
+      )
+    } else {
+      result <- mwana::mw_estimate_prevalence_screening(
+        df = df,
+        age = !!rlang::sym(age),
+        muac = df$muac,
+        oedema = NULL,
+        !!!dots
+      )
+    }
   result
 }
 
