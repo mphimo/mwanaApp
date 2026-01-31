@@ -134,7 +134,7 @@ testthat::test_that(desc = "Server data wrangling works as expected for MFAZ", {
 
   ### Test check ----
   testthat::expect_true(all(c("age_days", "mfaz", "flag_mfaz") %in% vals))
-  testthat::expect_true(app$get_js("$('#ipc_check-checked').length > 0"))
+  testthat::expect_true(app$get_js("$('#wrangle_data-wrangled').length > 0"))
 
   #### Stop the app ----
   app$stop()
@@ -150,7 +150,7 @@ testthat::test_that(desc = "Server data wrangling works as expected for MFAZ", {
 
 ### When age is given in categories ----
 testthat::test_that(
-  desc = "Prevalence tab works as expected when age is given in categories",
+  desc = "Server data wrangling works as expected for raw MUAC values",
   code = {
     #### Initialise app ----
     app <- shinytest2::AppDriver$new(
@@ -203,7 +203,7 @@ testthat::test_that(
 
     ### Test check ----
     testthat::expect_true("flag_muac" %in% vals)
-    testthat::expect_true(app$get_js("$('#ipc_check-checked').length > 0"))
+    testthat::expect_true(app$get_js("$('#wrangle_data-wrangled').length > 0"))
 
     ### Stop the app ----
     app$stop()
