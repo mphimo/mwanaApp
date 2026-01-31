@@ -505,32 +505,93 @@ mod_prevalence_call_combined_prev_estimator <- function(
 mod_prevalence_call_prev_estimator_screening <- function(
     df, age, muac, oedema = NULL,
     area1, area2, area3) {
-  ## Build the grouping variables dynamically ----
-  dots <- list(rlang::sym(area1))
-  if (nzchar(area2)) dots <- c(dots, list(rlang::sym(area2)))
-  if (nzchar(area3)) dots <- c(dots, list(rlang::sym(area3)))
+  
+  # VERY explicit check for empty/null oedema
+  oedema_is_empty <- TRUE
+  
+  if (!is.null(oedema)) {
+    if (!is.na(oedema)) {
+      if (is.character(oedema)) {
+        trimmed <- trimws(oedema)
+        if (nchar(trimmed) > 0) {
+          oedema_is_empty <- FALSE
+        }
+      }
+    }
+  }
+  
+  # Determine if we have a real oedema column
+  has_oedema <- !oedema_is_empty && (oedema %in% names(df))
+  
+  # If oedema is provided and exists, clean it
+  if (has_oedema) {
+    df <- df |> 
+      dplyr::mutate(
+        !!rlang::sym(oedema) := tolower(trimws(.data[[oedema]]))
+      )
+  } else {
+    # Create a dummy oedema column with all "n" values
+    oedema <- ".oedema_dummy"
+    df <- df |> 
+      dplyr::mutate(!!oedema := "n")
+  }
+  
+  # Convert MUAC to mm
+  df <- df |> 
+    dplyr::mutate(!!rlang::sym(muac) := .data[[muac]] * 10)
 
-  # muac is already "muac" (the standardized column name)
-  # oedema should be "oedema" or NULL
-
-  if (is.null(oedema) || !nzchar(oedema)) {
-    mwana::mw_estimate_prevalence_screening(
+  # Build grouping expression - also be explicit here
+  by_args <- c()
+  if (!is.null(area1) && !is.na(area1) && nchar(trimws(area1)) > 0) {
+    by_args <- c(by_args, area1)
+  }
+  if (!is.null(area2) && !is.na(area2) && nchar(trimws(area2)) > 0) {
+    by_args <- c(by_args, area2)
+  }
+  if (!is.null(area3) && !is.na(area3) && nchar(trimws(area3)) > 0) {
+    by_args <- c(by_args, area3)
+  }
+  
+  # Create the call - always pass oedema (either real or dummy)
+  if (length(by_args) == 0) {
+    result <- mwana::mw_estimate_prevalence_screening(
       df = df,
-              age = !!rlang::sym(age),
-        muac = !!rlang::sym(muac),
-      oedema = NULL,
-      !!!dots
+      age = !!rlang::sym(age),
+      muac = !!rlang::sym(muac),
+      oedema = !!rlang::sym(oedema)
+    )
+  } else if (length(by_args) == 1) {
+    result <- mwana::mw_estimate_prevalence_screening(
+      df = df,
+      age = !!rlang::sym(age),
+      muac = !!rlang::sym(muac),
+      oedema = !!rlang::sym(oedema),
+      !!rlang::sym(by_args[1])
+    )
+  } else if (length(by_args) == 2) {
+    result <- mwana::mw_estimate_prevalence_screening(
+      df = df,
+      age = !!rlang::sym(age),
+      muac = !!rlang::sym(muac),
+      oedema = !!rlang::sym(oedema),
+      !!rlang::sym(by_args[1]),
+      !!rlang::sym(by_args[2])
     )
   } else {
-    mwana::mw_estimate_prevalence_screening(
+    result <- mwana::mw_estimate_prevalence_screening(
       df = df,
-              age = !!rlang::sym(age),
-        muac = muac,
-      oedema = NULL,
-      !!!dots
+      age = !!rlang::sym(age),
+      muac = !!rlang::sym(muac),
+      oedema = !!rlang::sym(oedema),
+      !!rlang::sym(by_args[1]),
+      !!rlang::sym(by_args[2]),
+      !!rlang::sym(by_args[3])
     )
   }
+  
+  result
 }
+
 
 #'
 #'
@@ -625,7 +686,7 @@ mod_prevalence_neat_output_survey <- function(
     df |>
       dplyr::relocate(.data$wt_pop, .before = .data$gam_n) |>
       dplyr::rename(
-        "children (N)" = .data$wt_pop,
+        "children (N)" = .data$N,
         "gam #" = .data$gam_n,
         "gam %" = .data$gam_p,
         "gam lcl" = .data$gam_p_low,
@@ -646,7 +707,7 @@ mod_prevalence_neat_output_survey <- function(
     df |>
       dplyr::relocate(.data$wt_pop, .before = .data$cgam_n) |>
       dplyr::rename(
-        "children (N)" = .data$wt_pop,
+        "children (N)" = .data$N,
         "cgam #" = .data$cgam_n,
         "cgam %" = .data$cgam_p,
         "cgam lcl" = .data$cgam_p_low,
@@ -676,27 +737,8 @@ mod_prevalence_neat_output_screening <- function(df) {
   ## Get variable names ----
   names <- base::names(df)
 
-  if ("u2oedema" %in% names) {
-    df <- df |>
-      dplyr::select(!dplyr::contains(c("u2", "o2"))) |>
-      dplyr::mutate(
-        dplyr::across(
-          .cols = dplyr::contains("am_p"),
-          .fns = scales::label_percent(
-            accuracy = 0.1,
-            suffix = "%",
-            decimal.mark = "."
-          )
-        )
-      ) |>
-      dplyr::rename(
-        "children (N)" = .data$N,
-        "gam %" = .data$gam_p,
-        "sam %" = .data$sam_p,
-        "mam %" = .data$mam_p
-      )
-  } else {
-    df <- dplyr::mutate(
+  if ("gam_n" %in% names) {
+     df <- dplyr::mutate(
       .data = df,
       dplyr::across(
         .cols = dplyr::contains("am_p"),
@@ -716,6 +758,25 @@ mod_prevalence_neat_output_screening <- function(df) {
         "mam #" = .data$mam_n,
         "mam %" = .data$mam_p
       )
-  }
+    
+  } else {
+df <- df |>
+      dplyr::mutate(
+        dplyr::across(
+          .cols = dplyr::contains("am_p"),
+          .fns = scales::label_percent(
+            accuracy = 0.1,
+            suffix = "%",
+            decimal.mark = "."
+          )
+        )
+      ) |>
+      dplyr::rename(
+        "children (N)" = .data$N,
+        "gam %" = .data$gam_p,
+        "sam %" = .data$sam_p,
+        "mam %" = .data$mam_p
+      )
+    }
   df
 }

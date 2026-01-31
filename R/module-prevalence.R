@@ -126,7 +126,7 @@ module_server_prevalence <- function(id, data) {
           ##### Options for survey data ----
           "survey" = {
             shiny::radioButtons(
-              inputId = ns("method_survey"),
+              inputId = ns("amn_method_survey"),
               label = htmltools::tags$span("Acute malnutrition based on:",
                 style = "font-size: 14px; font-weight: bold;"
               ),
@@ -162,7 +162,7 @@ module_server_prevalence <- function(id, data) {
 
         #### Display variables ----
         mod_prevalence_display_input_variables(
-          vars, input$source, input$method_survey, input$has_age, ns
+          vars, input$source, input$amn_method_survey, input$has_age, ns
         )
       })
 
@@ -199,7 +199,7 @@ module_server_prevalence <- function(id, data) {
         tryCatch(
           {
             p <- if (input$source == "survey") {
-              switch(input$method_survey,
+              switch(input$amn_method_survey,
                 "wfhz" = {
                   mod_prevalence_call_wfhz_prev_estimator(
                     df = data(),
@@ -241,20 +241,16 @@ module_server_prevalence <- function(id, data) {
               switch(input$has_age,
                 "yes" = {
                   shiny::req(input$muac, input$age)
-
-                  data() |>
-                    dplyr::mutate(
-                      muac = mwana::recode_muac(!!rlang::sym(input$muac), "mm")
-                    ) |>
                     mod_prevalence_call_prev_estimator_screening(
-                      muac = muac,
+                  df = data(),
+                      muac = input$muac,
                       age = input$age,
                       oedema = input$oedema,
                       area1 = input$area1,
                       area2 = input$area2,
                       area3 = input$area3
-                    ) #|>
-                  # mod_prevalence_neat_output_screening()
+                    ) |>
+                   mod_prevalence_neat_output_screening()
                 },
                 "no" = {
                   shiny::req(input$muac, input$age_cat)
@@ -332,9 +328,9 @@ module_server_prevalence <- function(id, data) {
       output$download_results <- shiny::downloadHandler(
         filename = function() {
           if (input$source == "survey") {
-            if (input$method_survey == "wfhz") {
+            if (input$amn_method_survey == "wfhz") {
               paste0("mwana-amn-prevalence-survey-wfhz_", Sys.Date(), ".xlsx", sep = "")
-            } else if (input$method_survey == "muac") {
+            } else if (input$amn_method_survey == "muac") {
               paste0("mwana-amn-prevalence-survey-muac_", Sys.Date(), ".xlsx", sep = "")
             } else {
               paste0("mwana-amn-prevalence-survey-combined_", Sys.Date(), ".xlsx", sep = "")
