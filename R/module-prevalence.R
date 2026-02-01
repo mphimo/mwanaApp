@@ -201,7 +201,6 @@ module_server_prevalence <- function(id, data) {
             p <- if (input$source == "survey") {
               switch(input$amn_method_survey,
                 "wfhz" = {
-                  print(head(data()))
                   mod_prevalence_call_wfhz_prev_estimator(
                     df = data(),
                     wts = input$wts,
@@ -213,7 +212,7 @@ module_server_prevalence <- function(id, data) {
                 },
                 "muac" = {
                   data() |>
-                    dplyr::mutate(muac = mwana::recode_muac(.data[[input$muac]], "mm")) |>
+                    dplyr::mutate(muac = mwana::recode_muac(!!rlang::sym(input$muac), "mm")) |>
                     mod_prevalence_call_muac_prev_estimator(
                       age = input$age,
                       muac = input$muac,
@@ -227,7 +226,7 @@ module_server_prevalence <- function(id, data) {
                 },
                 "combined" = {
                   data() |>
-                    dplyr::mutate(muac = mwana::recode_muac(!!rlang::sym(input$muac), "mm")) |>
+                    dplyr::mutate(muac = mwana::recode_muac(.data$muac, "mm")) |>
                     mod_prevalence_call_combined_prev_estimator(
                       wts = input$wts,
                       oedema = input$oedema,

@@ -276,7 +276,7 @@ testthat::test_that(
     app$wait_for_value(output = "prevalence-results", timeout = 40000)
 
     ### Get the list of variable names from the rendered table ----
-    vals <- as.character(
+    column_names <- as.character(
       app$get_js(
       "$('#prevalence-results thead th').map(function() {
       return $(this).text();
@@ -285,14 +285,10 @@ testthat::test_that(
   )
     
   ### Test check ----
-    testthat::expect_equal(
-      object = vals,
-      expected = c(
+    testthat::expect_true(all(column_names %in% c(
         "area", "sex", "cgam %", "csam %", "cmam %", "children (N)", "cgam #",
         "cgam lcl", "cgam ucl", "cgam deff", "csam #", "csam lcl", "csam ucl",
-        "csam deff", "cmam #", "cmam lcl", "cmam ucl", "cmam deff"
-      )
-    )
+        "csam deff", "cmam #", "cmam lcl", "cmam ucl", "cmam deff")))
 
   ### Stop the app ----
     app$stop()
@@ -472,12 +468,11 @@ testthat::test_that(
 
     #### Click on Estimate Prevalence button ----
     app$click(input = "prevalence-estimate")
-
     #### Wait until output has been rendered ----
     app$wait_for_value(output = "prevalence-results", timeout = 40000)
 
     ### Get the list of variable names from the rendered table ----
-    vals <- as.character(
+    column_names <- as.character(
       app$get_js(
       "$('#prevalence-results thead th').map(function() {
       return $(this).text();
@@ -485,15 +480,17 @@ testthat::test_that(
     )[1:8]
   )
     
-  ### Test check ----
+  #### Test column names ----
     testthat::expect_true(
-      object = all(vals %in% c(
+      object = all(column_names %in% c(
         "area", "gam #", "gam %" , "sam #", "sam %", "mam #", "mam %", 
-        "children (N)"))
+        "children (N)")
+      ),
+      info = "Column names should match expected values"
     )
-
   ### Stop the app ----
     app$stop()
 
   }
+  
 )

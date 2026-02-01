@@ -149,12 +149,11 @@ mod_prevalence_display_input_variables <- function(
 }
 
 
-
+#'
 #'
 #'
 #' Invoke mwana's prevalence functions from within module server according to
 #' user specifications in the UI
-#'
 #'
 #' @keywords internal
 #'
@@ -162,99 +161,25 @@ mod_prevalence_display_input_variables <- function(
 mod_prevalence_call_wfhz_prev_estimator <- function(
     df, wts = NULL, oedema = NULL,
     area1, area2, area3) {
-  if (all(nzchar(c(area1, area2, area3)))) {
-    if ((nzchar(wts) && nzchar(oedema))) {
-      mwana::mw_estimate_prevalence_wfhz(
-        df = df,
-        wt = !!rlang::sym(wts),
-        oedema = !!rlang::sym(oedema),
-        !!rlang::sym(area1), !!rlang::sym(area2), !!rlang::sym(area3)
-      )
-    } else if (!nzchar(wts) && nzchar(oedema)) {
-      mwana::mw_estimate_prevalence_wfhz(
-        df = df,
-        wt = NULL,
-        oedema = !!rlang::sym(oedema),
-        !!rlang::sym(area1), !!rlang::sym(area2), !!rlang::sym(area3)
-      )
-    } else if (nzchar(wts) && !nzchar(oedema)) {
-      mwana::mw_estimate_prevalence_wfhz(
-        df = df,
-        wt = !!rlang::sym(wts),
-        oedema = NULL,
-        !!rlang::sym(area1), !!rlang::sym(area2), !!rlang::sym(area3)
-      )
-    } else {
-      mwana::mw_estimate_prevalence_wfhz(
-        df = df,
-        wt = NULL,
-        oedema = NULL,
-        !!rlang::sym(area1), !!rlang::sym(area2), !!rlang::sym(area3)
-      )
-    }
-  } else if (nzchar(area2) && !nzchar(area3)) {
-    if (all(nzchar(c(wts, oedema)))) {
-      mwana::mw_estimate_prevalence_wfhz(
-        df = df,
-        wt = !!rlang::sym(wts),
-        oedema = !!rlang::sym(oedema),
-        !!rlang::sym(area1), !!rlang::sym(area2)
-      )
-    } else if (!nzchar(wts) && nzchar(oedema)) {
-      mwana::mw_estimate_prevalence_wfhz(
-        df = df,
-        wt = NULL,
-        oedema = !!rlang::sym(oedema),
-        !!rlang::sym(area1), !!rlang::sym(area2)
-      )
-    } else if (nzchar(wts) && !nzchar(oedema)) {
-      mwana::mw_estimate_prevalence_wfhz(
-        df = df,
-        wt = !!rlang::sym(wts),
-        oedema = NULL,
-        !!rlang::sym(area1), !!rlang::sym(area2)
-      )
-    } else {
-      mwana::mw_estimate_prevalence_wfhz(
-        df = df,
-        wt = NULL,
-        oedema = NULL,
-        !!rlang::sym(area1), !!rlang::sym(area2)
-      )
-    }
-  } else {
-    if (all(nzchar(c(wts, oedema)))) {
-      mwana::mw_estimate_prevalence_wfhz(
-        df = df,
-        wt = !!rlang::sym(wts),
-        oedema = !!rlang::sym(oedema),
-        !!rlang::sym(area1)
-      )
-    } else if (!nzchar(wts) && nzchar(oedema)) {
-      mwana::mw_estimate_prevalence_wfhz(
-        df = df,
-        wt = NULL,
-        oedema = !!rlang::sym(oedema),
-        !!rlang::sym(area1)
-      )
-    } else if (nzchar(wts) && !nzchar(oedema)) {
-      mwana::mw_estimate_prevalence_wfhz(
-        df = df,
-        wt = !!rlang::sym(wts),
-        oedema = NULL,
-        !!rlang::sym(area1)
-      )
-    } else {
-      mwana::mw_estimate_prevalence_wfhz(
-        df = df,
-        wt = NULL,
-        oedema = NULL,
-        !!rlang::sym(area1)
-      )
-    }
-  }
+  
+  # Build the grouping variables dynamically
+  dots <- list()
+  if (!is.null(area1) && nzchar(area1)) dots <- c(dots, list(rlang::sym(area1)))
+  if (!is.null(area2) && nzchar(area2)) dots <- c(dots, list(rlang::sym(area2)))
+  if (!is.null(area3) && nzchar(area3)) dots <- c(dots, list(rlang::sym(area3)))
+  
+  # Determine wt and oedema arguments - only convert to symbol if valid
+  wt_arg <- if (!is.null(wts) && nzchar(wts)) rlang::sym(wts) else NULL
+  oedema_arg <- if (!is.null(oedema) && nzchar(oedema)) rlang::sym(oedema) else NULL
+  
+  # Call the function once with dynamic arguments
+  mwana::mw_estimate_prevalence_wfhz(
+    df = df,
+    wt = !!wt_arg,
+    oedema = !!oedema_arg,
+    !!!dots
+  )
 }
-
 
 #'
 #'
@@ -268,123 +193,27 @@ mod_prevalence_call_wfhz_prev_estimator <- function(
 mod_prevalence_call_muac_prev_estimator <- function(
     df, age, muac, wts = NULL, oedema = NULL,
     area1, area2, area3) {
-  if (all(nzchar(c(area1, area2, area3)))) {
-    if ((nzchar(wts) && nzchar(oedema))) {
-      mwana::mw_estimate_prevalence_muac(
-        df = df,
-        age = !!rlang::sym(age),
-        muac = !!rlang::sym(muac),
-        wt = !!rlang::sym(wts),
-        oedema = !!rlang::sym(oedema),
-        !!rlang::sym(area1), !!rlang::sym(area2), !!rlang::sym(area3)
-      )
-    } else if (!nzchar(wts) && nzchar(oedema)) {
-      mwana::mw_estimate_prevalence_muac(
-        df = df,
-                age = !!rlang::sym(age),
-        muac = !!rlang::sym(muac),
-        wt = NULL,
-        oedema = !!rlang::sym(oedema),
-        !!rlang::sym(area1), !!rlang::sym(area2), !!rlang::sym(area3)
-      )
-    } else if (nzchar(wts) && !nzchar(oedema)) {
-      mwana::mw_estimate_prevalence_muac(
-        df = df,
-                age = !!rlang::sym(age),
-        muac = !!rlang::sym(muac),
-        wt = !!rlang::sym(wts),
-        oedema = NULL,
-        !!rlang::sym(area1), !!rlang::sym(area2), !!rlang::sym(area3)
-      )
-    } else {
-      mwana::mw_estimate_prevalence_muac(
-        df = df,
-                age = !!rlang::sym(age),
-        muac = !!rlang::sym(muac),
-        wt = NULL,
-        oedema = NULL,
-        !!rlang::sym(area1), !!rlang::sym(area2), !!rlang::sym(area3)
-      )
-    }
-  } else if (nzchar(area2) && !nzchar(area3)) {
-    if (all(nzchar(c(wts, oedema)))) {
-      mwana::mw_estimate_prevalence_muac(
-        df = df,
-                age = !!rlang::sym(age),
-        muac = !!rlang::sym(muac),
-        wt = !!rlang::sym(wts),
-        oedema = !!rlang::sym(oedema),
-        !!rlang::sym(area1), !!rlang::sym(area2)
-      )
-    } else if (!nzchar(wts) && nzchar(oedema)) {
-      mwana::mw_estimate_prevalence_muac(
-        df = df,
-                age = !!rlang::sym(age),
-        muac = !!rlang::sym(muac),
-        wt = NULL,
-        oedema = !!rlang::sym(oedema),
-        !!rlang::sym(area1), !!rlang::sym(area2)
-      )
-    } else if (nzchar(wts) && !nzchar(oedema)) {
-      mwana::mw_estimate_prevalence_muac(
-        df = df,
-                age = !!rlang::sym(age),
-        muac = !!rlang::sym(muac),
-        wt = !!rlang::sym(wts),
-        oedema = NULL,
-        !!rlang::sym(area1), !!rlang::sym(area2)
-      )
-    } else {
-      mwana::mw_estimate_prevalence_muac(
-        df = df,
-                age = !!rlang::sym(age),
-        muac = !!rlang::sym(muac),
-        wt = NULL,
-        oedema = NULL,
-        !!rlang::sym(area1), !!rlang::sym(area2)
-      )
-    }
-  } else {
-    if (all(nzchar(c(wts, oedema)))) {
-      mwana::mw_estimate_prevalence_muac(
-        df = df,
-                age = !!rlang::sym(age),
-        muac = !!rlang::sym(muac),
-        wt = !!rlang::sym(wts),
-        oedema = !!rlang::sym(oedema),
-        !!rlang::sym(area1)
-      )
-    } else if (!nzchar(wts) && nzchar(oedema)) {
-      mwana::mw_estimate_prevalence_muac(
-        df = df,
-                age = !!rlang::sym(age),
-        muac = !!rlang::sym(muac),
-        wt = NULL,
-        oedema = !!rlang::sym(oedema),
-        !!rlang::sym(area1)
-      )
-    } else if (nzchar(wts) && !nzchar(oedema)) {
-      mwana::mw_estimate_prevalence_muac(
-        df = df,
-                age = !!rlang::sym(age),
-        muac = !!rlang::sym(muac),
-        wt = !!rlang::sym(wts),
-        oedema = NULL,
-        !!rlang::sym(area1)
-      )
-    } else {
-      mwana::mw_estimate_prevalence_muac(
-        df = df,
-                age = !!rlang::sym(age),
-        muac = !!rlang::sym(muac),
-        wt = NULL,
-        oedema = NULL,
-        !!rlang::sym(area1)
-      )
-    }
-  }
+  
+  # Build the grouping variables dynamically ----
+  dots <- list()
+  if (nzchar(area1)) dots <- c(dots, list(rlang::sym(area1)))
+  if (nzchar(area2)) dots <- c(dots, list(rlang::sym(area2)))
+  if (nzchar(area3)) dots <- c(dots, list(rlang::sym(area3)))
+  
+  # Determine wt and oedema arguments ----
+  wt_arg <- if (nzchar(wts)) rlang::sym(wts) else NULL
+  oedema_arg <- if (nzchar(oedema)) rlang::sym(oedema) else NULL
+  
+  # Call the function once with dynamic arguments
+  mwana::mw_estimate_prevalence_muac(
+    df = df,
+    age = !!rlang::sym(age),
+    muac = !!rlang::sym(muac),
+    wt = !!wt_arg,
+    oedema = !!oedema_arg,
+    !!!dots
+  )
 }
-
 
 #'
 #'
@@ -398,97 +227,24 @@ mod_prevalence_call_muac_prev_estimator <- function(
 mod_prevalence_call_combined_prev_estimator <- function(
     df, wts = NULL, oedema = NULL,
     area1, area2, area3) {
-  if (all(nzchar(c(area1, area2, area3)))) {
-    if ((nzchar(wts) && nzchar(oedema))) {
-      mwana::mw_estimate_prevalence_combined(
-        df = df,
-        wt = !!rlang::sym(wts),
-        oedema = !!rlang::sym(oedema),
-        !!rlang::sym(area1), !!rlang::sym(area2), !!rlang::sym(area3)
-      )
-    } else if (!nzchar(wts) && nzchar(oedema)) {
-      mwana::mw_estimate_prevalence_combined(
-        df = df,
-        wt = NULL,
-        oedema = !!rlang::sym(oedema),
-        !!rlang::sym(area1), !!rlang::sym(area2), !!rlang::sym(area3)
-      )
-    } else if (nzchar(wts) && !nzchar(oedema)) {
-      mwana::mw_estimate_prevalence_combined(
-        df = df,
-        wt = !!rlang::sym(wts),
-        oedema = NULL,
-        !!rlang::sym(area1), !!rlang::sym(area2), !!rlang::sym(area3)
-      )
-    } else {
-      mwana::mw_estimate_prevalence_combined(
-        df = df,
-        wt = NULL,
-        oedema = NULL,
-        !!rlang::sym(area1), !!rlang::sym(area2), !!rlang::sym(area3)
-      )
-    }
-  } else if (nzchar(area2) && !nzchar(area3)) {
-    if (all(nzchar(c(wts, oedema)))) {
-      mwana::mw_estimate_prevalence_combined(
-        df = df,
-        wt = !!rlang::sym(wts),
-        oedema = !!rlang::sym(oedema),
-        !!rlang::sym(area1), !!rlang::sym(area2)
-      )
-    } else if (!nzchar(wts) && nzchar(oedema)) {
-      mwana::mw_estimate_prevalence_combined(
-        df = df,
-        wt = NULL,
-        oedema = !!rlang::sym(oedema),
-        !!rlang::sym(area1), !!rlang::sym(area2)
-      )
-    } else if (nzchar(wts) && !nzchar(oedema)) {
-      mwana::mw_estimate_prevalence_combined(
-        df = df,
-        wt = !!rlang::sym(wts),
-        oedema = NULL,
-        !!rlang::sym(area1), !!rlang::sym(area2)
-      )
-    } else {
-      mwana::mw_estimate_prevalence_combined(
-        df = df,
-        wt = NULL,
-        oedema = NULL,
-        !!rlang::sym(area1), !!rlang::sym(area2)
-      )
-    }
-  } else {
-    if (all(nzchar(c(wts, oedema)))) {
-      mwana::mw_estimate_prevalence_combined(
-        df = df,
-        wt = !!rlang::sym(wts),
-        oedema = !!rlang::sym(oedema),
-        !!rlang::sym(area1)
-      )
-    } else if (!nzchar(wts) && nzchar(oedema)) {
-      mwana::mw_estimate_prevalence_combined(
-        df = df,
-        wt = NULL,
-        oedema = !!rlang::sym(oedema),
-        !!rlang::sym(area1)
-      )
-    } else if (nzchar(wts) && !nzchar(oedema)) {
-      mwana::mw_estimate_prevalence_combined(
-        df = df,
-        wt = !!rlang::sym(wts),
-        oedema = NULL,
-        !!rlang::sym(area1)
-      )
-    } else {
-      mwana::mw_estimate_prevalence_combined(
-        df = df,
-        wt = NULL,
-        oedema = NULL,
-        !!rlang::sym(area1)
-      )
-    }
-  }
+  
+  ## Build the grouping variables dynamically ----
+  dots <- list()
+  if (!is.null(area1) && nzchar(area1)) dots <- c(dots, list(rlang::sym(area1)))
+  if (!is.null(area2) && nzchar(area2)) dots <- c(dots, list(rlang::sym(area2)))
+  if (!is.null(area3) && nzchar(area3)) dots <- c(dots, list(rlang::sym(area3)))
+  
+  ## Determine wt and oedema arguments - only convert to symbol if valid ----
+  wt_arg <- if (!is.null(wts) && nzchar(wts)) rlang::sym(wts) else NULL
+  oedema_arg <- if (!is.null(oedema) && nzchar(oedema)) rlang::sym(oedema) else NULL
+  
+  ## Call the function once with dynamic arguments ----
+  mwana::mw_estimate_prevalence_combined(
+    df = df,
+    wt = !!wt_arg,
+    oedema = !!oedema_arg,
+    !!!dots
+  )
 }
 
 
