@@ -162,17 +162,17 @@ mod_prevalence_call_wfhz_prev_estimator <- function(
     df, wts = NULL, oedema = NULL,
     area1, area2, area3) {
   
-  # Build the grouping variables dynamically
+  ## Build the grouping variables dynamically ----
   dots <- list()
   if (!is.null(area1) && nzchar(area1)) dots <- c(dots, list(rlang::sym(area1)))
   if (!is.null(area2) && nzchar(area2)) dots <- c(dots, list(rlang::sym(area2)))
   if (!is.null(area3) && nzchar(area3)) dots <- c(dots, list(rlang::sym(area3)))
   
-  # Determine wt and oedema arguments - only convert to symbol if valid
+  ## Determine wt and oedema arguments - only convert to symbol if valid ----
   wt_arg <- if (!is.null(wts) && nzchar(wts)) rlang::sym(wts) else NULL
   oedema_arg <- if (!is.null(oedema) && nzchar(oedema)) rlang::sym(oedema) else NULL
   
-  # Call the function once with dynamic arguments
+  ## Call the function once with dynamic arguments ----
   mwana::mw_estimate_prevalence_wfhz(
     df = df,
     wt = !!wt_arg,
