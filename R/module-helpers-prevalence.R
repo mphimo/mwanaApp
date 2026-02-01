@@ -506,7 +506,8 @@ mod_prevalence_call_prev_estimator_screening <- function(
     df, age, muac, oedema = NULL,
     area1, area2, area3) {
 
-    dots <- list(rlang::sym(area1))
+    dots <- list()
+  if (nzchar(area1)) dots <- c(dots, list(rlang::sym(area1))) else NULL
   if (nzchar(area2)) dots <- c(dots, list(rlang::sym(area2)))
   if (nzchar(area3)) dots <- c(dots, list(rlang::sym(area3)))
   
@@ -548,7 +549,8 @@ mod_prevalence_call_prev_estimator_screening2 <- function(
     df, age_cat, muac, oedema = NULL,
     area1, area2, area3) {
 
-    dots <- list(rlang::sym(area1))
+    dots <- list()
+  if (nzchar(area1)) dots <- c(dots, list(rlang::sym(area1))) else NULL
   if (nzchar(area2)) dots <- c(dots, list(rlang::sym(area2)))
   if (nzchar(area3)) dots <- c(dots, list(rlang::sym(area3)))
   
