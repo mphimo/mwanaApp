@@ -108,18 +108,17 @@ mod_ipccheck_display_input_variables <- function(vars, source, ns) {
 #'
 #'
 mod_ipccheck_call_checker <- function(
-  df, cluster, source = character(), 
-  area1, area2) {
-  
+    df, cluster, source = character(),
+    area1, area2) {
   ## Build group variables dynamically ----
   dots <- list()
   if (!is.null(area1) && nzchar(area1)) dots <- c(dots, list(rlang::sym(area1)))
   if (!is.null(area2) && nzchar(area2)) dots <- c(dots, list(rlang::sym(area2)))
-  
-    mwana::mw_check_ipcamn_ssreq(
-      df = df,
-      cluster = !!rlang::sym(cluster),
-      .source = source,
-      !!!dots
-    )
+
+  mwana::mw_check_ipcamn_ssreq(
+    df = df,
+    cluster = !!rlang::sym(cluster),
+    .source = source,
+    !!!dots
+  )
 }

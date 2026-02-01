@@ -111,7 +111,7 @@ module_server_ipccheck <- function(id, data) {
       shiny::req(data(), input$ipccheck)
 
       cols <- base::names(data())
-      
+
       mod_ipccheck_display_input_variables(cols, input$ipccheck, ns)
     })
 

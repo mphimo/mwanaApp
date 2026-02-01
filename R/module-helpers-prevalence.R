@@ -77,18 +77,18 @@ mod_prevalence_display_input_variables <- function(
             choices = c("", vars)
           ),
           shiny::selectInput(
-        inputId = ns("wts"),
-        label = shiny::tagList(
-          htmltools::tags$span("Survey weights",
-            style = "font-size: 14px; font-weight: bold;"
-          ),
-          htmltools::tags$div(
-            style = "font-size: 0.85em; color: #6c7574;",
-            "Final survey weights for weighted analysis"
+            inputId = ns("wts"),
+            label = shiny::tagList(
+              htmltools::tags$span("Survey weights",
+                style = "font-size: 14px; font-weight: bold;"
+              ),
+              htmltools::tags$div(
+                style = "font-size: 0.85em; color: #6c7574;",
+                "Final survey weights for weighted analysis"
+              )
+            ),
+            choices = c("", vars)
           )
-        ),
-        choices = c("", vars)
-      )
         )
       }
     ))
@@ -161,17 +161,16 @@ mod_prevalence_display_input_variables <- function(
 mod_prevalence_call_wfhz_prev_estimator <- function(
     df, wts = NULL, oedema = NULL,
     area1, area2, area3) {
-  
   ## Build the grouping variables dynamically ----
   dots <- list()
   if (!is.null(area1) && nzchar(area1)) dots <- c(dots, list(rlang::sym(area1)))
   if (!is.null(area2) && nzchar(area2)) dots <- c(dots, list(rlang::sym(area2)))
   if (!is.null(area3) && nzchar(area3)) dots <- c(dots, list(rlang::sym(area3)))
-  
+
   ## Determine wt and oedema arguments - only convert to symbol if valid ----
   wt_arg <- if (!is.null(wts) && nzchar(wts)) rlang::sym(wts) else NULL
   oedema_arg <- if (!is.null(oedema) && nzchar(oedema)) rlang::sym(oedema) else NULL
-  
+
   ## Call the function once with dynamic arguments ----
   mwana::mw_estimate_prevalence_wfhz(
     df = df,
@@ -193,17 +192,16 @@ mod_prevalence_call_wfhz_prev_estimator <- function(
 mod_prevalence_call_muac_prev_estimator <- function(
     df, age, muac, wts = NULL, oedema = NULL,
     area1, area2, area3) {
-  
   # Build the grouping variables dynamically ----
   dots <- list()
   if (nzchar(area1)) dots <- c(dots, list(rlang::sym(area1)))
   if (nzchar(area2)) dots <- c(dots, list(rlang::sym(area2)))
   if (nzchar(area3)) dots <- c(dots, list(rlang::sym(area3)))
-  
+
   # Determine wt and oedema arguments ----
   wt_arg <- if (nzchar(wts)) rlang::sym(wts) else NULL
   oedema_arg <- if (nzchar(oedema)) rlang::sym(oedema) else NULL
-  
+
   # Call the function once with dynamic arguments
   mwana::mw_estimate_prevalence_muac(
     df = df,
@@ -227,17 +225,16 @@ mod_prevalence_call_muac_prev_estimator <- function(
 mod_prevalence_call_combined_prev_estimator <- function(
     df, wts = NULL, oedema = NULL,
     area1, area2, area3) {
-  
   ## Build the grouping variables dynamically ----
   dots <- list()
   if (!is.null(area1) && nzchar(area1)) dots <- c(dots, list(rlang::sym(area1)))
   if (!is.null(area2) && nzchar(area2)) dots <- c(dots, list(rlang::sym(area2)))
   if (!is.null(area3) && nzchar(area3)) dots <- c(dots, list(rlang::sym(area3)))
-  
+
   ## Determine wt and oedema arguments - only convert to symbol if valid ----
   wt_arg <- if (!is.null(wts) && nzchar(wts)) rlang::sym(wts) else NULL
   oedema_arg <- if (!is.null(oedema) && nzchar(oedema)) rlang::sym(oedema) else NULL
-  
+
   ## Call the function once with dynamic arguments ----
   mwana::mw_estimate_prevalence_combined(
     df = df,
@@ -261,32 +258,31 @@ mod_prevalence_call_combined_prev_estimator <- function(
 mod_prevalence_call_prev_estimator_screening <- function(
     df, age, muac, oedema = NULL,
     area1, area2, area3) {
-
-    dots <- list()
+  dots <- list()
   if (nzchar(area1)) dots <- c(dots, list(rlang::sym(area1))) else NULL
   if (nzchar(area2)) dots <- c(dots, list(rlang::sym(area2)))
   if (nzchar(area3)) dots <- c(dots, list(rlang::sym(area3)))
-  
+
   df <- dplyr::mutate(df, muac = !!rlang::sym(muac) * 10)
 
   # Create the call - pass oedema as NULL or as a symbol
-    if (nzchar(oedema)) {
-      result <- mwana::mw_estimate_prevalence_screening(
-        df = df,
-        age = !!rlang::sym(age),
-        muac = df$muac,
-        oedema = !!rlang::sym(oedema), 
-        !!!dots
-      )
-    } else {
-      result <- mwana::mw_estimate_prevalence_screening(
-        df = df,
-        age = !!rlang::sym(age),
-        muac = df$muac,
-        oedema = NULL,
-        !!!dots
-      )
-    }
+  if (nzchar(oedema)) {
+    result <- mwana::mw_estimate_prevalence_screening(
+      df = df,
+      age = !!rlang::sym(age),
+      muac = df$muac,
+      oedema = !!rlang::sym(oedema),
+      !!!dots
+    )
+  } else {
+    result <- mwana::mw_estimate_prevalence_screening(
+      df = df,
+      age = !!rlang::sym(age),
+      muac = df$muac,
+      oedema = NULL,
+      !!!dots
+    )
+  }
   result
 }
 
@@ -304,30 +300,29 @@ mod_prevalence_call_prev_estimator_screening <- function(
 mod_prevalence_call_prev_estimator_screening2 <- function(
     df, age_cat, muac, oedema = NULL,
     area1, area2, area3) {
-
-    dots <- list()
+  dots <- list()
   if (nzchar(area1)) dots <- c(dots, list(rlang::sym(area1))) else NULL
   if (nzchar(area2)) dots <- c(dots, list(rlang::sym(area2)))
   if (nzchar(area3)) dots <- c(dots, list(rlang::sym(area3)))
 
   # Create the call - pass oedema as NULL or as a symbol
-    if (nzchar(oedema)) {
-      result <- mwana::mw_estimate_prevalence_screening2(
-        df = df,
-        age_cat = !!rlang::sym(age_cat),
-        muac = df$muac,
-        oedema = !!rlang::sym(oedema), 
-        !!!dots
-      )
-    } else {
-      result <- mwana::mw_estimate_prevalence_screening2(
-        df = df,
-        age_cat = !!rlang::sym(age_cat),
-        muac = df$muac,
-        oedema = NULL,
-        !!!dots
-      )
-    }
+  if (nzchar(oedema)) {
+    result <- mwana::mw_estimate_prevalence_screening2(
+      df = df,
+      age_cat = !!rlang::sym(age_cat),
+      muac = df$muac,
+      oedema = !!rlang::sym(oedema),
+      !!!dots
+    )
+  } else {
+    result <- mwana::mw_estimate_prevalence_screening2(
+      df = df,
+      age_cat = !!rlang::sym(age_cat),
+      muac = df$muac,
+      oedema = NULL,
+      !!!dots
+    )
+  }
   result
 }
 
@@ -407,7 +402,7 @@ mod_prevalence_neat_output_screening <- function(df) {
   names <- base::names(df)
 
   if ("gam_n" %in% names) {
-     df <- dplyr::mutate(
+    df <- dplyr::mutate(
       .data = df,
       dplyr::across(
         .cols = dplyr::contains("am_p"),
@@ -427,9 +422,8 @@ mod_prevalence_neat_output_screening <- function(df) {
         "mam #" = .data$mam_n,
         "mam %" = .data$mam_p
       )
-    
   } else {
-df <- df |>
+    df <- df |>
       dplyr::mutate(
         dplyr::across(
           .cols = dplyr::contains("am_p"),
@@ -446,6 +440,6 @@ df <- df |>
         "sam %" = .data$sam_p,
         "mam %" = .data$mam_p
       )
-    }
+  }
   df
 }

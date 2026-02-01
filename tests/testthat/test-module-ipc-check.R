@@ -16,7 +16,7 @@ testthat::test_that(
     ### Initialise mwana app ----
     app <- shinytest2::AppDriver$new(
       app_dir = testthat::test_path("fixtures"),
-      load_timeout = 120000, 
+      load_timeout = 120000,
       wait = TRUE
     )
 
@@ -26,7 +26,7 @@ testthat::test_that(
     ### Click on the Data uploading navbar ----
     app$click(selector = "a[data-value='Data Upload']")
     app$wait_for_idle(timeout = 40000)
-    
+
     ### Upload data ----
     #### Read data ----
     data <- read.csv(

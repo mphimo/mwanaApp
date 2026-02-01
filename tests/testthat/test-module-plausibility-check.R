@@ -215,7 +215,7 @@ testthat::test_that(
     ### Initialise mwana app ----
     app <- shinytest2::AppDriver$new(
       app_dir = testthat::test_path("fixtures"),
-      load_timeout = 120000, 
+      load_timeout = 120000,
       wait = TRUE
     )
 

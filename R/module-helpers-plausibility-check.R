@@ -145,7 +145,6 @@ mod_plausibility_display_input_variables <- function(vars, method, ns) {
 mod_plausibility_call_checker <- function(
     df, age = NULL, sex, muac = NULL, weight = NULL,
     height = NULL, flags, area1, area2, area3, .for = c("wfhz", "muac", "mfaz")) {
-  
   ## Match options in `.for` ----
   .for <- match.arg(.for)
 
@@ -154,40 +153,40 @@ mod_plausibility_call_checker <- function(
   if (!is.null(area1) && nzchar(area1)) dots <- c(dots, list(rlang::sym(area1)))
   if (!is.null(area2) && nzchar(area2)) dots <- c(dots, list(rlang::sym(area2)))
   if (!is.null(area3) && nzchar(area3)) dots <- c(dots, list(rlang::sym(area3)))
-  
+
 
   if (.for == "wfhz") {
-     results <- mwana::mw_neat_output_wfhz(
-        mwana::mw_plausibility_check_wfhz(
-          df = df,
-          sex = !!rlang::sym(sex),
-          age = !!rlang::sym(age),
-          weight = !!rlang::sym(weight),
-          height = !!rlang::sym(height),
-          flags = !!rlang::sym(flags),
-          !!!dots
-        )
+    results <- mwana::mw_neat_output_wfhz(
+      mwana::mw_plausibility_check_wfhz(
+        df = df,
+        sex = !!rlang::sym(sex),
+        age = !!rlang::sym(age),
+        weight = !!rlang::sym(weight),
+        height = !!rlang::sym(height),
+        flags = !!rlang::sym(flags),
+        !!!dots
       )
+    )
   } else if (.for == "mfaz") {
-    results <-  mwana::mw_neat_output_mfaz(
-        mwana::mw_plausibility_check_mfaz(
-          df = df,
-          sex = !!rlang::sym(sex),
-          muac = !!rlang::sym(muac),
-          age = !!rlang::sym(age),
-          flags = !!rlang::sym(flags),
-          !!!dots
-        )
+    results <- mwana::mw_neat_output_mfaz(
+      mwana::mw_plausibility_check_mfaz(
+        df = df,
+        sex = !!rlang::sym(sex),
+        muac = !!rlang::sym(muac),
+        age = !!rlang::sym(age),
+        flags = !!rlang::sym(flags),
+        !!!dots
       )
+    )
   } else {
-    results <-  mwana::mw_neat_output_muac(
-        mwana::mw_plausibility_check_muac(
-          df = df,
-          sex = !!rlang::sym(sex),
-          muac = !!rlang::sym(muac),
-          flags = !!rlang::sym(flags),
-          !!!dots
-        )
+    results <- mwana::mw_neat_output_muac(
+      mwana::mw_plausibility_check_muac(
+        df = df,
+        sex = !!rlang::sym(sex),
+        muac = !!rlang::sym(muac),
+        flags = !!rlang::sym(flags),
+        !!!dots
       )
-    }
+    )
+  }
 }
