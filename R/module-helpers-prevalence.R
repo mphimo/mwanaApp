@@ -598,7 +598,7 @@ mod_prevalence_neat_output_survey <- function(
 
   if (.type %in% c("wfhz", "muac")) {
     df |>
-      dplyr::relocate(.data$wt_pop, .before = .data$gam_n) |>
+      dplyr::relocate(.data$N, .before = .data$gam_n) |>
       dplyr::rename(
         "children (N)" = .data$N,
         "gam #" = .data$gam_n,
@@ -619,7 +619,7 @@ mod_prevalence_neat_output_survey <- function(
       )
   } else {
     df |>
-      dplyr::relocate(.data$wt_pop, .before = .data$cgam_n) |>
+      dplyr::relocate(.data$N, .before = .data$cgam_n) |>
       dplyr::rename(
         "children (N)" = .data$N,
         "cgam #" = .data$cgam_n,
