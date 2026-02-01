@@ -28,15 +28,15 @@ Imports:
     openxlsx (>= 4.2.8.1),
     DT,
     htmltools (>= 0.5.8.1),
-    scales (>= 1.4.0),
-    shinytest2 (>= 0.4.1)
+    scales (>= 1.4.0)
 Suggests: 
     covr (>= 3.6.4),
     knitr (>= 1.50),
     rmarkdown (>= 2.30),
     quarto (>= 1.4.4),
     spelling (>= 2.3.1),
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    shinytest2 (>= 0.4.1)
 Remotes:
     mphimo/mwana
 Config/testthat/edition: 3
