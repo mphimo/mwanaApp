@@ -98,6 +98,7 @@ module_ui_prevalence <- function(id) {
 
 ## ---- Module: Server ---------------------------------------------------------
 
+
 #'
 #'
 #' Module server for prevalence analysis
@@ -142,7 +143,7 @@ module_server_prevalence <- function(id, data) {
           ##### Options for screening data: check if age is available ----
           "screening" = {
             shiny::radioButtons(
-              inputId = ns("amn_method_screening"),
+              inputId = ns("has_age"),
               label = htmltools::tags$span("Is age in months available?",
                 style = "font-size: 14px; font-weight: bold;"
               ),
@@ -159,8 +160,9 @@ module_server_prevalence <- function(id, data) {
         shiny::req(data())
         vars <- names(data())
 
+        #### Display variables ----
         mod_prevalence_display_input_variables(
-          vars = vars, source = input$source, ns = ns
+          vars, input$source, input$amn_method_survey, input$has_age, ns
         )
       })
 
@@ -175,10 +177,10 @@ module_server_prevalence <- function(id, data) {
         message <- ""
 
         if (input$source == "screening") {
-          if (input$amn_method_screening == "yes") {
-            if (!nzchar(input$muac)) {
+          if (input$has_age== "yes") {
+            if (any(!nzchar(c(input$muac, input$age)))) {
               valid <- FALSE
-              message <- "Please supply MUAC variable."
+              message <- "Please select all required variables: MUAC and Age in months."
             }
           } else {
             if (any(!nzchar(c(input$muac, input$age_cat)))) {
@@ -210,10 +212,12 @@ module_server_prevalence <- function(id, data) {
                 },
                 "muac" = {
                   data() |>
-                    dplyr::mutate(muac = mwana::recode_muac(.data$muac, "mm")) |>
+                    dplyr::mutate(muac = mwana::recode_muac(!!rlang::sym(input$muac), "mm")) |>
                     mod_prevalence_call_muac_prev_estimator(
-                      wts = input$wts,
+                      age = input$age,
+                      muac = input$muac,
                       oedema = input$oedema,
+                                            wts = input$wts,
                       area1 = input$area1,
                       area2 = input$area2,
                       area3 = input$area3
@@ -234,20 +238,19 @@ module_server_prevalence <- function(id, data) {
                 }
               )
             } else {
-              switch(input$amn_method_screening,
+              switch(input$has_age,
                 "yes" = {
-                  shiny::req(input$muac)
-
-                  data() |>
-                    dplyr::mutate(muac = mwana::recode_muac(.data$muac, "mm")) |>
+                  shiny::req(input$muac, input$age)
                     mod_prevalence_call_prev_estimator_screening(
+                  df = data(),
                       muac = input$muac,
+                      age = input$age,
                       oedema = input$oedema,
                       area1 = input$area1,
                       area2 = input$area2,
                       area3 = input$area3
                     ) |>
-                    mod_prevalence_neat_output_screening()
+                   mod_prevalence_neat_output_screening()
                 },
                 "no" = {
                   shiny::req(input$muac, input$age_cat)
@@ -333,7 +336,7 @@ module_server_prevalence <- function(id, data) {
               paste0("mwana-amn-prevalence-survey-combined_", Sys.Date(), ".xlsx", sep = "")
             }
           } else {
-            if (input$amn_method_screening == "yes") {
+            if (input$has_age== "yes") {
               paste0("mwana-amn-prevalence-screening-age-avail_", Sys.Date(), ".xlsx", sep = "")
             } else {
               paste0("mwana-amn-prevalence-screening-age-notavail_", Sys.Date(), ".xlsx", sep = "")

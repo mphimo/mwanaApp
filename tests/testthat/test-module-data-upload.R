@@ -38,15 +38,15 @@ testthat::test_that("Data upload tab works as expected", {
   app$wait_for_value(output = "upload_data-uploadedDataTable", timeout = 40000)
 
   #### Get values ----
-  vals <- app$get_values(
+  column_names <- app$get_values(
     input = "upload_data-upload",
     output = c("upload_data-fileUploaded", "upload_data-uploadedDataTable")
   )
 
   ### Test checks ----
-  testthat::expect_gte(object = vals$input$`upload_data-upload`$size, 78696)
-  testthat::expect_equal(object = vals$input$`upload_data-upload`$type, "text/csv")
-  testthat::expect_true(object = vals$output$`upload_data-fileUploaded`)
+  testthat::expect_gte(object = column_names$input$`upload_data-upload`$size, 78696)
+  testthat::expect_equal(object = column_names$input$`upload_data-upload`$type, "text/csv")
+  testthat::expect_true(object = column_names$output$`upload_data-fileUploaded`)
   testthat::expect_true(app$get_js("$('#upload_data-uploadedDataTable').length > 0"))
   expect_equal(
     object = app$get_js("

@@ -55,15 +55,15 @@ testthat::test_that(desc = "Server data wrangling works as expected for WFHZ", {
   app$wait_for_value(output = "wrangle_data-wrangled", timeout = 40000)
 
   ### Get wrangled values ----
-  vals <- app$get_js("
+  column_names <- app$get_js("
     $('#wrangle_data-wrangled thead th').map(function() {
       return $(this).text();
     }).get();
   ") |> as.character()
 
-  testthat::expect_true(all(c("wfhz", "flag_wfhz") %in% vals))
+  testthat::expect_true(all(c("wfhz", "flag_wfhz") %in% column_names))
   testthat::expect_equal(
-    object = length(vals),
+    object = length(column_names),
     expected = 14
   )
 
@@ -126,15 +126,15 @@ testthat::test_that(desc = "Server data wrangling works as expected for MFAZ", {
   app$wait_for_value(output = "wrangle_data-wrangled", timeout = 40000)
 
   ### Get wrangled values ----
-  vals <- app$get_js("
+  column_names <- app$get_js("
     $('#wrangle_data-wrangled thead th').map(function() {
       return $(this).text();
     }).get();
   ") |> as.character()
 
   ### Test check ----
-  testthat::expect_true(all(c("age_days", "mfaz", "flag_mfaz") %in% vals))
-  testthat::expect_true(app$get_js("$('#ipc_check-checked').length > 0"))
+  testthat::expect_true(all(c("age_days", "mfaz", "flag_mfaz") %in% column_names))
+  testthat::expect_true(app$get_js("$('#wrangle_data-wrangled').length > 0"))
 
   #### Stop the app ----
   app$stop()
@@ -150,7 +150,7 @@ testthat::test_that(desc = "Server data wrangling works as expected for MFAZ", {
 
 ### When age is given in categories ----
 testthat::test_that(
-  desc = "Prevalence tab works as expected when age is given in categories",
+  desc = "Server data wrangling works as expected for raw MUAC values",
   code = {
     #### Initialise app ----
     app <- shinytest2::AppDriver$new(
@@ -195,15 +195,15 @@ testthat::test_that(
     app$wait_for_idle(timeout = 40000)
 
     ### Get wrangled values ----
-    vals <- app$get_js("
+    column_names <- app$get_js("
     $('#wrangle_data-wrangled thead th').map(function() {
       return $(this).text();
     }).get();
   ") |> as.character()
 
     ### Test check ----
-    testthat::expect_true("flag_muac" %in% vals)
-    testthat::expect_true(app$get_js("$('#ipc_check-checked').length > 0"))
+    testthat::expect_true("flag_muac" %in% column_names)
+    testthat::expect_true(app$get_js("$('#wrangle_data-wrangled').length > 0"))
 
     ### Stop the app ----
     app$stop()

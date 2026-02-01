@@ -79,7 +79,7 @@ testthat::test_that(
     app$wait_for_value(output = "plausible-checked", timeout = 40000)
 
     ### Get checked file and assert existing variables agains expected ----
-    vals <- app$get_js(
+    column_names <- app$get_js(
       "$('#plausible-checked thead th').map(function() {
       return $(this).text();
     }).get();"
@@ -87,7 +87,7 @@ testthat::test_that(
 
     ### Test check -----
     testthat::expect_equal(
-      object = vals,
+      object = column_names,
       expected = c(
         "Area", "Total children", "Flagged data (%)",
         "Class. of flagged data", "Sex ratio (p)", "Class. of sex ratio",
@@ -177,7 +177,7 @@ testthat::test_that(
     app$wait_for_value(output = "plausible-checked", timeout = 40000)
 
     ### Get checked file and assert existing variables agains expected ----
-    vals <- app$get_js(
+    column_names <- app$get_js(
       "$('#plausible-checked thead th').map(function() {
       return $(this).text();
     }).get();"
@@ -185,7 +185,7 @@ testthat::test_that(
 
     ### Test check ----
     testthat::expect_equal(
-      object = vals,
+      object = column_names,
       expected = c(
         "Area", "Total children", "Flagged data (%)",
         "Class. of flagged data", "Sex ratio (p)", "Class. of sex ratio",
@@ -275,7 +275,7 @@ testthat::test_that(
     app$wait_for_value(output = "plausible-checked", timeout = 40000)
 
     ### Get checked file and assert existing variables agains expected ----
-    vals <- app$get_js(
+    column_names <- app$get_js(
       "$('#plausible-checked thead th').map(function() {
       return $(this).text();
     }).get();"
@@ -283,7 +283,7 @@ testthat::test_that(
 
     ### Test check -----
     testthat::expect_equal(
-      object = vals,
+      object = column_names,
       expected = c(
         "Area", "Total children", "Flagged data (%)",
         "Class. of flagged data", "Sex ratio (p)", "Class. of sex ratio", "DPS(#)",

@@ -104,9 +104,7 @@ module_server_ipccheck <- function(id, data) {
   shiny::moduleServer(id, function(input, output, session) {
     ns <- session$ns
 
-    dataset <- shiny::reactiveValues(
-      checked = NULL
-    )
+    dataset <- shiny::reactiveValues(checked = NULL)
 
     ### Create a reactive that explicitly depends on both inputs ----
     ui_inputs <- shiny::reactive({
@@ -114,9 +112,7 @@ module_server_ipccheck <- function(id, data) {
 
       cols <- base::names(data())
       
-      mod_ipccheck_display_input_variables(
-        vars = cols, source = input$ipccheck, ns = ns
-      )
+      mod_ipccheck_display_input_variables(cols, input$ipccheck, ns)
     })
 
     output$data_source <- shiny::renderUI({
