@@ -553,8 +553,6 @@ mod_prevalence_call_prev_estimator_screening2 <- function(
   if (nzchar(area1)) dots <- c(dots, list(rlang::sym(area1))) else NULL
   if (nzchar(area2)) dots <- c(dots, list(rlang::sym(area2)))
   if (nzchar(area3)) dots <- c(dots, list(rlang::sym(area3)))
-  
-  df <- dplyr::mutate(df, muac = !!rlang::sym(muac) * 10)
 
   # Create the call - pass oedema as NULL or as a symbol
     if (nzchar(oedema)) {
