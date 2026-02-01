@@ -351,7 +351,7 @@ mod_prevalence_neat_output_survey <- function(
   )
 
   if (.type %in% c("wfhz", "muac")) {
-    df |>
+    df <- df |>
       dplyr::relocate(.data$N, .before = .data$gam_n) |>
       dplyr::rename(
         "children (N)" = .data$N,
@@ -372,7 +372,7 @@ mod_prevalence_neat_output_survey <- function(
         "mam deff" = .data$mam_p_deff
       )
   } else {
-    df |>
+    df <- df |>
       dplyr::relocate(.data$N, .before = .data$cgam_n) |>
       dplyr::rename(
         "children (N)" = .data$N,
@@ -393,6 +393,7 @@ mod_prevalence_neat_output_survey <- function(
         "cmam deff" = .data$cmam_p_deff
       )
   }
+  df
 }
 
 
