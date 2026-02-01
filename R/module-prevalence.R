@@ -178,9 +178,9 @@ module_server_prevalence <- function(id, data) {
 
         if (input$source == "screening") {
           if (input$has_age== "yes") {
-            if (!nzchar(input$muac)) {
+            if (any(!nzchar(c(input$muac, input$age)))) {
               valid <- FALSE
-              message <- "Please supply MUAC variable."
+              message <- "Please select all required variables: MUAC and Age in months."
             }
           } else {
             if (any(!nzchar(c(input$muac, input$age_cat)))) {
