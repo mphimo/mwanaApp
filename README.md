@@ -52,7 +52,7 @@ citation("mwanaApp")
 
     To cite mwanaApp in publications use:
 
-      Tomás Zaba (2025). _mwanaApp: A seamless graphical interface to the
+      Tomás Zaba (2026). _mwanaApp: A seamless graphical interface to the
       mwana R package for data wrangling, plausibility checks, and
       prevalence estimation_. R package version 0.0.1,
       <https://github.com/mphimo/mwanaApp.git>.
@@ -62,7 +62,7 @@ citation("mwanaApp")
       @Manual{,
         title = {mwanaApp: A seamless graphical interface to the mwana R package for data wrangling, plausibility checks, and prevalence estimation},
         author = {{Tomás Zaba}},
-        year = {2025},
+        year = {2026},
         note = {R package version 0.0.1},
         url = {https://github.com/mphimo/mwanaApp.git},
       }
