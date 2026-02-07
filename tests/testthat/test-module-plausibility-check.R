@@ -67,9 +67,9 @@ testthat::test_that(
     app$set_inputs(`plausible-method` = "wfhz", wait_ = FALSE)
 
     ### Select input variables ----
-    app$set_inputs(`plausible-area1` = "area", wait_ = FALSE)
-    app$set_inputs(`plausible-area2` = "", wait_ = FALSE)
-    app$set_inputs(`plausible-area3` = "", wait_ = FALSE)
+    app$set_inputs(`plausible-area1` = "province", wait_ = FALSE)
+    app$set_inputs(`plausible-area2` = "strata", wait_ = FALSE)
+    app$set_inputs(`plausible-area3` = "sex", wait_ = FALSE)
     app$set_inputs(`plausible-sex` = "sex", wait_ = FALSE)
     app$set_inputs(`plausible-age` = "age", wait_ = FALSE)
     app$set_inputs(`plausible-weight` = "weight", wait_ = FALSE)
@@ -85,13 +85,13 @@ testthat::test_that(
       "$('#plausible-checked thead th').map(function() {
       return $(this).text();
     }).get();"
-    )[1:20] |> as.character()
+    )[1:22] |> as.character()
 
     ### Test check -----
     testthat::expect_equal(
       object = column_names,
       expected = c(
-        "Area", "Total children", "Flagged data (%)",
+        "Province", "Strata", "Sex", "Total children", "Flagged data (%)",
         "Class. of flagged data", "Sex ratio (p)", "Class. of sex ratio",
         "Age ratio (p)", "Class. of age ratio", "DPS weight (#)", "Class. DPS weight",
         "DPS height (#)", "Class. DPS height", "Standard Dev* (#)",
@@ -168,9 +168,9 @@ testthat::test_that(
     app$set_inputs(`plausible-method` = "mfaz", wait_ = TRUE, timeout_ = 15000)
 
     ### Select input variables ----
-    app$set_inputs(`plausible-area1` = "area", wait_ = FALSE)
-    app$set_inputs(`plausible-area2` = "", wait_ = FALSE)
-    app$set_inputs(`plausible-area3` = "", wait_ = FALSE)
+    app$set_inputs(`plausible-area1` = "province", wait_ = FALSE)
+    app$set_inputs(`plausible-area2` = "strata", wait_ = FALSE)
+    app$set_inputs(`plausible-area3` = "sex", wait_ = FALSE)
     app$set_inputs(`plausible-sex` = "sex", wait_ = FALSE)
     app$set_inputs(`plausible-age` = "age", wait_ = FALSE)
     app$set_inputs(`plausible-muac` = "muac", wait_ = FALSE)
@@ -185,13 +185,13 @@ testthat::test_that(
       "$('#plausible-checked thead th').map(function() {
       return $(this).text();
     }).get();"
-    )[1:18] |> as.character()
+    )[1:20] |> as.character()
 
     ### Test check ----
     testthat::expect_equal(
       object = column_names,
       expected = c(
-        "Area", "Total children", "Flagged data (%)",
+        "Province", "Strata", "Sex", "Total children", "Flagged data (%)",
         "Class. of flagged data", "Sex ratio (p)", "Class. of sex ratio",
         "Age ratio (p)", "Class. of age ratio", "DPS (#)",
         "Class. of DPS", "Standard Dev* (#)", "Class. of standard dev",
@@ -267,9 +267,9 @@ testthat::test_that(
     app$wait_for_idle(timeout = 40000)
 
     ### Select input variables ----
-    app$set_inputs(`plausible-area1` = "area", wait_ = FALSE)
-    app$set_inputs(`plausible-area2` = "", wait_ = FALSE)
-    app$set_inputs(`plausible-area3` = "", wait_ = FALSE)
+    app$set_inputs(`plausible-area1` = "province", wait_ = FALSE)
+    app$set_inputs(`plausible-area2` = "strata", wait_ = FALSE)
+    app$set_inputs(`plausible-area3` = "sex", wait_ = FALSE)
     app$set_inputs(`plausible-sex` = "sex", wait_ = FALSE)
     app$set_inputs(`plausible-muac` = "muac", wait_ = FALSE)
     app$set_inputs(`plausible-flags` = "flag_muac", wait_ = FALSE)
@@ -283,13 +283,13 @@ testthat::test_that(
       "$('#plausible-checked thead th').map(function() {
       return $(this).text();
     }).get();"
-    )[1:10] |> as.character()
+    )[1:12] |> as.character()
 
     ### Test check -----
     testthat::expect_equal(
       object = column_names,
       expected = c(
-        "Area", "Total children", "Flagged data (%)",
+        "Province", "Strata", "Sex", "Total children", "Flagged data (%)",
         "Class. of flagged data", "Sex ratio (p)", "Class. of sex ratio", "DPS(#)",
         "Class. of DPS", "Standard Dev* (#)", "Class. of standard dev"
       )
