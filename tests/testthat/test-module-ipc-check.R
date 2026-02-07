@@ -49,8 +49,8 @@ testthat::test_that(
     app$wait_for_idle(timeout = 40000)
 
     #### Now set parameters for survey ----
-    app$set_inputs(`ipc_check-area1` = "area", wait_ = FALSE)
-    app$set_inputs(`ipc_check-area2` = "", wait_ = FALSE)
+    app$set_inputs(`ipc_check-area1` = "province", wait_ = FALSE)
+    app$set_inputs(`ipc_check-area2` = "strata", wait_ = FALSE)
     app$set_inputs(`ipc_check-psu` = "cluster", wait_ = FALSE)
 
     #### Run check ----
@@ -64,9 +64,9 @@ testthat::test_that(
     $('#ipc_check-checked thead th').map(function() {
       return $(this).text();
     }).get();
-  ")[1:4] |> as.character(),
+  ")[1:5] |> as.character(),
       expected = c(
-        "area", "n_clusters", "n_obs", "meet_ipc"
+        "province", "strata", "n_clusters", "n_obs", "meet_ipc"
       )
     )
   }
@@ -119,8 +119,8 @@ testthat::test_that(
     app$wait_for_idle(timeout = 40000)
 
     #### Now set parameters for survey ----
-    app$set_inputs(`ipc_check-area1` = "area", wait_ = FALSE)
-    app$set_inputs(`ipc_check-area2` = "sex", wait_ = FALSE)
+    app$set_inputs(`ipc_check-area1` = "province", wait_ = FALSE)
+    app$set_inputs(`ipc_check-area2` = "strata", wait_ = FALSE)
     app$set_inputs(`ipc_check-sites` = "cluster", wait_ = FALSE)
 
     #### Run check ----
@@ -135,7 +135,7 @@ testthat::test_that(
     }).get();
   ")[1:5] |> as.character(),
       expected = c(
-        "area", "sex", "n_clusters", "n_obs", "meet_ipc"
+        "province", "strata", "n_clusters", "n_obs", "meet_ipc"
       )
     )
   }
@@ -187,8 +187,8 @@ testthat::test_that(
     app$wait_for_idle(timeout = 40000)
 
     #### Now set parameters for survey ----
-    app$set_inputs(`ipc_check-area1` = "area", wait_ = FALSE)
-    app$set_inputs(`ipc_check-area2` = "sex", wait_ = FALSE)
+    app$set_inputs(`ipc_check-area1` = "province", wait_ = FALSE)
+    app$set_inputs(`ipc_check-area2` = "strata", wait_ = FALSE)
     app$set_inputs(`ipc_check-ssites` = "cluster", wait_ = FALSE)
 
     #### Run check ----
@@ -204,7 +204,7 @@ testthat::test_that(
     }).get();
   ")[1:5] |> as.character(),
       expected = c(
-        "area", "sex", "n_clusters", "n_obs", "meet_ipc"
+        "province", "strata", "n_clusters", "n_obs", "meet_ipc"
       )
     )
   }
