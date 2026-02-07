@@ -66,10 +66,10 @@ testthat::test_that(
 
     ### Select the method ----
     app$set_inputs(`prevalence-amn_method_survey` = "wfhz", wait_ = FALSE)
-    app$set_inputs(`prevalence-area1` = "area", wait_ = FALSE)
-    app$set_inputs(`prevalence-area2` = "sex", wait_ = FALSE) ## Assume sex as grouping var
-    app$set_inputs(`prevalence-area3` = "", wait_ = FALSE)
-    app$set_inputs(`prevalence-wts` = "", wait_ = FALSE)
+    app$set_inputs(`prevalence-area1` = "province", wait_ = FALSE)
+    app$set_inputs(`prevalence-area2` = "strata", wait_ = FALSE) ## Assume sex as grouping var
+    app$set_inputs(`prevalence-area3` = "sex", wait_ = FALSE)
+    app$set_inputs(`prevalence-wts` = "wtfactor", wait_ = FALSE)
     app$set_inputs(`prevalence-oedema` = "oedema", wait_ = FALSE)
 
     ### Click on Estime Prevalence button ----
@@ -82,11 +82,11 @@ testthat::test_that(
         "$('#prevalence-results thead th').map(function() {
       return $(this).text();
     }).get();"
-      )[1:18]
+      )[1:19]
     )
 
     ### Test check ----
-    testthat::expect_equal(length(column_names), 18)
+    testthat::expect_equal(length(column_names), 19)
 
     ### Stop the app ----
     app$stop()
@@ -156,12 +156,12 @@ testthat::test_that(
 
     ### Select the method ----
     app$set_inputs(`prevalence-amn_method_survey` = "muac", wait_ = FALSE)
-    app$set_inputs(`prevalence-area1` = "area", wait_ = FALSE)
-    app$set_inputs(`prevalence-area2` = "sex", wait_ = FALSE) ## Assume sex as grouping var
-    app$set_inputs(`prevalence-area3` = "", wait_ = FALSE)
+    app$set_inputs(`prevalence-area1` = "province", wait_ = FALSE)
+    app$set_inputs(`prevalence-area2` = "strata", wait_ = FALSE) ## Assume sex as grouping var
+    app$set_inputs(`prevalence-area3` = "sex", wait_ = FALSE)
     app$set_inputs(`prevalence-muac` = "muac", wait_ = FALSE)
     app$set_inputs(`prevalence-age` = "age", wait_ = FALSE)
-    app$set_inputs(`prevalence-wts` = "", wait_ = FALSE)
+    app$set_inputs(`prevalence-wts` = "wtfactor", wait_ = FALSE)
     app$set_inputs(`prevalence-oedema` = "oedema", wait_ = FALSE)
 
     ### Click on Estime Prevalence button ----
@@ -174,11 +174,11 @@ testthat::test_that(
         "$('#prevalence-results thead th').map(function() {
       return $(this).text();
     }).get();"
-      )[1:18]
+      )[1:19]
     )
 
     ### Test check ----
-    testthat::expect_equal(length(column_names), 18)
+    testthat::expect_equal(length(column_names), 19)
 
     ### Stop the app ----
     app$stop()
@@ -250,10 +250,10 @@ testthat::test_that(
 
     ### Select the method ----
     app$set_inputs(`prevalence-amn_method_survey` = "combined", wait_ = FALSE)
-    app$set_inputs(`prevalence-area1` = "area", wait_ = FALSE)
-    app$set_inputs(`prevalence-area2` = "sex", wait_ = FALSE) ## Assume sex as grouping var
-    app$set_inputs(`prevalence-area3` = "", wait_ = FALSE)
-    app$set_inputs(`prevalence-wts` = "", wait_ = FALSE)
+    app$set_inputs(`prevalence-area1` = "province", wait_ = FALSE)
+    app$set_inputs(`prevalence-area2` = "strata", wait_ = FALSE) ## Assume sex as grouping var
+    app$set_inputs(`prevalence-area3` = "sex", wait_ = FALSE)
+    app$set_inputs(`prevalence-wts` = "wtfactor", wait_ = FALSE)
     app$set_inputs(`prevalence-oedema` = "oedema", wait_ = FALSE)
 
     ### Click on Estime Prevalence button ----
@@ -266,11 +266,11 @@ testthat::test_that(
         "$('#prevalence-results thead th').map(function() {
       return $(this).text();
     }).get();"
-      )[1:18]
+      )[1:19]
     )
 
     ### Test check ----
-    testthat::expect_equal(length(column_names), 18)
+    testthat::expect_equal(length(column_names), 19)
 
     ### Stop the app ----
     app$stop()
@@ -307,7 +307,7 @@ testthat::test_that(
 
     #### Read data ----
     data <- read.csv(
-      file = testthat::test_path("fixtures", "anthro-01.csv"),
+      file = testthat::test_path("fixtures", "anthro-02.csv"),
       check.names = FALSE
     )
     tempfile <- tempfile(fileext = ".csv")
@@ -344,7 +344,7 @@ testthat::test_that(
 
     ### Select the method ----
     app$set_inputs(`prevalence-has_age` = "yes", wait_ = FALSE)
-    app$set_inputs(`prevalence-area1` = "area", wait_ = FALSE)
+    app$set_inputs(`prevalence-area1` = "analysis_unit", wait_ = FALSE)
     app$set_inputs(`prevalence-area2` = "sex", wait_ = FALSE) ## Assume sex as grouping var
     app$set_inputs(`prevalence-area3` = "", wait_ = FALSE)
     app$set_inputs(`prevalence-muac` = "muac", wait_ = FALSE)
@@ -399,9 +399,17 @@ testthat::test_that(
 
     #### Read data ----
     data <- read.csv(
-      file = testthat::test_path("fixtures", "anthro-01.csv"),
+      file = testthat::test_path("fixtures", "anthro-02.csv"),
       check.names = FALSE
     )
+
+    ### Make age categories ----
+    data <- data |> 
+      transform(
+        age_cat = ifelse(age < 24, "6-23", "24-59"),
+        oedema = dplyr::recode_values(oedema, "n " ~ "n")
+      )
+
     tempfile <- tempfile(fileext = ".csv")
     write.csv(data, tempfile, row.names = FALSE)
 
@@ -436,8 +444,8 @@ testthat::test_that(
     app$set_inputs("prevalence-has_age" = "no", wait_ = FALSE)
 
     #### Select variables ----
-    app$set_inputs("prevalence-area1" = "area", wait_ = FALSE)
-    app$set_inputs("prevalence-area2" = "", wait_ = FALSE)
+    app$set_inputs("prevalence-area1" = "analysis_unit", wait_ = FALSE)
+    app$set_inputs("prevalence-area2" = "sex", wait_ = FALSE)
     app$set_inputs("prevalence-area3" = "", wait_ = FALSE)
     app$set_inputs("prevalence-muac" = "muac", wait_ = FALSE)
     app$set_inputs("prevalence-age_cat" = "age_cat", wait_ = FALSE)
