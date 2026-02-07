@@ -80,16 +80,19 @@ testthat::test_that(
     app$click(input = "plausible-check")
     app$wait_for_value(output = "plausible-checked", timeout = 40000)
 
-    ### Get checked file and assert existing variables agains expected ----
-    column_names <- app$get_js(
-      "$('#plausible-checked thead th').map(function() {
-      return $(this).text();
-    }).get();"
-    )[1:22] |> as.character()
+    ### Capture JavaScript expressions to return results's cols and values ----
+    js_cols <- "$('#plausible-checked thead th').map(function() {
+      return $(this).text();}).get();"
+    
+    js_values <- "$('#plausible-checked tbody tr').map(function() 
+    {return $(this).text();}).get();"
+
+    ### Capture Zambezia-urban plausibility check results ----
+    plausibility_results <- 
+      "ZambeziaRural23681.4%Excellent<0.001Problematic0.882Excellent9Good7Excellent0.92Excellent0.1Excellent0.2Excellent12Good"
 
     ### Test check -----
-    testthat::expect_equal(
-      object = column_names,
+    testthat::expect_equal(as.character(app$get_js(js_cols)[1:22]), 
       expected = c(
         "Province", "Strata", "Sex", "Total children", "Flagged data (%)",
         "Class. of flagged data", "Sex ratio (p)", "Class. of sex ratio",
@@ -99,7 +102,7 @@ testthat::test_that(
         "Kurtosis* (#)", "Class. of kurtosis", "Overall score", "Overall quality"
       )
     )
-
+    testthat::expect_equal(app$get_js(js_values)[[3]], plausibility_results)
     ### Stop the app ----
     app$stop()
   }
@@ -180,16 +183,18 @@ testthat::test_that(
     app$click(input = "plausible-check")
     app$wait_for_value(output = "plausible-checked", timeout = 40000)
 
-    ### Get checked file and assert existing variables agains expected ----
-    column_names <- app$get_js(
-      "$('#plausible-checked thead th').map(function() {
-      return $(this).text();
-    }).get();"
-    )[1:20] |> as.character()
+    ### Capture JavaScript expressions to return results's cols and values ----
+    js_cols <- "$('#plausible-checked thead th').map(function() {
+      return $(this).text();}).get();"
+    js_values <- "$('#plausible-checked tbody tr').map(function() 
+    {return $(this).text();}).get();"
 
+    ### Capture Nampula-urban plausibility check results ----
+    plausibility_results <- 
+      "NampulaUrban26141.3%Good<0.001Problematic0.241Excellent10Good0.96Excellent-0.36Excellent0.27Good18Acceptable"
+    
     ### Test check ----
-    testthat::expect_equal(
-      object = column_names,
+    testthat::expect_equal(as.character(app$get_js(js_cols)[1:20]),
       expected = c(
         "Province", "Strata", "Sex", "Total children", "Flagged data (%)",
         "Class. of flagged data", "Sex ratio (p)", "Class. of sex ratio",
@@ -199,6 +204,7 @@ testthat::test_that(
         "Class. of kurtosis", "Overall score", "Overall quality"
       )
     )
+    testthat::expect_equal(app$get_js(js_values)[[2]], plausibility_results)
     ### Stop the app ----
     app$stop()
   }
@@ -216,6 +222,7 @@ testthat::test_that(
 testthat::test_that(
   desc = "Plausibility check module works well for MUAC data",
   code = {
+
     ### Initialise mwana app ----
     app <- shinytest2::AppDriver$new(
       app_dir = testthat::test_path("fixtures"),
@@ -278,22 +285,24 @@ testthat::test_that(
     app$click(input = "plausible-check")
     app$wait_for_value(output = "plausible-checked", timeout = 40000)
 
-    ### Get checked file and assert existing variables agains expected ----
-    column_names <- app$get_js(
-      "$('#plausible-checked thead th').map(function() {
-      return $(this).text();
-    }).get();"
-    )[1:12] |> as.character()
+    ### Capture JavaScript expressions to return results's cols and values ----
+    js_cols <- "$('#plausible-checked thead th').map(function() {
+      return $(this).text();}).get();"
+    js_values <- "$('#plausible-checked tbody tr').map(function() 
+    {return $(this).text();}).get();"
+
+    ### Capture Zambezia-urban plausibility check results ----
+    plausibility_results <- 
+      "ZambeziaUrban28130.1%Excellent<0.001Problematic5Excellent13.48Acceptable"
 
     ### Test check -----
-    testthat::expect_equal(
-      object = column_names,
+    testthat::expect_equal(as.character(app$get_js(js_cols)[1:12]),
       expected = c(
         "Province", "Strata", "Sex", "Total children", "Flagged data (%)",
         "Class. of flagged data", "Sex ratio (p)", "Class. of sex ratio", "DPS(#)",
-        "Class. of DPS", "Standard Dev* (#)", "Class. of standard dev"
-      )
-    )
+        "Class. of DPS", "Standard Dev* (#)", "Class. of standard dev"))
+    
+    testthat::expect_equal(app$get_js(js_values)[[4]], plausibility_results)
 
     ### Stop the app ----
     app$stop()

@@ -57,18 +57,19 @@ testthat::test_that(
     app$click(input = "ipc_check-apply_check")
     app$wait_for_value(output = "ipc_check-checked", timeout = 40000)
 
+    ### Capture JavaScript expressions to return results's cols and values ----
+    js_cols <- "$('#ipc_check-checked thead th').map(function() {
+      return $(this).text();}).get();"
+    js_values <- "$('#ipc_check-checked tbody tr').map(function() 
+    {return $(this).text();}).get();"
+
     ### Test check ----
     testthat::expect_true(app$get_js("$('#ipc_check-checked').length > 0"))
-    expect_equal(
-      object = app$get_js("
-    $('#ipc_check-checked thead th').map(function() {
-      return $(this).text();
-    }).get();
-  ")[1:5] |> as.character(),
-      expected = c(
-        "province", "strata", "n_clusters", "n_obs", "meet_ipc"
-      )
+    testthat::expect_equal(as.character(app$get_js(js_cols)[1:5]), 
+    c("province", "strata", "n_clusters", "n_obs", "meet_ipc")
     )
+    testthat::expect_equal(app$get_js(js_values)[[1]], "NampulaRural60472yes")
+    testthat::expect_equal(app$get_js(js_values)[[3]], "ZambeziaRural51368yes")
   }
 )
 
@@ -127,17 +128,19 @@ testthat::test_that(
     app$click(input = "ipc_check-apply_check")
     app$wait_for_value(output = "ipc_check-checked", timeout = 40000)
 
+    ### Capture JavaScript expressions to return results's cols and values ----
+    js_cols <- "$('#ipc_check-checked thead th').map(function() {
+      return $(this).text();}).get();"
+    js_values <- "$('#ipc_check-checked tbody tr').map(function() 
+    {return $(this).text();}).get();"
+
+    ### Test ----
     testthat::expect_true(app$get_js("$('#ipc_check-checked').length > 0"))
-    expect_equal(
-      object = app$get_js("
-    $('#ipc_check-checked thead th').map(function() {
-      return $(this).text();
-    }).get();
-  ")[1:5] |> as.character(),
-      expected = c(
-        "province", "strata", "n_clusters", "n_obs", "meet_ipc"
-      )
+    testthat::expect_equal(as.character(app$get_js(js_cols)[1:5]), 
+    c("province", "strata", "n_clusters", "n_obs", "meet_ipc")
     )
+    testthat::expect_equal(app$get_js(js_values)[[1]], "NampulaRural60472no")
+    testthat::expect_equal(app$get_js(js_values)[[3]], "ZambeziaRural51368no")
   }
 )
 
@@ -195,17 +198,18 @@ testthat::test_that(
     app$click(input = "ipc_check-apply_check")
     app$wait_for_value(output = "ipc_check-checked", timeout = 40000)
 
-    #### Test checks ----
+    ### Capture JavaScript expressions to return results's cols and values ----
+    js_cols <- "$('#ipc_check-checked thead th').map(function() {
+      return $(this).text();}).get();"
+    js_values <- "$('#ipc_check-checked tbody tr').map(function() 
+    {return $(this).text();}).get();"
+
+    ### Test ----
     testthat::expect_true(app$get_js("$('#ipc_check-checked').length > 0"))
-    expect_equal(
-      object = app$get_js("
-    $('#ipc_check-checked thead th').map(function() {
-      return $(this).text();
-    }).get();
-  ")[1:5] |> as.character(),
-      expected = c(
-        "province", "strata", "n_clusters", "n_obs", "meet_ipc"
-      )
+    testthat::expect_equal(as.character(app$get_js(js_cols)[1:5]), 
+    c("province", "strata", "n_clusters", "n_obs", "meet_ipc")
     )
+    testthat::expect_equal(app$get_js(js_values)[[1]], "NampulaRural60472yes")
+    testthat::expect_equal(app$get_js(js_values)[[3]], "ZambeziaRural51368yes")
   }
 )

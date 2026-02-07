@@ -76,18 +76,19 @@ testthat::test_that(
     app$click(input = "prevalence-estimate")
     app$wait_for_value(output = "prevalence-results", timeout = 40000)
 
-    ### Get the list of variable names from the rendered table ----
-    column_names <- as.character(
-      app$get_js(
-        "$('#prevalence-results thead th').map(function() {
-      return $(this).text();
-    }).get();"
-      )[1:19]
-    )
+    ### Capture JavaScript expressions to return results's cols and values ----
+    js_cols <- "$('#prevalence-results thead th').map(function() 
+    {return $(this).text();}).get();"
+
+    js_values <- "$('#prevalence-results tbody tr').map(function() 
+    {return $(this).text();}).get();"
+
+    ### Capture prevalence results ----
+    prev <- "NampulaRural2430163.7%2.0%5.4%51.2%0.0%2.4%112.6%1.2%3.9%"
 
     ### Test check ----
-    testthat::expect_equal(length(column_names), 19)
-
+    testthat::expect_equal(length(app$get_js(js_cols)[1:19]), 19)
+    testthat::expect_equal(app$get_js(js_values)[[1]], prev)
     ### Stop the app ----
     app$stop()
   }
@@ -103,6 +104,7 @@ testthat::test_that(
 testthat::test_that(
   desc = "Module works well to estimate prevalence of AMN by MUAC from survey",
   code = {
+
     ### Initialise mwana app ----
     app <- shinytest2::AppDriver$new(
       app_dir = testthat::test_path("fixtures"),
@@ -168,17 +170,20 @@ testthat::test_that(
     app$click(input = "prevalence-estimate")
     app$wait_for_value(output = "prevalence-results", timeout = 40000)
 
-    ### Get the list of variable names from the rendered table ----
-    column_names <- as.character(
-      app$get_js(
-        "$('#prevalence-results thead th').map(function() {
-      return $(this).text();
-    }).get();"
-      )[1:19]
-    )
+    ### Capture JavaScript expressions to return results's cols and values ----
+    js_cols <- "$('#prevalence-results thead th').map(function() 
+    {return $(this).text();}).get();"
+
+    js_values <- "$('#prevalence-results tbody tr').map(function() 
+    {return $(this).text();}).get();"
+
+    ### Capture prevalence results ----
+    prev <- 
+      "NampulaUrban2607138.4075500009466.8%3.9%9.7%1.939656397588462121.9%0.3%3.4%1.918752742759906344.9%2.8%7.0%1.37068876118748"
 
     ### Test check ----
-    testthat::expect_equal(length(column_names), 19)
+    testthat::expect_equal(length(app$get_js(js_cols)[1:19]), 19)
+    testthat::expect_equal(app$get_js(js_values)[[2]], prev)
 
     ### Stop the app ----
     app$stop()
@@ -195,6 +200,7 @@ testthat::test_that(
 testthat::test_that(
   desc = "Module works well to estimate prevalence of combined AMN from survey",
   code = {
+
     ### Initialise mwana app ----
     app <- shinytest2::AppDriver$new(
       app_dir = testthat::test_path("fixtures"),
@@ -260,17 +266,20 @@ testthat::test_that(
     app$click(input = "prevalence-estimate")
     app$wait_for_value(output = "prevalence-results", timeout = 40000)
 
-    ### Get the list of variable names from the rendered table ----
-    column_names <- as.character(
-      app$get_js(
-        "$('#prevalence-results thead th').map(function() {
-      return $(this).text();
-    }).get();"
-      )[1:19]
-    )
+    ### Capture JavaScript expressions to return results's cols and values ----
+    js_cols <- "$('#prevalence-results thead th').map(function() 
+    {return $(this).text();}).get();"
+
+    js_values <- "$('#prevalence-results tbody tr').map(function() 
+    {return $(this).text();}).get();"
+
+    ### Capture prevalence results ----
+    prev <- 
+      "ZambeziaUrban2785435.5%3.8%7.1%70.9%0.2%1.5%395.0%3.4%6.6%"
 
     ### Test check ----
-    testthat::expect_equal(length(column_names), 19)
+    testthat::expect_equal(length(app$get_js(js_cols)[1:19]), 19)
+    testthat::expect_equal(app$get_js(js_values)[[4]], prev)
 
     ### Stop the app ----
     app$stop()
@@ -291,6 +300,7 @@ testthat::test_that(
 testthat::test_that(
   desc = "Module works well to estimate prevalence from screening",
   code = {
+
     ### Initialise mwana app ----
     app <- shinytest2::AppDriver$new(
       app_dir = testthat::test_path("fixtures"),
@@ -310,6 +320,10 @@ testthat::test_that(
       file = testthat::test_path("fixtures", "anthro-02.csv"),
       check.names = FALSE
     )
+    ### Make age categories ----
+    data <- data |> 
+      transform(oedema = dplyr::recode_values(oedema, "n " ~ "n"))
+    
     tempfile <- tempfile(fileext = ".csv")
     write.csv(data, tempfile, row.names = FALSE)
 
@@ -355,17 +369,21 @@ testthat::test_that(
     app$click(input = "prevalence-estimate")
     app$wait_for_value(output = "prevalence-results", timeout = 40000)
 
-    ### Get the list of variable names from the rendered table ----
-    column_names <- as.character(
-      app$get_js(
-        "$('#prevalence-results thead th').map(function() {
-      return $(this).text();
-    }).get();"
-      )[1:9]
-    )
+    ### Capture JavaScript expressions to return results's cols and values ----
+    js_cols <- "$('#prevalence-results thead th').map(function() 
+    {return $(this).text();}).get();"
+
+    js_values <- "$('#prevalence-results tbody tr').map(function() 
+    {return $(this).text();}).get();"
+
+    ### Capture prevalence results ----
+    prev_unit_a <- "Unit A2396.4%71.2%325.3%608"
+    prev_unit_a <- "Unit B212.4%3.2%9.2%1359"
 
     ### Test check ----
-    testthat::expect_equal(length(column_names), 9)
+    testthat::expect_equal(length(app$get_js(js_cols)[1:9]), 9)
+    testthat::expect_equal(app$get_js(js_values)[[1]], prev_unit_a)
+    testthat::expect_equal(app$get_js(js_values)[[2]], prev_unit_b)
 
     ### Stop the app ----
     app$stop()
@@ -456,17 +474,20 @@ testthat::test_that(
     #### Wait until output has been rendered ----
     app$wait_for_value(output = "prevalence-results", timeout = 40000)
 
-    ### Get the list of variable names from the rendered table ----
-    column_names <- as.character(
-      app$get_js(
-        "$('#prevalence-results thead th').map(function() {
-      return $(this).text();
-    }).get();"
-      )[1:8]
-    )
+    ### Capture JavaScript expressions to return results's cols and values ----
+    js_cols <- "$('#prevalence-results thead th').map(function() 
+    {return $(this).text();}).get();"
 
+    js_values <- "$('#prevalence-results tbody tr').map(function() 
+    {return $(this).text();}).get();"
+
+    ### Capture prevalence results ----
+    prev_unit_a <- "Unit A2396.4%71.1%325.2%612"
+    prev_unit_b <- "Unit B212.6%3.4%9.1%1365"
     ### Test check ----
-    testthat::expect_equal(length(column_names), 8)
+    testthat::expect_equal(length(app$get_js(js_cols)[1:9]), 9)
+    testthat::expect_equal(app$get_js(js_values)[[1]], prev_unit_a)
+    testthat::expect_equal(app$get_js(js_values)[[2]], prev_unit_b)
 
     ### Stop the app ----
     app$stop()
