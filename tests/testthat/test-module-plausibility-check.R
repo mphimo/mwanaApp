@@ -2,7 +2,9 @@
 #  Test Suite: Module Plausibility Check
 # ==============================================================================
 
+
 ## ---- Plausibility Check on WFHZ data ----------------------------------------
+
 
 ### Skip test on windows ----
 # if (identical(Sys.getenv("CI"), "true") && Sys.info()[["sysname"]] == "Windows") {
@@ -103,7 +105,9 @@ testthat::test_that(
   }
 )
 
+
 ## ---- Plausibility Check on MFAZ data ----------------------------------------
+
 
 ### Skip test on windows ----
 # if (identical(Sys.getenv("CI"), "true") && Sys.info()[["sysname"]] == "Windows") {
@@ -201,8 +205,8 @@ testthat::test_that(
 )
 
 
-
 ## ---- Plausibility Check on raw MUAC data ------------------------------------
+
 
 ### Skip test on windows ----
 # if (identical(Sys.getenv("CI"), "true") && Sys.info()[["sysname"]] == "Windows") {

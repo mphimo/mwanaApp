@@ -2,7 +2,9 @@
 #  Test Suite: Module Prevalence
 # ==============================================================================
 
+
 ## ---- Survey data ------------------------------------------------------------
+
 
 ### WFHZ Prevalence ----
 
@@ -275,7 +277,9 @@ testthat::test_that(
   }
 )
 
+
 ## ---- Screening data ---------------------------------------------------------
+
 
 ### When age is available ----
 
@@ -367,7 +371,6 @@ testthat::test_that(
     app$stop()
   }
 )
-
 
 ### When age is given in categories ----
 
