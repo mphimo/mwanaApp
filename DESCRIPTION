@@ -36,7 +36,8 @@ Suggests:
     quarto (>= 1.4.4),
     spelling (>= 2.3.1),
     testthat (>= 3.0.0),
-    shinytest2 (>= 0.4.1)
+    shinytest2 (>= 0.4.1),
+    stringr (>= 1.6.0)
 Remotes:
     mphimo/mwana
 Config/testthat/edition: 3
