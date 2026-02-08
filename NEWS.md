@@ -1,3 +1,3 @@
-## mwanaApp v0.0.0
+## mwanaApp v0.1.0
 
-+ First release.
++ First release of a feature-complete app.
