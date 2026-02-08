@@ -179,11 +179,11 @@ testthat::test_that(
 
     ### Capture prevalence results ----
     prev <- 
-      "NampulaUrban2607138.4075500009466.8%3.9%9.7%1.939656397588462121.9%0.3%3.4%1.918752742759906344.9%2.8%7.0%1.37068876118748"
+      "ZambeziaRural2125803.92485165.3%2.9%7.7%0.988318405269110441.3%-0.2%2.7%1.43002767958192124.0%1.6%6.4%1.295294076766007"
 
     ### Test check ----
     testthat::expect_equal(length(app$get_js(js_cols)[1:19]), 19)
-    testthat::expect_equal(app$get_js(js_values)[[2]], prev)
+    testthat::expect_equal(app$get_js(js_values)[[3]], prev)
 
     ### Stop the app ----
     app$stop()
