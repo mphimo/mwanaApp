@@ -2,13 +2,14 @@
 #  Test Suite: Module IPC Check
 # ==============================================================================
 
+
 ## ---- IPC check on survey data -----------------------------------------------
+
 
 ### Skip test on windows ----
 # if (identical(Sys.getenv("CI"), "true") && Sys.info()[["sysname"]] == "Windows") {
 #   skip("Skipping shinytest2 integration tests on Windows CI to reduce runtime")
 # }
-
 
 testthat::test_that(
   "IPC check's server module behaves as expected on survey data",
@@ -16,7 +17,7 @@ testthat::test_that(
     ### Initialise mwana app ----
     app <- shinytest2::AppDriver$new(
       app_dir = testthat::test_path("fixtures"),
-      load_timeout = 120000, 
+      load_timeout = 120000,
       wait = TRUE
     )
 
@@ -26,7 +27,7 @@ testthat::test_that(
     ### Click on the Data uploading navbar ----
     app$click(selector = "a[data-value='Data Upload']")
     app$wait_for_idle(timeout = 40000)
-    
+
     ### Upload data ----
     #### Read data ----
     data <- read.csv(
@@ -48,30 +49,33 @@ testthat::test_that(
     app$wait_for_idle(timeout = 40000)
 
     #### Now set parameters for survey ----
-    app$set_inputs(`ipc_check-area1` = "area", wait_ = FALSE)
-    app$set_inputs(`ipc_check-area2` = "", wait_ = FALSE)
+    app$set_inputs(`ipc_check-area1` = "province", wait_ = FALSE)
+    app$set_inputs(`ipc_check-area2` = "strata", wait_ = FALSE)
     app$set_inputs(`ipc_check-psu` = "cluster", wait_ = FALSE)
 
     #### Run check ----
     app$click(input = "ipc_check-apply_check")
     app$wait_for_value(output = "ipc_check-checked", timeout = 40000)
 
+    ### Capture JavaScript expressions to return results's cols and values ----
+    js_cols <- "$('#ipc_check-checked thead th').map(function() {
+      return $(this).text();}).get();"
+    js_values <- "$('#ipc_check-checked tbody tr').map(function() 
+    {return $(this).text();}).get();"
+
     ### Test check ----
     testthat::expect_true(app$get_js("$('#ipc_check-checked').length > 0"))
-    expect_equal(
-      object = app$get_js("
-    $('#ipc_check-checked thead th').map(function() {
-      return $(this).text();
-    }).get();
-  ")[1:4] |> as.character(),
-      expected = c(
-        "area", "n_clusters", "n_obs", "meet_ipc"
-      )
+    testthat::expect_equal(as.character(app$get_js(js_cols)[1:5]), 
+    c("province", "strata", "n_clusters", "n_obs", "meet_ipc")
     )
+    testthat::expect_equal(app$get_js(js_values)[[1]], "NampulaRural60472yes")
+    testthat::expect_equal(app$get_js(js_values)[[3]], "ZambeziaRural51368yes")
   }
 )
 
+
 ## ---- IPC Check on screening data --------------------------------------------
+
 
 ### Skip test on windows ----
 # if (identical(Sys.getenv("CI"), "true") && Sys.info()[["sysname"]] == "Windows") {
@@ -116,29 +120,33 @@ testthat::test_that(
     app$wait_for_idle(timeout = 40000)
 
     #### Now set parameters for survey ----
-    app$set_inputs(`ipc_check-area1` = "area", wait_ = FALSE)
-    app$set_inputs(`ipc_check-area2` = "sex", wait_ = FALSE)
+    app$set_inputs(`ipc_check-area1` = "province", wait_ = FALSE)
+    app$set_inputs(`ipc_check-area2` = "strata", wait_ = FALSE)
     app$set_inputs(`ipc_check-sites` = "cluster", wait_ = FALSE)
 
     #### Run check ----
     app$click(input = "ipc_check-apply_check")
     app$wait_for_value(output = "ipc_check-checked", timeout = 40000)
 
+    ### Capture JavaScript expressions to return results's cols and values ----
+    js_cols <- "$('#ipc_check-checked thead th').map(function() {
+      return $(this).text();}).get();"
+    js_values <- "$('#ipc_check-checked tbody tr').map(function() 
+    {return $(this).text();}).get();"
+
+    ### Test ----
     testthat::expect_true(app$get_js("$('#ipc_check-checked').length > 0"))
-    expect_equal(
-      object = app$get_js("
-    $('#ipc_check-checked thead th').map(function() {
-      return $(this).text();
-    }).get();
-  ")[1:5] |> as.character(),
-      expected = c(
-        "area", "sex", "n_clusters", "n_obs", "meet_ipc"
-      )
+    testthat::expect_equal(as.character(app$get_js(js_cols)[1:5]), 
+    c("province", "strata", "n_clusters", "n_obs", "meet_ipc")
     )
+    testthat::expect_equal(app$get_js(js_values)[[1]], "NampulaRural60472no")
+    testthat::expect_equal(app$get_js(js_values)[[3]], "ZambeziaRural51368no")
   }
 )
 
+
 ## ---- IPC Check on sentinel site data ----------------------------------------
+
 
 ### Skip test on windows ----
 # if (identical(Sys.getenv("CI"), "true") && Sys.info()[["sysname"]] == "Windows") {
@@ -182,25 +190,26 @@ testthat::test_that(
     app$wait_for_idle(timeout = 40000)
 
     #### Now set parameters for survey ----
-    app$set_inputs(`ipc_check-area1` = "area", wait_ = FALSE)
-    app$set_inputs(`ipc_check-area2` = "sex", wait_ = FALSE)
+    app$set_inputs(`ipc_check-area1` = "province", wait_ = FALSE)
+    app$set_inputs(`ipc_check-area2` = "strata", wait_ = FALSE)
     app$set_inputs(`ipc_check-ssites` = "cluster", wait_ = FALSE)
 
     #### Run check ----
     app$click(input = "ipc_check-apply_check")
     app$wait_for_value(output = "ipc_check-checked", timeout = 40000)
 
-    #### Test checks ----
+    ### Capture JavaScript expressions to return results's cols and values ----
+    js_cols <- "$('#ipc_check-checked thead th').map(function() {
+      return $(this).text();}).get();"
+    js_values <- "$('#ipc_check-checked tbody tr').map(function() 
+    {return $(this).text();}).get();"
+
+    ### Test ----
     testthat::expect_true(app$get_js("$('#ipc_check-checked').length > 0"))
-    expect_equal(
-      object = app$get_js("
-    $('#ipc_check-checked thead th').map(function() {
-      return $(this).text();
-    }).get();
-  ")[1:5] |> as.character(),
-      expected = c(
-        "area", "sex", "n_clusters", "n_obs", "meet_ipc"
-      )
+    testthat::expect_equal(as.character(app$get_js(js_cols)[1:5]), 
+    c("province", "strata", "n_clusters", "n_obs", "meet_ipc")
     )
+    testthat::expect_equal(app$get_js(js_values)[[1]], "NampulaRural60472yes")
+    testthat::expect_equal(app$get_js(js_values)[[3]], "ZambeziaRural51368yes")
   }
 )

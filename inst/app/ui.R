@@ -40,7 +40,10 @@ ui <- tagList(
       ),
 
       ### Right side: app version ----
-      tags$span("v0.2.3",
+      tags$span(paste0(
+        "App v", utils::packageVersion("mwanaApp"),
+        " | Eng: mwana v", utils::packageVersion("mwana")
+      ),
         id = "app-version",
         style = "font-size: 12.5px; color:  rgba(255, 255, 255, 0.4);
         position: fixed; top: 40px; right: 20px;"

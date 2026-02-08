@@ -2,7 +2,9 @@
 #  Test Suite: Module Prevalence
 # ==============================================================================
 
+
 ## ---- Survey data ------------------------------------------------------------
+
 
 ### WFHZ Prevalence ----
 
@@ -64,27 +66,32 @@ testthat::test_that(
 
     ### Select the method ----
     app$set_inputs(`prevalence-amn_method_survey` = "wfhz", wait_ = FALSE)
-    app$set_inputs(`prevalence-area1` = "area", wait_ = FALSE)
-    app$set_inputs(`prevalence-area2` = "sex", wait_ = FALSE) ## Assume sex as grouping var
-    app$set_inputs(`prevalence-area3` = "", wait_ = FALSE)
-    app$set_inputs(`prevalence-wts` = "", wait_ = FALSE)
+    app$set_inputs(`prevalence-area1` = "province", wait_ = FALSE)
+    app$set_inputs(`prevalence-area2` = "strata", wait_ = FALSE) ## Assume sex as grouping var
+    app$set_inputs(`prevalence-area3` = "sex", wait_ = FALSE)
+    app$set_inputs(`prevalence-wts` = "wtfactor", wait_ = FALSE)
     app$set_inputs(`prevalence-oedema` = "oedema", wait_ = FALSE)
 
     ### Click on Estime Prevalence button ----
     app$click(input = "prevalence-estimate")
     app$wait_for_value(output = "prevalence-results", timeout = 40000)
 
-    ### Get the list of variable names from the rendered table ----
-    column_names <- as.character(
-      app$get_js(
-        "$('#prevalence-results thead th').map(function() {
-      return $(this).text();
-    }).get();"
-      )[1:18]
-    )
+    ### Capture JavaScript expressions to return results's cols and values ----
+    js_cols <- "$('#prevalence-results thead th').map(function()
+    {return $(this).text();}).get();"
+
+    js_values <- "$('#prevalence-results tbody tr').map(function()
+    {return $(this).text();}).get();"
+
+    ### Capture prevalence results of Nampula Province, Rural Strata ----
+    glued_results <- app$get_js(js_values)[[1]]
+    weighted_pop <- stringr::str_extract(glued_results, "\\d{6}")
+    gam_prev <- stringr::str_extract(glued_results, "\\d\\.\\d")
 
     ### Test check ----
-    testthat::expect_equal(length(column_names), 18)
+    testthat::expect_equal(length(app$get_js(js_cols)[1:19]), 19)
+    testthat::expect_equal(as.numeric(weighted_pop), 243016)
+    testthat::expect_equal(as.numeric(gam_prev), 3.7)
 
     ### Stop the app ----
     app$stop()
@@ -153,30 +160,43 @@ testthat::test_that(
     app$set_inputs(`prevalence-source` = "survey", wait_ = FALSE)
 
     ### Select the method ----
-    app$set_inputs(`prevalence-amn_method_survey` = "muac", wait_ = FALSE)
-    app$set_inputs(`prevalence-area1` = "area", wait_ = FALSE)
-    app$set_inputs(`prevalence-area2` = "sex", wait_ = FALSE) ## Assume sex as grouping var
-    app$set_inputs(`prevalence-area3` = "", wait_ = FALSE)
+    app$set_inputs(`prevalence-amn_method_survey` = "muac", wait_ = TRUE)
+    app$set_inputs(`prevalence-area1` = "province", wait_ = FALSE)
+    app$set_inputs(`prevalence-area2` = "strata", wait_ = FALSE) ## Assume sex as grouping var
+    app$set_inputs(`prevalence-area3` = "sex", wait_ = FALSE)
     app$set_inputs(`prevalence-muac` = "muac", wait_ = FALSE)
     app$set_inputs(`prevalence-age` = "age", wait_ = FALSE)
-    app$set_inputs(`prevalence-wts` = "", wait_ = FALSE)
+    app$set_inputs(`prevalence-wts` = "wtfactor", wait_ = FALSE)
     app$set_inputs(`prevalence-oedema` = "oedema", wait_ = FALSE)
 
     ### Click on Estime Prevalence button ----
     app$click(input = "prevalence-estimate")
     app$wait_for_value(output = "prevalence-results", timeout = 40000)
 
-    ### Get the list of variable names from the rendered table ----
-    column_names <- as.character(
-      app$get_js(
-        "$('#prevalence-results thead th').map(function() {
-      return $(this).text();
-    }).get();"
-      )[1:18]
-    )
+    ### Capture JavaScript expressions to return results's cols and values ----
+    js_cols <- "$('#prevalence-results thead th').map(function()
+    {return $(this).text();}).get();"
+
+    js_values <- "$('#prevalence-results tbody tr').map(function()
+    {return $(this).text();}).get();"
+
+    ### Get a JS expression ----
+    js_result <- app$get_js(js_values)
+
+    ### Wait/validate that we have at least 3 values
+    if (length(js_result) < 4) {
+      #### Add a small delay and retry
+      Sys.sleep(3)
+      js_result <- app$get_js(js_values)
+    }
+    ### Capture prevalence results of Zambezia Province, Rural Strata ----
+    prev <- stringr::str_extract_all(js_result[[3]][1], "\\d\\.\\d")[[1]]
 
     ### Test check ----
-    testthat::expect_equal(length(column_names), 18)
+    testthat::expect_equal(length(app$get_js(js_cols)[1:19]), 19)
+    testthat::expect_equal(as.numeric(prev[2]), 5.3) # GAM
+    testthat::expect_equal(as.numeric(prev[6]), 1.3) # SAM
+    testthat::expect_equal(as.numeric(prev[10]), 4.0) # MAM
 
     ### Stop the app ----
     app$stop()
@@ -247,35 +267,41 @@ testthat::test_that(
     app$set_inputs(`prevalence-source` = "survey", wait_ = FALSE)
 
     ### Select the method ----
-    app$set_inputs(`prevalence-amn_method_survey` = "combined", wait_ = FALSE)
-    app$set_inputs(`prevalence-area1` = "area", wait_ = FALSE)
-    app$set_inputs(`prevalence-area2` = "sex", wait_ = FALSE) ## Assume sex as grouping var
-    app$set_inputs(`prevalence-area3` = "", wait_ = FALSE)
-    app$set_inputs(`prevalence-wts` = "", wait_ = FALSE)
+    app$set_inputs(`prevalence-amn_method_survey` = "combined", wait_ = TRUE)
+    app$set_inputs(`prevalence-area1` = "province", wait_ = FALSE)
+    app$set_inputs(`prevalence-area2` = "strata", wait_ = FALSE) ## Assume sex as grouping var
+    app$set_inputs(`prevalence-area3` = "sex", wait_ = FALSE)
+    app$set_inputs(`prevalence-wts` = "wtfactor", wait_ = FALSE)
     app$set_inputs(`prevalence-oedema` = "oedema", wait_ = FALSE)
 
     ### Click on Estime Prevalence button ----
     app$click(input = "prevalence-estimate")
     app$wait_for_value(output = "prevalence-results", timeout = 40000)
 
-    ### Get the list of variable names from the rendered table ----
-    column_names <- as.character(
-      app$get_js(
-        "$('#prevalence-results thead th').map(function() {
-      return $(this).text();
-    }).get();"
-      )[1:18]
-    )
+    ### Capture JavaScript expressions to return results's cols and values ----
+    js_cols <- "$('#prevalence-results thead th').map(function()
+    {return $(this).text();}).get();"
+
+    js_values <- "$('#prevalence-results tbody tr').map(function()
+    {return $(this).text();}).get();"
+
+    ### Capture prevalence results of Nampula Province, Urban Strata ----
+    glued_results <- app$get_js(js_values)[[2]]
+    prev <- stringr::str_extract_all(glued_results, "\\d{2}\\.\\d")[[1]] # not all are prevs
 
     ### Test check ----
-    testthat::expect_equal(length(column_names), 18)
+    testthat::expect_equal(length(app$get_js(js_cols)[1:19]), 19)
+    testthat::expect_equal(as.numeric(prev[1]), 10.1) # GAM
+    testthat::expect_equal(as.numeric(prev[2]), 13.3) # GAM's upper CI
 
     ### Stop the app ----
     app$stop()
   }
 )
 
+
 ## ---- Screening data ---------------------------------------------------------
+
 
 ### When age is available ----
 
@@ -303,9 +329,13 @@ testthat::test_that(
 
     #### Read data ----
     data <- read.csv(
-      file = testthat::test_path("fixtures", "anthro-01.csv"),
+      file = testthat::test_path("fixtures", "anthro-02.csv"),
       check.names = FALSE
     )
+    ### Make age categories ----
+    data <- data |>
+      transform(oedema = dplyr::recode_values(oedema, "n " ~ "n"))
+
     tempfile <- tempfile(fileext = ".csv")
     write.csv(data, tempfile, row.names = FALSE)
 
@@ -339,8 +369,8 @@ testthat::test_that(
     app$set_inputs(`prevalence-source` = "screening", wait_ = TRUE)
 
     ### Select the method ----
-    app$set_inputs(`prevalence-has_age` = "yes", wait_ = FALSE)
-    app$set_inputs(`prevalence-area1` = "area", wait_ = FALSE)
+    app$set_inputs(`prevalence-has_age` = "yes", wait_ = TRUE)
+    app$set_inputs(`prevalence-area1` = "analysis_unit", wait_ = FALSE)
     app$set_inputs(`prevalence-area2` = "sex", wait_ = FALSE) ## Assume sex as grouping var
     app$set_inputs(`prevalence-area3` = "", wait_ = FALSE)
     app$set_inputs(`prevalence-muac` = "muac", wait_ = FALSE)
@@ -351,23 +381,38 @@ testthat::test_that(
     app$click(input = "prevalence-estimate")
     app$wait_for_value(output = "prevalence-results", timeout = 40000)
 
-    ### Get the list of variable names from the rendered table ----
-    column_names <- as.character(
-      app$get_js(
-        "$('#prevalence-results thead th').map(function() {
-      return $(this).text();
-    }).get();"
-      )[1:9]
-    )
+    ### Capture JavaScript expressions to return results's cols and values ----
+    js_cols <- "$('#prevalence-results thead th').map(function()
+    {return $(this).text();}).get();"
+
+    js_values <- "$('#prevalence-results tbody tr').map(function()
+    {return $(this).text();}).get();"
+
+    ### Capture results ----
+    glued_results_unit_a <- app$get_js(js_values)[[1]]
+    glued_results_unit_b <- app$get_js(js_values)[[2]]
+
+    N_unit_a <- stringr::str_extract_all(glued_results_unit_a, "\\d{3}$")[[1]]
+    N_unit_b <- stringr::str_extract_all(glued_results_unit_b, "\\d{4}$")[[1]]
+
+    #### Prevalences ----
+    prev_unit_a <- stringr::str_extract_all(glued_results_unit_a, "\\d\\.\\d")[[1]]
+    prev_unit_b <- stringr::str_extract(glued_results_unit_b, "\\d{2}\\.\\d")[[1]]
+
 
     ### Test check ----
-    testthat::expect_equal(length(column_names), 9)
+    testthat::expect_equal(length(app$get_js(js_cols)[1:9]), 9)
+    testthat::expect_equal(as.numeric(N_unit_a), 608)
+    testthat::expect_equal(as.numeric(N_unit_b), 1359)
+    testthat::expect_equal(as.numeric(prev_unit_a)[1], 6.4) # GAM
+    testthat::expect_equal(as.numeric(prev_unit_a)[2], 1.2) # SAM
+    testthat::expect_equal(as.numeric(prev_unit_a)[3], 5.3) # MAM
+    testthat::expect_equal(as.numeric(prev_unit_b), 12.4) # Age-weighted GAM
 
     ### Stop the app ----
     app$stop()
   }
 )
-
 
 ### When age is given in categories ----
 
@@ -396,9 +441,17 @@ testthat::test_that(
 
     #### Read data ----
     data <- read.csv(
-      file = testthat::test_path("fixtures", "anthro-01.csv"),
+      file = testthat::test_path("fixtures", "anthro-02.csv"),
       check.names = FALSE
     )
+
+    ### Make age categories ----
+    data <- data |>
+      transform(
+        age_cat = ifelse(age < 24, "6-23", "24-59"),
+        oedema = dplyr::recode_values(oedema, "n " ~ "n")
+      )
+
     tempfile <- tempfile(fileext = ".csv")
     write.csv(data, tempfile, row.names = FALSE)
 
@@ -430,11 +483,11 @@ testthat::test_that(
     app$wait_for_idle(timeout = 40000)
 
     #### Select if age is available ----
-    app$set_inputs("prevalence-has_age" = "no", wait_ = FALSE)
+    app$set_inputs("prevalence-has_age" = "no", wait_ = TRUE)
 
     #### Select variables ----
-    app$set_inputs("prevalence-area1" = "area", wait_ = FALSE)
-    app$set_inputs("prevalence-area2" = "", wait_ = FALSE)
+    app$set_inputs("prevalence-area1" = "analysis_unit", wait_ = FALSE)
+    app$set_inputs("prevalence-area2" = "sex", wait_ = FALSE)
     app$set_inputs("prevalence-area3" = "", wait_ = FALSE)
     app$set_inputs("prevalence-muac" = "muac", wait_ = FALSE)
     app$set_inputs("prevalence-age_cat" = "age_cat", wait_ = FALSE)
@@ -445,17 +498,33 @@ testthat::test_that(
     #### Wait until output has been rendered ----
     app$wait_for_value(output = "prevalence-results", timeout = 40000)
 
-    ### Get the list of variable names from the rendered table ----
-    column_names <- as.character(
-      app$get_js(
-        "$('#prevalence-results thead th').map(function() {
-      return $(this).text();
-    }).get();"
-      )[1:8]
-    )
+    ### Capture JavaScript expressions to return results's cols and values ----
+    js_cols <- "$('#prevalence-results thead th').map(function()
+    {return $(this).text();}).get();"
+
+    js_values <- "$('#prevalence-results tbody tr').map(function()
+    {return $(this).text();}).get();"
+
+    ### Capture prevalence ----
+    glued_results_unit_a <- app$get_js(js_values)[[1]]
+    glued_results_unit_b <- app$get_js(js_values)[[2]]
+
+    N_unit_a <- stringr::str_extract_all(glued_results_unit_a, "\\d{3}$")[[1]]
+    N_unit_b <- stringr::str_extract_all(glued_results_unit_b, "\\d{4}$")[[1]]
+
+    #### Prevalences ----
+    prev_unit_a <- stringr::str_extract_all(glued_results_unit_a, "\\d\\.\\d")[[1]]
+    prev_unit_b <- stringr::str_extract(glued_results_unit_b, "\\d{2}\\.\\d")[[1]]
+
 
     ### Test check ----
-    testthat::expect_equal(length(column_names), 8)
+    testthat::expect_equal(length(app$get_js(js_cols)[1:9]), 9)
+    testthat::expect_equal(as.numeric(N_unit_a), 612)
+    testthat::expect_equal(as.numeric(N_unit_b), 1365)
+    testthat::expect_equal(as.numeric(prev_unit_a)[1], 6.4) # GAM
+    testthat::expect_equal(as.numeric(prev_unit_a)[2], 1.1) # SAM
+    testthat::expect_equal(as.numeric(prev_unit_a)[3], 5.2) # MAM
+    testthat::expect_equal(as.numeric(prev_unit_b), 12.6) # Age-weighted GAM
 
     ### Stop the app ----
     app$stop()

@@ -177,7 +177,7 @@ module_server_prevalence <- function(id, data) {
         message <- ""
 
         if (input$source == "screening") {
-          if (input$has_age== "yes") {
+          if (input$has_age == "yes") {
             if (any(!nzchar(c(input$muac, input$age)))) {
               valid <- FALSE
               message <- "Please select all required variables: MUAC and Age in months."
@@ -217,7 +217,7 @@ module_server_prevalence <- function(id, data) {
                       age = input$age,
                       muac = input$muac,
                       oedema = input$oedema,
-                                            wts = input$wts,
+                      wts = input$wts,
                       area1 = input$area1,
                       area2 = input$area2,
                       area3 = input$area3
@@ -241,16 +241,16 @@ module_server_prevalence <- function(id, data) {
               switch(input$has_age,
                 "yes" = {
                   shiny::req(input$muac, input$age)
-                    mod_prevalence_call_prev_estimator_screening(
-                  df = data(),
-                      muac = input$muac,
-                      age = input$age,
-                      oedema = input$oedema,
-                      area1 = input$area1,
-                      area2 = input$area2,
-                      area3 = input$area3
-                    ) |>
-                   mod_prevalence_neat_output_screening()
+                  mod_prevalence_call_prev_estimator_screening(
+                    df = data(),
+                    muac = input$muac,
+                    age = input$age,
+                    oedema = input$oedema,
+                    area1 = input$area1,
+                    area2 = input$area2,
+                    area3 = input$area3
+                  ) |>
+                    mod_prevalence_neat_output_screening()
                 },
                 "no" = {
                   shiny::req(input$muac, input$age_cat)
@@ -336,7 +336,7 @@ module_server_prevalence <- function(id, data) {
               paste0("mwana-amn-prevalence-survey-combined_", Sys.Date(), ".xlsx", sep = "")
             }
           } else {
-            if (input$has_age== "yes") {
+            if (input$has_age == "yes") {
               paste0("mwana-amn-prevalence-screening-age-avail_", Sys.Date(), ".xlsx", sep = "")
             } else {
               paste0("mwana-amn-prevalence-screening-age-notavail_", Sys.Date(), ".xlsx", sep = "")

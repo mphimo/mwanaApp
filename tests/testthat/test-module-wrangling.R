@@ -5,6 +5,7 @@
 
 ## ---- Data Wrangling: WFHZ ---------------------------------------------------
 
+
 ### Skip test on windows ----
 # if (identical(Sys.getenv("CI"), "true") && Sys.info()[["sysname"]] == "Windows") {
 #   skip("Skipping shinytest2 integration tests on Windows CI to reduce runtime")
@@ -62,10 +63,7 @@ testthat::test_that(desc = "Server data wrangling works as expected for WFHZ", {
   ") |> as.character()
 
   testthat::expect_true(all(c("wfhz", "flag_wfhz") %in% column_names))
-  testthat::expect_equal(
-    object = length(column_names),
-    expected = 14
-  )
+  testthat::expect_equal(length(column_names), 12)
 
   #### Stop the app ----
   app$stop()
@@ -73,6 +71,7 @@ testthat::test_that(desc = "Server data wrangling works as expected for WFHZ", {
 
 
 ## ---- Data Wrangling: MFAZ ---------------------------------------------------
+
 
 ### Skip test on windows ----
 # if (identical(Sys.getenv("CI"), "true") && Sys.info()[["sysname"]] == "Windows") {
@@ -135,6 +134,7 @@ testthat::test_that(desc = "Server data wrangling works as expected for MFAZ", {
   ### Test check ----
   testthat::expect_true(all(c("age_days", "mfaz", "flag_mfaz") %in% column_names))
   testthat::expect_true(app$get_js("$('#wrangle_data-wrangled').length > 0"))
+  testthat::expect_equal(length(column_names), 13)
 
   #### Stop the app ----
   app$stop()
@@ -142,6 +142,7 @@ testthat::test_that(desc = "Server data wrangling works as expected for MFAZ", {
 
 
 ## ---- Data Wrangling: MUAC ---------------------------------------------------
+
 
 ### Skip test on windows ----
 # if (identical(Sys.getenv("CI"), "true") && Sys.info()[["sysname"]] == "Windows") {
@@ -204,6 +205,7 @@ testthat::test_that(
     ### Test check ----
     testthat::expect_true("flag_muac" %in% column_names)
     testthat::expect_true(app$get_js("$('#wrangle_data-wrangled').length > 0"))
+    testthat::expect_equal(length(column_names), 11)
 
     ### Stop the app ----
     app$stop()
@@ -212,6 +214,7 @@ testthat::test_that(
 
 
 ## ---- Data Wrangling: WFHZ and MFAZ ------------------------------------------
+
 
 ### Skip test on windows ----
 # if (identical(Sys.getenv("CI"), "true") && Sys.info()[["sysname"]] == "Windows") {
@@ -266,7 +269,7 @@ testthat::test_that(
     app$wait_for_value(output = "wrangle_data-wrangled", timeout = 40000)
 
     app$wait_for_idle(timeout = 15000)
-
+    
     testthat::expect_true(app$get_js("$('#wrangle_data-wrangled').length > 0"))
 
     #### Stop the app ----
