@@ -157,7 +157,7 @@ testthat::test_that(
     app$set_inputs(`prevalence-source` = "survey", wait_ = FALSE)
 
     ### Select the method ----
-    app$set_inputs(`prevalence-amn_method_survey` = "muac", wait_ = FALSE)
+    app$set_inputs(`prevalence-amn_method_survey` = "muac", wait_ = TRUE)
     app$set_inputs(`prevalence-area1` = "province", wait_ = FALSE)
     app$set_inputs(`prevalence-area2` = "strata", wait_ = FALSE) ## Assume sex as grouping var
     app$set_inputs(`prevalence-area3` = "sex", wait_ = FALSE)
@@ -255,7 +255,7 @@ testthat::test_that(
     app$set_inputs(`prevalence-source` = "survey", wait_ = FALSE)
 
     ### Select the method ----
-    app$set_inputs(`prevalence-amn_method_survey` = "combined", wait_ = FALSE)
+    app$set_inputs(`prevalence-amn_method_survey` = "combined", wait_ = TRUE)
     app$set_inputs(`prevalence-area1` = "province", wait_ = FALSE)
     app$set_inputs(`prevalence-area2` = "strata", wait_ = FALSE) ## Assume sex as grouping var
     app$set_inputs(`prevalence-area3` = "sex", wait_ = FALSE)
@@ -274,12 +274,11 @@ testthat::test_that(
     {return $(this).text();}).get();"
 
     ### Capture prevalence results ----
-    prev <- 
-      "ZambeziaUrban2785435.5%3.8%7.1%70.9%0.2%1.5%395.0%3.4%6.6%"
+    prev <- "NampulaUrban25425510.1%7.0%13.3%112.0%0.7%3.4%458.3%5.5%11.1%"
 
     ### Test check ----
     testthat::expect_equal(length(app$get_js(js_cols)[1:19]), 19)
-    testthat::expect_equal(app$get_js(js_values)[[4]], prev)
+    testthat::expect_equal(app$get_js(js_values)[[2]], prev)
 
     ### Stop the app ----
     app$stop()
@@ -357,7 +356,7 @@ testthat::test_that(
     app$set_inputs(`prevalence-source` = "screening", wait_ = TRUE)
 
     ### Select the method ----
-    app$set_inputs(`prevalence-has_age` = "yes", wait_ = FALSE)
+    app$set_inputs(`prevalence-has_age` = "yes", wait_ = TRUE)
     app$set_inputs(`prevalence-area1` = "analysis_unit", wait_ = FALSE)
     app$set_inputs(`prevalence-area2` = "sex", wait_ = FALSE) ## Assume sex as grouping var
     app$set_inputs(`prevalence-area3` = "", wait_ = FALSE)
@@ -378,7 +377,7 @@ testthat::test_that(
 
     ### Capture prevalence results ----
     prev_unit_a <- "Unit A2396.4%71.2%325.3%608"
-    prev_unit_a <- "Unit B212.4%3.2%9.2%1359"
+    prev_unit_b <- "Unit B212.4%3.2%9.2%1359"
 
     ### Test check ----
     testthat::expect_equal(length(app$get_js(js_cols)[1:9]), 9)
@@ -459,7 +458,7 @@ testthat::test_that(
     app$wait_for_idle(timeout = 40000)
 
     #### Select if age is available ----
-    app$set_inputs("prevalence-has_age" = "no", wait_ = FALSE)
+    app$set_inputs("prevalence-has_age" = "no", wait_ = TRUE)
 
     #### Select variables ----
     app$set_inputs("prevalence-area1" = "analysis_unit", wait_ = FALSE)
