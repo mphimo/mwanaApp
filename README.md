@@ -18,7 +18,7 @@ to seamlessly streamline plausibility checks and wasting prevalence
 estimation of child anthropometric data, by automating key steps of the
 R package mwana for non-R users.
 
-The app is divided in five easy-to-navigate tabs:
+The app is divided in six easy-to-navigate tabs:
 
 1.  Home
 2.  Data Upload
@@ -54,7 +54,7 @@ citation("mwanaApp")
 
       Tomás Zaba (2026). _mwanaApp: A seamless graphical interface to the
       mwana R package for data wrangling, plausibility checks, and
-      prevalence estimation_. R package version 0.0.1,
+      prevalence estimation_. R package version 0.0.0,
       <https://github.com/mphimo/mwanaApp.git>.
 
     A BibTeX entry for LaTeX users is
@@ -63,6 +63,6 @@ citation("mwanaApp")
         title = {mwanaApp: A seamless graphical interface to the mwana R package for data wrangling, plausibility checks, and prevalence estimation},
         author = {{Tomás Zaba}},
         year = {2026},
-        note = {R package version 0.0.1},
+        note = {R package version 0.0.0},
         url = {https://github.com/mphimo/mwanaApp.git},
       }

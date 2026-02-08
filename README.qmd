@@ -13,7 +13,7 @@ format: gfm
 
 `mwanaApp` is a lightweight, field-ready application thoughtful designed to seamlessly streamline plausibility checks and wasting prevalence estimation of child anthropometric data, by automating key steps of the R package mwana for non-R users. 
 
-The app is divided in five easy-to-navigate tabs:
+The app is divided in six easy-to-navigate tabs:
 
 1. Home
 2. Data Upload
