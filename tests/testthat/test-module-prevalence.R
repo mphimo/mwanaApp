@@ -92,6 +92,7 @@ testthat::test_that(
     testthat::expect_equal(length(app$get_js(js_cols)[1:19]), 19)
     testthat::expect_equal(as.numeric(weighted_pop), 243016)
     testthat::expect_equal(as.numeric(gam_prev), 3.7)
+
     ### Stop the app ----
     app$stop()
   }
@@ -189,6 +190,7 @@ testthat::test_that(
     testthat::expect_equal(as.numeric(prev[2]), 5.3) # GAM
     testthat::expect_equal(as.numeric(prev[6]), 1.3) # SAM
     testthat::expect_equal(as.numeric(prev[10]), 4.0) # MAM
+
     ### Stop the app ----
     app$stop()
   }
@@ -381,14 +383,14 @@ testthat::test_that(
     js_values <- "$('#prevalence-results tbody tr').map(function() 
     {return $(this).text();}).get();"
 
-    ### Capture prevalence results ----
+    ### Capture results ----
     glued_results_unit_a <- app$get_js(js_values)[[1]]
     glued_results_unit_b <- app$get_js(js_values)[[2]]
 
     N_unit_a <- stringr::str_extract_all(glued_results_unit_a, "\\d{3}$")[[1]]
     N_unit_b <- stringr::str_extract_all(glued_results_unit_b, "\\d{4}$")[[1]]
 
-    #### Prevalences 
+    #### Prevalences ----
     prev_unit_a <- stringr::str_extract_all(glued_results_unit_a, "\\d\\.\\d")[[1]]
     prev_unit_b <- stringr::str_extract(glued_results_unit_b, "\\d{2}\\.\\d")[[1]]
 
@@ -498,14 +500,14 @@ testthat::test_that(
     js_values <- "$('#prevalence-results tbody tr').map(function() 
     {return $(this).text();}).get();"
 
-    ### Capture prevalence results ----
+    ### Capture prevalence ----
     glued_results_unit_a <- app$get_js(js_values)[[1]]
     glued_results_unit_b <- app$get_js(js_values)[[2]]
 
     N_unit_a <- stringr::str_extract_all(glued_results_unit_a, "\\d{3}$")[[1]]
     N_unit_b <- stringr::str_extract_all(glued_results_unit_b, "\\d{4}$")[[1]]
 
-    #### Prevalences 
+    #### Prevalences ----
     prev_unit_a <- stringr::str_extract_all(glued_results_unit_a, "\\d\\.\\d")[[1]]
     prev_unit_b <- stringr::str_extract(glued_results_unit_b, "\\d{2}\\.\\d")[[1]]
 
