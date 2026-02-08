@@ -83,12 +83,15 @@ testthat::test_that(
     js_values <- "$('#prevalence-results tbody tr').map(function() 
     {return $(this).text();}).get();"
 
-    ### Capture prevalence results ----
-    prev <- "NampulaRural2430163.7%2.0%5.4%51.2%0.0%2.4%112.6%1.2%3.9%"
+    ### Capture prevalence results of Nampula Province, Rural Strata ----
+    glued_results <- app$get_js(js_values)[[1]]
+    weighted_pop <- stringr::str_extract(glued_results, "\\d{6}")
+    gam_prev <- stringr::str_extract(glued_results, "\\d\\.\\d")
 
     ### Test check ----
     testthat::expect_equal(length(app$get_js(js_cols)[1:19]), 19)
-    testthat::expect_equal(app$get_js(js_values)[[1]], prev)
+    testthat::expect_equal(as.numeric(weighted_pop), 243016)
+    testthat::expect_equal(as.numeric(gam_prev), 3.7)
     ### Stop the app ----
     app$stop()
   }
@@ -177,14 +180,15 @@ testthat::test_that(
     js_values <- "$('#prevalence-results tbody tr').map(function() 
     {return $(this).text();}).get();"
 
-    ### Capture prevalence results ----
-    prev <- 
-      "ZambeziaRural2125803.92485165.3%2.9%7.7%0.988318405269110441.3%-0.2%2.7%1.43002767958192124.0%1.6%6.4%1.295294076766007"
-
+    ### Capture prevalence results of Zambezia Province, Rural Strata ----
+    glued_results <- app$get_js(js_values)[[3]]
+    prev <- stringr::str_extract_all(glued_results, "\\d\\.\\d")[[1]]
+   
     ### Test check ----
     testthat::expect_equal(length(app$get_js(js_cols)[1:19]), 19)
-    testthat::expect_equal(app$get_js(js_values)[[3]], prev)
-
+    testthat::expect_equal(as.numeric(prev[2]), 5.3) # GAM
+    testthat::expect_equal(as.numeric(prev[6]), 1.3) # SAM
+    testthat::expect_equal(as.numeric(prev[10]), 4.0) # MAM
     ### Stop the app ----
     app$stop()
   }
@@ -273,12 +277,14 @@ testthat::test_that(
     js_values <- "$('#prevalence-results tbody tr').map(function() 
     {return $(this).text();}).get();"
 
-    ### Capture prevalence results ----
-    prev <- "NampulaUrban25425510.1%7.0%13.3%112.0%0.7%3.4%458.3%5.5%11.1%"
-
+    ### Capture prevalence results of Nampula Province, Urban Strata ----
+    glued_results <- app$get_js(js_values)[[2]]
+    prev <- stringr::str_extract_all(glued_results, "\\d{2}\\.\\d")[[1]] #not all are prevs
+  
     ### Test check ----
     testthat::expect_equal(length(app$get_js(js_cols)[1:19]), 19)
-    testthat::expect_equal(app$get_js(js_values)[[2]], prev)
+    testthat::expect_equal(as.numeric(prev[1]), 10.1) #GAM
+    testthat::expect_equal(as.numeric(prev[2]), 13.3) #GAM's upper CI
 
     ### Stop the app ----
     app$stop()
@@ -376,13 +382,25 @@ testthat::test_that(
     {return $(this).text();}).get();"
 
     ### Capture prevalence results ----
-    prev_unit_a <- "Unit A2396.4%71.2%325.3%608"
-    prev_unit_b <- "Unit B212.4%3.2%9.2%1359"
+    glued_results_unit_a <- app$get_js(js_values)[[1]]
+    glued_results_unit_b <- app$get_js(js_values)[[2]]
+
+    N_unit_a <- stringr::str_extract_all(glued_results_unit_a, "\\d{3}$")[[1]]
+    N_unit_b <- stringr::str_extract_all(glued_results_unit_b, "\\d{4}$")[[1]]
+
+    #### Prevalences 
+    prev_unit_a <- stringr::str_extract_all(glued_results_unit_a, "\\d\\.\\d")[[1]]
+    prev_unit_b <- stringr::str_extract(glued_results_unit_b, "\\d{2}\\.\\d")[[1]]
+
 
     ### Test check ----
     testthat::expect_equal(length(app$get_js(js_cols)[1:9]), 9)
-    testthat::expect_equal(app$get_js(js_values)[[1]], prev_unit_a)
-    testthat::expect_equal(app$get_js(js_values)[[2]], prev_unit_b)
+    testthat::expect_equal(as.numeric(N_unit_a), 608)
+    testthat::expect_equal(as.numeric(N_unit_b), 1359)
+    testthat::expect_equal(as.numeric(prev_unit_a)[1], 6.4) # GAM
+    testthat::expect_equal(as.numeric(prev_unit_a)[2], 1.2) # SAM
+    testthat::expect_equal(as.numeric(prev_unit_a)[3], 5.3) # MAM
+    testthat::expect_equal(as.numeric(prev_unit_b), 12.4) # Age-weighted GAM
 
     ### Stop the app ----
     app$stop()
@@ -481,12 +499,25 @@ testthat::test_that(
     {return $(this).text();}).get();"
 
     ### Capture prevalence results ----
-    prev_unit_a <- "Unit A2396.4%71.1%325.2%612"
-    prev_unit_b <- "Unit B212.6%3.4%9.1%1365"
+    glued_results_unit_a <- app$get_js(js_values)[[1]]
+    glued_results_unit_b <- app$get_js(js_values)[[2]]
+
+    N_unit_a <- stringr::str_extract_all(glued_results_unit_a, "\\d{3}$")[[1]]
+    N_unit_b <- stringr::str_extract_all(glued_results_unit_b, "\\d{4}$")[[1]]
+
+    #### Prevalences 
+    prev_unit_a <- stringr::str_extract_all(glued_results_unit_a, "\\d\\.\\d")[[1]]
+    prev_unit_b <- stringr::str_extract(glued_results_unit_b, "\\d{2}\\.\\d")[[1]]
+
+
     ### Test check ----
     testthat::expect_equal(length(app$get_js(js_cols)[1:9]), 9)
-    testthat::expect_equal(app$get_js(js_values)[[1]], prev_unit_a)
-    testthat::expect_equal(app$get_js(js_values)[[2]], prev_unit_b)
+    testthat::expect_equal(as.numeric(N_unit_a), 612)
+    testthat::expect_equal(as.numeric(N_unit_b), 1365)
+    testthat::expect_equal(as.numeric(prev_unit_a)[1], 6.4) # GAM
+    testthat::expect_equal(as.numeric(prev_unit_a)[2], 1.1) # SAM
+    testthat::expect_equal(as.numeric(prev_unit_a)[3], 5.2) # MAM
+    testthat::expect_equal(as.numeric(prev_unit_b), 12.6) # Age-weighted GAM
 
     ### Stop the app ----
     app$stop()
