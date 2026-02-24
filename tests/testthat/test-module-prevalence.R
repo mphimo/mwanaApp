@@ -6,7 +6,7 @@
 ## ---- Survey data ------------------------------------------------------------
 
 
-### WFHZ Prevalence: weighted prevalence ----
+### WFHZ weighted prevalence ----
 testthat::test_that(
   desc = "Module works well to estimate weighted-WFHZ prevalence from survey",
   code = {
@@ -94,7 +94,7 @@ testthat::test_that(
 )
 
 
-### WFHZ Prevalence: unweighted prevalence ----
+### WFHZ unweighted prevalence ----
 testthat::test_that(
   desc = "Module works well to estimate unweighted-WFHZ prevalence from survey",
   code = {
@@ -182,7 +182,7 @@ testthat::test_that(
 )
 
 
-### MUAC prevalence: weighted prevalence ----
+### MUAC weighted prevalence ----
 testthat::test_that(
   desc = "Module works well to estimate weighted-MUAC prevalence from survey",
   code = {
@@ -283,7 +283,7 @@ testthat::test_that(
 )
 
 
-### MUAC prevalence: unweighted prevalence ----
+### MUAC unweighted prevalence ----
 testthat::test_that(
   desc = "Module works well to estimate unweighted-MUAC prevalence from survey",
   code = {
@@ -385,7 +385,7 @@ testthat::test_that(
 
 
 
-### Combined prevalence: weighted prevalence ----
+### Combined weighted prevalence ----
 testthat::test_that(
   desc = "Module works well to estimate weighted-combined prevalence from survey",
   code = {
@@ -478,7 +478,7 @@ testthat::test_that(
 )
 
 
-### Combined prevalence: unweighted prevalence ----
+### Combined unweighted prevalence ----
 testthat::test_that(
   desc = "Module works well to estimate unweighted-combined prevalence from survey",
   code = {
