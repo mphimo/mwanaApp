@@ -260,17 +260,17 @@ testthat::test_that(
     {return $(this).text();}).get();"
 
     ### Get a JS expression ----
-    js_result <- app$get_js(js_values)[[3]]
+    js_result <- app$get_js(js_values)
 
     ### Wait/validate that we have at least 3 values
     if (length(js_result) < 4) {
       #### Add a small delay and retry
       Sys.sleep(3)
-      js_result <- app$get_js(js_values)[[3]]
+      js_result <- app$get_js(js_values)
     }
     ### Capture prevalence results of Zambezia Province, Rural Strata ----
-    prev <- stringr::str_extract_all(js_result, "\\d\\.\\d")[[1]]
-    weighted_pop <- sub("1", "", stringr::str_extract(js_result, "\\d{7}(?:)"))
+    prev <- stringr::str_extract_all(js_result[[3]], "\\d\\.\\d")[[1]]
+    weighted_pop <- sub("1", "", stringr::str_extract(js_result[[3]], "\\d{7}(?:)"))
 
     ### Test check ----
     testthat::expect_equal(length(app$get_js(js_cols)[1:19]), 19)
@@ -361,17 +361,17 @@ testthat::test_that(
     {return $(this).text();}).get();"
 
     ### Get a JS expression ----
-    js_result <- app$get_js(js_values)[[3]]
+    js_result <- app$get_js(js_values)
 
     ### Wait/validate that we have at least 3 values
     if (length(js_result) < 4) {
       #### Add a small delay and retry
       Sys.sleep(3)
-      js_result <- app$get_js(js_values)[[3]]
+      js_result <- app$get_js(js_values)
     }
     ### Capture prevalence results of Zambezia Province, Rural Strata ----
-    pop <- sub("1", "", stringr::str_extract(js_result, "\\d{4}"))
-    prev <- stringr::str_extract(js_result, "\\d{1}\\.\\d")
+    pop <- sub("1", "", stringr::str_extract(js_result[[3]], "\\d{4}"))
+    prev <- stringr::str_extract(js_result[[3]], "\\d{1}\\.\\d")
 
     ### Test check ----
     testthat::expect_equal(length(app$get_js(js_cols)[1:19]), 19)
