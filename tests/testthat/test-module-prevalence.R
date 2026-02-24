@@ -90,8 +90,8 @@ testthat::test_that(
 
     ### Test check ----
     testthat::expect_equal(length(app$get_js(js_cols)[1:19]), 19)
-    testthat::expect_equal(as.numeric(weighted_pop), 243016)
-    testthat::expect_equal(as.numeric(gam_prev), 3.7)
+    testthat::expect_equal(as.numeric(weighted_pop), 230478)
+    testthat::expect_equal(as.numeric(gam_prev), 4.3)
 
     ### Stop the app ----
     app$stop()
@@ -287,12 +287,16 @@ testthat::test_that(
 
     ### Capture prevalence results of Nampula Province, Urban Strata ----
     glued_results <- app$get_js(js_values)[[2]]
-    prev <- stringr::str_extract_all(glued_results, "\\d{2}\\.\\d")[[1]] # not all are prevs
+    prev <- stringr::str_extract_all(glued_results, "\\d+(?:\\.\\d+)")[[1]] # not all are prevs
 
     ### Test check ----
+    testthat::expect_equal(
+      round(as.numeric(stringr::str_extract_all(glued_results, "\\d{6}\\.\\d")[[1]][1])
+      ), 574022
+    )
     testthat::expect_equal(length(app$get_js(js_cols)[1:19]), 19)
-    testthat::expect_equal(as.numeric(prev[1]), 10.1) # GAM
-    testthat::expect_equal(as.numeric(prev[2]), 13.3) # GAM's upper CI
+    testthat::expect_equal(as.numeric(prev[9]), 10.6) # MAM's upper CI
+    testthat::expect_equal(as.numeric(prev[3]), 12.5) # GAM's upper CI
 
     ### Stop the app ----
     app$stop()
