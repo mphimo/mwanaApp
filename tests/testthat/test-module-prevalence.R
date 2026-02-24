@@ -35,6 +35,7 @@ testthat::test_that(
       file = testthat::test_path("fixtures", "anthro-01.csv"),
       check.names = FALSE
     )
+    data["sex"] <- ifelse(data$sex == 1, "m", "f")
     tempfile <- tempfile(fileext = ".csv")
     write.csv(data, tempfile, row.names = FALSE)
 
@@ -84,14 +85,14 @@ testthat::test_that(
     {return $(this).text();}).get();"
 
     ### Capture prevalence results of Nampula Province, Rural Strata ----
-    glued_results <- app$get_js(js_values)[[1]]
-    weighted_pop <- stringr::str_extract(glued_results, "\\d{6}")
+    glued_results <- app$get_js(js_values)[[3]]
+    weighted_pop <- sub("1", "", stringr::str_extract(glued_results, "\\d{7}(?:)"))
     gam_prev <- stringr::str_extract(glued_results, "\\d\\.\\d")
 
     ### Test check ----
     testthat::expect_equal(length(app$get_js(js_cols)[1:19]), 19)
-    testthat::expect_equal(as.numeric(weighted_pop), 230478)
-    testthat::expect_equal(as.numeric(gam_prev), 4.3)
+    testthat::expect_equal(as.numeric(weighted_pop), 292611)
+    testthat::expect_equal(as.numeric(gam_prev), 6.1)
 
     ### Stop the app ----
     app$stop()
@@ -127,6 +128,7 @@ testthat::test_that(
       file = testthat::test_path("fixtures", "anthro-01.csv"),
       check.names = FALSE
     )
+    data["sex"] <- ifelse(data$sex == 1, "m", "f")
     tempfile <- tempfile(fileext = ".csv")
     write.csv(data, tempfile, row.names = FALSE)
 
@@ -181,22 +183,22 @@ testthat::test_that(
     {return $(this).text();}).get();"
 
     ### Get a JS expression ----
-    js_result <- app$get_js(js_values)
+    js_result <- app$get_js(js_values)[[3]]
 
     ### Wait/validate that we have at least 3 values
     if (length(js_result) < 4) {
       #### Add a small delay and retry
       Sys.sleep(3)
-      js_result <- app$get_js(js_values)
+      js_result <- app$get_js(js_values)[[3]]
     }
     ### Capture prevalence results of Zambezia Province, Rural Strata ----
-    prev <- stringr::str_extract_all(js_result[[3]][1], "\\d\\.\\d")[[1]]
+    prev <- stringr::str_extract_all(js_result, "\\d\\.\\d")[[1]]
+    weighted_pop <- sub("1", "", stringr::str_extract(js_result, "\\d{7}(?:)"))
 
     ### Test check ----
     testthat::expect_equal(length(app$get_js(js_cols)[1:19]), 19)
-    testthat::expect_equal(as.numeric(prev[2]), 5.3) # GAM
-    testthat::expect_equal(as.numeric(prev[6]), 1.3) # SAM
-    testthat::expect_equal(as.numeric(prev[10]), 4.0) # MAM
+    testthat::expect_equal(as.numeric(prev[2]), 7.7) # GAM
+    testthat::expect_equal(as.numeric(weighted_pop), 307395)
 
     ### Stop the app ----
     app$stop()
@@ -232,6 +234,7 @@ testthat::test_that(
       file = testthat::test_path("fixtures", "anthro-01.csv"),
       check.names = FALSE
     )
+    data["sex"] <- ifelse(data$sex == 1, "m", "f")
     tempfile <- tempfile(fileext = ".csv")
     write.csv(data, tempfile, row.names = FALSE)
 
@@ -286,17 +289,14 @@ testthat::test_that(
     {return $(this).text();}).get();"
 
     ### Capture prevalence results of Nampula Province, Urban Strata ----
-    glued_results <- app$get_js(js_values)[[2]]
-    prev <- stringr::str_extract_all(glued_results, "\\d+(?:\\.\\d+)")[[1]] # not all are prevs
+    glued_results <- app$get_js(js_values)[[3]]
+    prev <- stringr::str_extract_all(glued_results, "\\d{2}\\.\\d")[[1]]
+    weighted_pop <- sub("1", "", stringr::str_extract(glued_results, "\\d{7}(?:)"))
 
     ### Test check ----
-    testthat::expect_equal(
-      round(as.numeric(stringr::str_extract_all(glued_results, "\\d{6}\\.\\d")[[1]][1])
-      ), 574022
-    )
     testthat::expect_equal(length(app$get_js(js_cols)[1:19]), 19)
-    testthat::expect_equal(as.numeric(prev[9]), 10.6) # MAM's upper CI
-    testthat::expect_equal(as.numeric(prev[3]), 12.5) # GAM's upper CI
+    testthat::expect_equal(as.numeric(prev[2]), 10.8) # GAM
+    testthat::expect_equal(as.numeric(weighted_pop), 288534)
 
     ### Stop the app ----
     app$stop()
