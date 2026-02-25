@@ -239,10 +239,10 @@ module_server_wrangling <- function(id, data) {
 
                 data() |>
                   dplyr::mutate(
-                    muac = mwana::recode_muac(x = !!rlang::sym(input$muac), .to = "cm")
-                  ) |>
-                  dplyr::rename(
-                    age = !!rlang::sym(input$age),
+                    muac = mwana::recode_muac(!!rlang::sym(input$muac), "cm"),
+                    dos = as.Date(!!rlang::sym(input$dos), format = "%d/%m/%Y"),
+                    dob = as.Date(!!rlang::sym(input$dob), format = "%d/%m/%Y"),
+                    age = as.numeric(!!rlang::sym(input$age)),
                     sex = !!rlang::sym(input$sex),
                     weight = !!rlang::sym(input$weight),
                     height = !!rlang::sym(input$height)
@@ -253,7 +253,7 @@ module_server_wrangling <- function(id, data) {
                     weight = .data$weight,
                     height = .data$height
                   ) |>
-                  mwana::mw_wrangle_age(dos = NULL, dob = NULL, age = .data$age) |>
+                  mwana::mw_wrangle_age(.data$dos, .data$dob, .data$age) |>
                   mwana::mw_wrangle_muac(
                     sex = .data$sex,
                     .recode_sex = FALSE,
