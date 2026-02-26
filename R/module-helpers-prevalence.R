@@ -7,7 +7,7 @@
 #' Display input variables dynamically, according to UI for screening
 #' 
 #' 
-#' @param df,vars,source,indicator_surv,has_age Input variables collected 
+#' @param vars,source,indicator_surv,has_age Input variables collected 
 #' from the UI and required to pass to `{mwana}` prevalence functions.
 #' 
 #' @param ns A placeholder for Shiny module namespace.
@@ -270,10 +270,9 @@ mod_prevalence_call_combined_prev_estimator <- function(
 #' Invoke mwana's prevalence functions from within module server according to
 #' user specifications in the UI
 #' 
-#' @param df,age,age_cat,muac,oedema,area1,area2,area3 Input variables collected 
-#' from the UI and required to pass to mwana::mw_estimate_prevalence_screening() 
-#' and mwana::mw_estimate_prevalence_screening2()
-#' 
+#' @param df,age,muac,oedema,area1,area2,area3 Input variables collected 
+#' from the UI and required to pass to mwana::mw_estimate_prevalence_screening(). 
+#
 #' @returns A summary tibble for the descriptive statistics about wasting based 
 #' on MUAC, with no confidence intervals.
 #'
@@ -318,8 +317,13 @@ mod_prevalence_call_prev_estimator_screening <- function(
 #' Invoke mwana's prevalence functions from within module server according to
 #' user specifications in the UI
 #'
-#' @inheritParams mod_prevalence_call_prev_estimator_screening
+#' @param df,age_cat,muac,oedema,area1,area2,area3 Input variables collected 
+#' from the UI and required to pass to mwana::mw_estimate_prevalence_screening2()
+#' 
+#' @returns A summary tibble for the descriptive statistics about wasting based 
+#' on MUAC, with no confidence intervals.
 #'
+#' @keywords internal
 #'
 mod_prevalence_call_prev_estimator_screening2 <- function(
     df, age_cat, muac, oedema = NULL,

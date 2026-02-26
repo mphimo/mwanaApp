@@ -13,10 +13,10 @@ mod_prevalence_display_input_variables(
 )
 }
 \arguments{
-\item{ns}{A placeholder for Shiny module namespace.}
-
-\item{df, vars, source, indicator_surv, has_age}{Input variables collected
+\item{vars, source, indicator_surv, has_age}{Input variables collected
 from the UI and required to pass to \code{{mwana}} prevalence functions.}
+
+\item{ns}{A placeholder for Shiny module namespace.}
 }
 \description{
 Display input variables dynamically, according to UI for screening
