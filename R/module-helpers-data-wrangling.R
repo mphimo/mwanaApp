@@ -5,8 +5,17 @@
 #'
 #'
 #' Display input variables dynamically, according to UI for screening
-#'
-#'
+#' 
+#' @param vars An object holding the data variable names. This is used to display
+#' all the variables in the input variable of the ui. 
+#' 
+#' @param method User-selected method for data wrangling.
+#' 
+#' @param ns A placeholder for Shiny module namespace.
+#' 
+#' @returns A set of input variables specific for the user-selected data-wrangling 
+#' method.
+#' 
 #' @keywords internal
 #'
 #'

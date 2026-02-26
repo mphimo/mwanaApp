@@ -8,8 +8,9 @@ module_server_prevalence(id, data)
 }
 \arguments{
 \item{id}{Module ID}
+
+\item{data}{An output and reactive data object from previous tab.}
 }
 \description{
 Module server for prevalence analysis
 }
-\keyword{internal}

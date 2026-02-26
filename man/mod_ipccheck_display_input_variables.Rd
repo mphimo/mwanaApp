@@ -6,6 +6,19 @@
 \usage{
 mod_ipccheck_display_input_variables(vars, source, ns)
 }
+\arguments{
+\item{vars}{An object holding the data variable names. This is used to display
+all the variables in the input variable of the UI.}
+
+\item{source}{User-selected source of data. As in the underlying method
+used to collect the data. Choices are survey, screening and sentinel.}
+
+\item{ns}{A placeholder for Shiny module namespace.}
+}
+\value{
+A set of input variables specific for the user-selected source of
+data.
+}
 \description{
 Display input variables dynamically, according to UI for screening
 }

@@ -6,7 +6,6 @@
 #'
 #' @param id Module ID
 #'
-#'
 #' @keywords internal
 #'
 #'
@@ -59,7 +58,7 @@ module_ui_plausibility_check <- function(id) {
         style = "font-size: 15px; font-weight: bold;"
       )),
 
-      #### A Placehoder for wrangled data and embed user feedback ----
+      #### A Placeholder for wrangled data and embed user feedback ----
       shinycssloaders::withSpinner(
         ui_element = DT::DTOutput(outputId = ns("checked")),
         type = 8,
@@ -77,7 +76,7 @@ module_ui_plausibility_check <- function(id) {
         )
       ),
 
-      #### Placeholder for donwload button ----
+      #### Placeholder for download button ----
       shiny::uiOutput(outputId = ns("download_plausibility"))
     )
   )
@@ -90,10 +89,8 @@ module_ui_plausibility_check <- function(id) {
 #'
 #' Module server for plausibility check
 #'
-#' @param id Module ID
-#'
-#'
-#' @keywords internal
+#' 
+#' @inheritParams module_server_wrangling
 #'
 #'
 module_server_plausibility_check <- function(id, data) {

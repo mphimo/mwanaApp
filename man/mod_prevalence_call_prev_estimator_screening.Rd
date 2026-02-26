@@ -15,6 +15,14 @@ mod_prevalence_call_prev_estimator_screening(
   area3
 )
 }
+\arguments{
+\item{df, age, muac, oedema, area1, area2, area3}{Input variables collected
+from the UI and required to pass to mwana::mw_estimate_prevalence_screening().}
+}
+\value{
+A summary tibble for the descriptive statistics about wasting based
+on MUAC, with no confidence intervals.
+}
 \description{
 Invoke mwana's prevalence functions from within module server according to
 user specifications in the UI

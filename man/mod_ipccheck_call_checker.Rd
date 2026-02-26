@@ -7,6 +7,18 @@ from within the module server}
 \usage{
 mod_ipccheck_call_checker(df, cluster, source = character(), area1, area2)
 }
+\arguments{
+\item{df, cluster, source, area1, area2}{Input variables collected from the UI
+and required to pass to mwana::mw_check_ipcamn_ssreq() function.}
+}
+\value{
+A summary tibble containing check results for:
+\itemize{
+\item n_clusters - the total number of unique clusters or screening or site identifiers;
+\item n_obs - the corresponding total number of children in the dataset; and,
+\item meet_ipc - whether the IPC AMN requirements were met.
+}
+}
 \description{
 Invoke mwana's IPC Acute Malnutrition minimum sample size requirement checker
 from within the module server
