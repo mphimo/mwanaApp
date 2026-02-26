@@ -6,7 +6,8 @@
 #'
 #' Display input variables dynamically, according to UI for screening
 #'
-#' @keywords internal
+#' @inheritParams mod_data_wrangling_display_input_variables
+#' 
 #'
 mod_plausibility_display_input_variables <- function(vars, method, ns) {
   ### Base inputs always shown
@@ -132,15 +133,20 @@ mod_plausibility_display_input_variables <- function(vars, method, ns) {
   inputs_vars
 }
 
+
 #'
 #'
 #' Invoke mwana's plausibility checkers dynamically from within module server,
 #' according to user specifications in the UI
 #'
-#'
+#' @param df,age,sex,muac,weight,height,flags,area1,area2,area3,.for Input 
+#' variables collected from the UI and required to pass to 
+#' mwana::mw_plausibility_check_wfhz().
+#' 
+#' @returns A single-row summary tibble with columns containing the plausibility 
+#' check results.
+#' 
 #' @keywords internal
-#'
-#'
 #'
 mod_plausibility_call_checker <- function(
     df, age = NULL, sex, muac = NULL, weight = NULL,

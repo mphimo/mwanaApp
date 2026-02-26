@@ -8,6 +8,12 @@ module_server_wrangling(id, data)
 }
 \arguments{
 \item{id}{Module ID}
+
+\item{data}{An output and reactive data object from previous tab.}
+}
+\value{
+A reactive data object wrangled and ready to be used in plausibility
+checks and prevalence analysis tabs.
 }
 \description{
 Module server for data wrangling

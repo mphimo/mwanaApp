@@ -6,7 +6,14 @@
 \usage{
 mod_plausibility_display_input_variables(vars, method, ns)
 }
+\arguments{
+\item{vars}{An object holding the data variable names. This is used to display
+all the variables in the input variable of the ui.}
+
+\item{method}{User-selected method for data wrangling.}
+
+\item{ns}{A placeholder for Shiny module namespace.}
+}
 \description{
 Display input variables dynamically, according to UI for screening
 }
-\keyword{internal}

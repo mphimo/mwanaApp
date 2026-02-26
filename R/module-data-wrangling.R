@@ -6,8 +6,7 @@
 #'
 #' Module UI for data wrangling
 #'
-#' @param id Module ID
-#'
+#' @rdname module-id
 #'
 #' @keywords internal
 #'
@@ -64,7 +63,7 @@ module_ui_wrangling <- function(id) {
           style = "font-size: 15px; font-weight: bold;"
         )),
 
-        #### A Placehoder for wrangled data and embed user feedback ----
+        #### A Placeholder for wrangled data and embed user feedback ----
         shinycssloaders::withSpinner(
           ui_element = DT::DTOutput(outputId = ns("wrangled")),
           type = 8,
@@ -82,7 +81,7 @@ module_ui_wrangling <- function(id) {
           )
         ),
 
-        #### Placeholder for donwload button ----
+        #### Placeholder for download button ----
         shiny::uiOutput(outputId = ns("download_wrangled_data"))
       )
     )
@@ -98,7 +97,11 @@ module_ui_wrangling <- function(id) {
 #' Module server for data wrangling
 #'
 #' @param id Module ID
-#'
+#' 
+#' @param data An output and reactive data object from previous tab.
+#' 
+#' @returns A reactive data object wrangled and ready to be used in plausibility 
+#' checks and prevalence analysis tabs.
 #'
 #' @keywords internal
 #'
@@ -145,22 +148,22 @@ module_server_wrangling <- function(id, data) {
         if (input$wrangle == "wfhz") {
           if (any(!nzchar(c(input$sex, input$weight, input$height)))) {
             valid <- FALSE
-            message <- "Please select all required variables."
+            message <- "Please select all required variables for the chosen method (see the UI input list)."
           }
         } else if (input$wrangle == "mfaz") {
           if (any(!nzchar(c(input$age, input$sex, input$muac)))) {
             valid <- FALSE
-            message <- "Please select all required variables."
+            message <- "Please select all required variables for the chosen method (see the UI input list)."
           }
         } else if (input$wrangle == "muac") {
           if (any(!nzchar(c(input$sex, input$muac)))) {
             valid <- FALSE
-            message <- "Please select all required variables."
+            message <- "Please select all required variables for the chosen method (see the UI input list)."
           }
         } else {
           if (any(!nzchar(c(input$age, input$sex, input$weight, input$height, input$muac)))) {
             valid <- FALSE
-            message <- "Please select all required variables."
+            message <- "Please select all required variables for the chosen method (see the UI input list)."
           }
         }
 

@@ -5,6 +5,12 @@
 #'
 #'
 #' Display input variables dynamically, according to UI for screening
+#' 
+#' 
+#' @param df,vars,source,indicator_surv,has_age Input variables collected 
+#' from the UI and required to pass to `{mwana}` prevalence functions.
+#' 
+#' @param ns A placeholder for Shiny module namespace.
 #'
 #' @keywords internal
 #'
@@ -154,6 +160,11 @@ mod_prevalence_display_input_variables <- function(
 #'
 #' Invoke mwana's prevalence functions from within module server according to
 #' user specifications in the UI
+#' 
+#' @param df,wts,oedema,area1,area2,area3 Input variables collected from the UI 
+#' and required to pass to mwana::mw_estimate_prevalence_wfhz().
+#' 
+#' @returns A summary tibble for the descriptive statistics about wasting.
 #'
 #' @keywords internal
 #'
@@ -180,12 +191,19 @@ mod_prevalence_call_wfhz_prev_estimator <- function(
   )
 }
 
+
 #'
 #'
 #'
 #' Invoke mwana's prevalence functions from within module server according to
 #' user specifications in the UI
 #'
+#' @param df,age,muac,wts,oedema,area1,area2,area3 Input variables collected 
+#' from the UI and required to pass to mwana::mw_estimate_prevalence_muac().
+#' 
+#' @returns A summary tibble for the descriptive statistics about wasting based 
+#' on MUAC, with confidence intervals.
+#' 
 #' @keywords internal
 #'
 #'
@@ -213,13 +231,14 @@ mod_prevalence_call_muac_prev_estimator <- function(
   )
 }
 
+
 #'
 #'
 #'
 #' Invoke mwana's prevalence functions from within module server according to
 #' user specifications in the UI
 #'
-#' @keywords internal
+#' @inheritParams mod_prevalence_call_wfhz_prev_estimator
 #'
 #'
 mod_prevalence_call_combined_prev_estimator <- function(
@@ -250,9 +269,15 @@ mod_prevalence_call_combined_prev_estimator <- function(
 #'
 #' Invoke mwana's prevalence functions from within module server according to
 #' user specifications in the UI
+#' 
+#' @param df,age,age_cat,muac,oedema,area1,area2,area3 Input variables collected 
+#' from the UI and required to pass to mwana::mw_estimate_prevalence_screening() 
+#' and mwana::mw_estimate_prevalence_screening2()
+#' 
+#' @returns A summary tibble for the descriptive statistics about wasting based 
+#' on MUAC, with no confidence intervals.
 #'
 #' @keywords internal
-#'
 #'
 #'
 mod_prevalence_call_prev_estimator_screening <- function(
@@ -293,8 +318,7 @@ mod_prevalence_call_prev_estimator_screening <- function(
 #' Invoke mwana's prevalence functions from within module server according to
 #' user specifications in the UI
 #'
-#'
-#' @keywords internal
+#' @inheritParams mod_prevalence_call_prev_estimator_screening
 #'
 #'
 mod_prevalence_call_prev_estimator_screening2 <- function(
@@ -329,6 +353,14 @@ mod_prevalence_call_prev_estimator_screening2 <- function(
 
 #'
 #'
+#' Neat prevalence output from survey
+#' 
+#' @param df data.frame containing the prevalence results.
+#' @param .type A choice from which the prevalence is derived.
+#' 
+#' @returns A tibble object of the same length and width as df, with column 
+#' names and values formatted for clarity and readability.
+#' 
 #' @keywords internal
 #'
 #'
@@ -393,6 +425,13 @@ mod_prevalence_neat_output_survey <- function(
 
 
 #'
+#' 
+#' Neat prevalence output from survey
+#' 
+#' @param df data.frame containing the prevalence results.
+#' 
+#' @returns A tibble object of the same length and width as df, with column 
+#' names and values formatted for clarity and readability.
 #'
 #' @keywords internal
 #'

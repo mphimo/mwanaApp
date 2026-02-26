@@ -5,9 +5,10 @@
 #'
 #'
 #' @param id Module ID
-#'
+#' @rdname module-id
+#' 
 #' @keywords internal
-#'
+#' 
 #'
 module_ui_upload <- function(id) {
   ## Namespace ID's ----
@@ -94,9 +95,10 @@ module_ui_upload <- function(id) {
 #'
 #' Module server for data upload
 #'
+#' @rdname module-id
 #'
-#' @param id Module ID
-#'
+#' @returns A reactive data object to be used in data wrangling tab.
+#' 
 #' @keywords internal
 #'
 #'

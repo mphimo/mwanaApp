@@ -6,7 +6,6 @@
 #'
 #' @param id Module ID
 #'
-#'
 #' @keywords internal
 #'
 #'
@@ -59,7 +58,7 @@ module_ui_plausibility_check <- function(id) {
         style = "font-size: 15px; font-weight: bold;"
       )),
 
-      #### A Placehoder for wrangled data and embed user feedback ----
+      #### A Placeholder for wrangled data and embed user feedback ----
       shinycssloaders::withSpinner(
         ui_element = DT::DTOutput(outputId = ns("checked")),
         type = 8,
@@ -77,7 +76,7 @@ module_ui_plausibility_check <- function(id) {
         )
       ),
 
-      #### Placeholder for donwload button ----
+      #### Placeholder for download button ----
       shiny::uiOutput(outputId = ns("download_plausibility"))
     )
   )
@@ -90,10 +89,8 @@ module_ui_plausibility_check <- function(id) {
 #'
 #' Module server for plausibility check
 #'
-#' @param id Module ID
-#'
-#'
-#' @keywords internal
+#' 
+#' @inheritParams module_server_wrangling
 #'
 #'
 module_server_plausibility_check <- function(id, data) {
@@ -133,19 +130,19 @@ module_server_plausibility_check <- function(id, data) {
           required_vars <- c(input$sex, input$weight, input$height, input$age, input$flags)
           if (any(required_vars == "" | is.null(required_vars))) {
             valid <- FALSE
-            message <- "Please select all required variables."
+            message <- "Please select all required variables for the chosen method (see the UI input list)."
           }
         } else if (input$method == "mfaz") {
           required_vars <- c(input$age, input$sex, input$muac, input$flags)
           if (any(required_vars == "" | is.null(required_vars))) {
             valid <- FALSE
-            message <- "Please select all required variables."
+            message <- "Please select all required variables for the chosen method (see the UI input list)."
           }
         } else if (input$method == "muac") {
           required_vars <- c(input$sex, input$muac, input$flags)
           if (any(required_vars == "" | is.null(required_vars))) {
             valid <- FALSE
-            message <- "Please select all required variables."
+            message <- "Please select all required variables for the chosen method (see the UI input list)."
           }
         } else {
           valid <- FALSE

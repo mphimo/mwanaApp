@@ -8,8 +8,6 @@
 #'
 #' @keywords internal
 #'
-#'
-#'
 module_ui_ipccheck <- function(id) {
   ## Namespace ID ----
   ns <- shiny::NS(id)
@@ -79,7 +77,7 @@ module_ui_ipccheck <- function(id) {
           )
         ),
 
-        #### Placeholder for donwload button ----
+        #### Placeholder for download button ----
         shiny::uiOutput(outputId = ns("download_ipccheck"))
       )
     )
@@ -87,17 +85,13 @@ module_ui_ipccheck <- function(id) {
 }
 
 
-## ---- Module: Sever ----------------------------------------------------------
+## ---- Module: Server ----------------------------------------------------------
 
 #'
 #'
 #' Module server for IPC Acute Malnutrition sample size requirements check
 #'
-#' @param id Module ID
-#'
-#'
-#' @keywords internal
-#'
+#' @inheritParams module_server_wrangling
 #'
 #'
 module_server_ipccheck <- function(id, data) {
@@ -131,17 +125,17 @@ module_server_ipccheck <- function(id, data) {
       if (input$ipccheck == "survey") {
         if (is.null(input$area1) || is.null(input$psu) || input$area1 == "" || input$psu == "") {
           valid <- FALSE
-          message <- "Please select all required variables."
+          message <- "Please select all required variables for the chosen method (see the UI input list)."
         }
       } else if (input$ipccheck == "screening") {
         if (is.null(input$area1) || is.null(input$sites) || input$area1 == "" || input$sites == "") {
           valid <- FALSE
-          message <- "Please select all required variables."
+          message <- "Please select all required variables for the chosen method (see the UI input list)."
         }
       } else if (input$ipccheck == "sentinel") {
         if (is.null(input$area1) || is.null(input$ssites) || input$area1 == "" || input$ssites == "") {
           valid <- FALSE
-          message <- "Please select all required variables."
+          message <- "Please select all required variables for the chosen method (see the UI input list)."
         }
       }
 
@@ -204,7 +198,7 @@ module_server_ipccheck <- function(id, data) {
           pageLength = 20,
           scrollX = FALSE,
           scrollY = "800px",
-          columDefs = list(list(className = "dt-center", targets = "_all"))
+          columnDefs = list(list(className = "dt-center", targets = "_all"))
         ),
         caption = if (nrow(dataset$checked) > 20) {
           paste(

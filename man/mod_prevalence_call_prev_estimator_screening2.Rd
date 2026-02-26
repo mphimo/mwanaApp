@@ -19,4 +19,3 @@ mod_prevalence_call_prev_estimator_screening2(
 Invoke mwana's prevalence functions from within module server according to
 user specifications in the UI
 }
-\keyword{internal}
