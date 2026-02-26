@@ -130,19 +130,19 @@ module_server_plausibility_check <- function(id, data) {
           required_vars <- c(input$sex, input$weight, input$height, input$age, input$flags)
           if (any(required_vars == "" | is.null(required_vars))) {
             valid <- FALSE
-            message <- "Please select all required variables for the chosen method (see the UI input list)."
+            message <- "Please select all required variables."
           }
         } else if (input$method == "mfaz") {
           required_vars <- c(input$age, input$sex, input$muac, input$flags)
           if (any(required_vars == "" | is.null(required_vars))) {
             valid <- FALSE
-            message <- "Please select all required variables for the chosen method (see the UI input list)."
+            message <- "Please select all required variables."
           }
         } else if (input$method == "muac") {
           required_vars <- c(input$sex, input$muac, input$flags)
           if (any(required_vars == "" | is.null(required_vars))) {
             valid <- FALSE
-            message <- "Please select all required variables for the chosen method (see the UI input list)."
+            message <- "Please select all required variables."
           }
         } else {
           valid <- FALSE

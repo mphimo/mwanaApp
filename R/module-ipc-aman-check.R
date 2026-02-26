@@ -125,17 +125,17 @@ module_server_ipccheck <- function(id, data) {
       if (input$ipccheck == "survey") {
         if (is.null(input$area1) || is.null(input$psu) || input$area1 == "" || input$psu == "") {
           valid <- FALSE
-          message <- "Please select all required variables for the chosen method (see the UI input list)."
+          message <- "Please select all required variables."
         }
       } else if (input$ipccheck == "screening") {
         if (is.null(input$area1) || is.null(input$sites) || input$area1 == "" || input$sites == "") {
           valid <- FALSE
-          message <- "Please select all required variables for the chosen method (see the UI input list)."
+          message <- "Please select all required variables."
         }
       } else if (input$ipccheck == "sentinel") {
         if (is.null(input$area1) || is.null(input$ssites) || input$area1 == "" || input$ssites == "") {
           valid <- FALSE
-          message <- "Please select all required variables for the chosen method (see the UI input list)."
+          message <- "Please select all required variables."
         }
       }
 
