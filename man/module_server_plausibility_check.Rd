@@ -8,8 +8,9 @@ module_server_plausibility_check(id, data)
 }
 \arguments{
 \item{id}{Module ID}
+
+\item{data}{An output and reactive data object from previous tab.}
 }
 \description{
 Module server for plausibility check
 }
-\keyword{internal}

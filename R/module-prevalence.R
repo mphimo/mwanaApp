@@ -9,7 +9,6 @@
 #' @keywords internal
 #'
 #'
-#'
 module_ui_prevalence <- function(id) {
   ## Namespace ID ----
   ns <- shiny::NS(id)
@@ -71,7 +70,7 @@ module_ui_prevalence <- function(id) {
         )
       ),
 
-      #### A Placehoder for wrangled data and embed user feedback ----
+      #### A Placeholder for wrangled data and embed user feedback ----
       shinycssloaders::withSpinner(
         ui_element = DT::DTOutput(outputId = ns("results")),
         type = 8,
@@ -89,7 +88,7 @@ module_ui_prevalence <- function(id) {
         )
       ),
 
-      #### Placeholder for donwload button ----
+      #### Placeholder for download button ----
       shiny::uiOutput(outputId = ns("download_prevalence"))
     )
   )
@@ -103,9 +102,7 @@ module_ui_prevalence <- function(id) {
 #'
 #' Module server for prevalence analysis
 #'
-#' @param id Module ID
-#'
-#' @keywords internal
+#' @inheritParams module_server_wrangling
 #'
 #'
 module_server_prevalence <- function(id, data) {

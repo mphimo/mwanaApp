@@ -8,8 +8,18 @@
 #'
 #'
 #' Display input variables dynamically, according to UI for screening
+#' 
+#' @param vars An object holding the data variable names. This is used to display
+#' all the variables in the input variable of the UI. 
+#' 
+#' @param source User-selected source of data. As in the underlying method 
+#' used to collect the data. Choices are survey, screening and sentinel.
 #'
-#'
+#' @param ns A placeholder for Shiny module namespace.
+#' 
+#' @returns A set of input variables specific for the user-selected source of 
+#' data.
+#' 
 #' @keywords internal
 #'
 #'
@@ -103,7 +113,14 @@ mod_ipccheck_display_input_variables <- function(vars, source, ns) {
 #' Invoke mwana's IPC Acute Malnutrition minimum sample size requirement checker
 #' from within the module server
 #'
-#'
+#' @param df,cluster,source,area1,area2 Input variables collected from the UI
+#' and required to pass to mwana::mw_check_ipcamn_ssreq() function.
+#' 
+#' @returns A summary tibble containing check results for:
+#' + n_clusters - the total number of unique clusters or screening or site identifiers;
+#' + n_obs - the corresponding total number of children in the dataset; and,
+#' + meet_ipc - whether the IPC AMN requirements were met.
+#' 
 #' @keywords internal
 #'
 #'

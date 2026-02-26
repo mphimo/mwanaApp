@@ -19,6 +19,15 @@ mod_plausibility_call_checker(
   .for = c("wfhz", "muac", "mfaz")
 )
 }
+\arguments{
+\item{df, age, sex, muac, weight, height, flags, area1, area2, area3, .for}{Input
+variables collected from the UI and required to pass to
+mwana::mw_plausibility_check_wfhz().}
+}
+\value{
+A single-row summary tibble with columns containing the plausibility
+check results.
+}
 \description{
 Invoke mwana's plausibility checkers dynamically from within module server,
 according to user specifications in the UI
