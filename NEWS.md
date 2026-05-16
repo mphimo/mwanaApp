@@ -1,3 +1,10 @@
+# mwanaApp 0.2.1
+
+### Bug fixes
+
++ Resolved an issue where hyperlinks in the app were directing users to a 
+non‑existent page.
+
 # mwanaApp 0.2.0
 
 ### New features ✨
