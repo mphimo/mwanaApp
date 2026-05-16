@@ -31,7 +31,7 @@ ui <- tagList(
           style = "margin-right: 10px; font-family: Arial, sans-serif; font-size: 50px;"
         ),
         tags$a(
-          href = "https://nutriverse.io/mwana/",
+          href = "https://mphimo.github.io/mwana/",
           tags$span(
             tags$img(src = "logo.png", height = "40px"),
             style = "margin-right: 20px;"
@@ -87,13 +87,13 @@ ui <- tagList(
                 tags$h3(
                   style = "marging: 0; font-weight: bold;",
                   "A seamless graphical interface to the mwana R package for data 
-                  wrangling, plausibility checks, and prevalence estimation"
+                  wrangling, plausibility checks, and prevalence estimation of wasting"
                 )
             ),
 
                 ##### Right side: logo ----
                 tags$a(
-                  href = "https://nutriverse.io/mwana/",
+                  href = "https://mphimo.github.io/mwana/",
                   tags$img(
                     src = "logo.png",
                     height = "160px",
@@ -117,7 +117,7 @@ ui <- tagList(
                   by automating key steps of the R package
                   ",
                   tags$a(
-                    href = "https://nutriverse.io/mwana/",
+                    href = "https://mphimo.github.io/mwana/",
                     tags$code("mwana")
                   ), "for non-R users."
                 ),
@@ -312,8 +312,8 @@ ui <- tagList(
                     tags$code("Age categories (6-23 and 24-59)"), "input field.
                     This ensures that MUAC-based prevalence gets age-weighted
                     whenever there is excess of children in the 6-23' category.", "Read more",
-                    tags$a("here", href = "https://nutriverse.io/mwana/dev/reference/age_ratio.html"),
-                    "and", tags$a("here", href = "https://nutriverse.io/mwana/dev/articles/prevalence.html#sec-prevalence-muac"),
+                    tags$a("here", href = "https://mphimo.github.io/mwana/dev/reference/age_ratio.html"),
+                    "and", tags$a("here", href = "https://mphimo.github.io/mwana/dev/articles/prevalence.html#sec-prevalence-muac"),
                     "."
                   ),
                   tags$p(
