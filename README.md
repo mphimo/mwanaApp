@@ -54,15 +54,15 @@ citation("mwanaApp")
 
       Tomás Zaba (2026). _mwanaApp: A seamless graphical interface to the
       mwana R package for data wrangling, plausibility checks, and
-      prevalence estimation_. R package version 0.2.0,
+      prevalence estimation of wasting_. R package version 0.2.1,
       <https://github.com/mphimo/mwanaApp>.
 
     A BibTeX entry for LaTeX users is
 
       @Manual{,
-        title = {mwanaApp: A seamless graphical interface to the mwana R package for data wrangling, plausibility checks, and prevalence estimation},
+        title = {mwanaApp: A seamless graphical interface to the mwana R package for data wrangling, plausibility checks, and prevalence estimation of wasting},
         author = {{Tomás Zaba}},
         year = {2026},
-        note = {R package version 0.2.0},
+        note = {R package version 0.2.1},
         url = {https://github.com/mphimo/mwanaApp},
       }
