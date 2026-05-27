@@ -31,7 +31,7 @@ ui <- tagList(
         style = "display: flex; align-items: center;",
         tags$span(
           "mwana",
-          style = "margin-right: 10px; font-family: Arial, sans-serif; font-size: 50px;"
+          style = "margin-right: 10px; font-family: Roboto, Arial, sans-serif; font-size: 50px;"
         ),
         tags$a(
           href = "https://mphimo.github.io/mwana/",

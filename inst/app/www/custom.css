@@ -7,9 +7,7 @@
 body {
   color: rgb(68, 68, 68);
   background-color: #f9fdfb;
-  font-family: system-ui, "Segoe UI", Roboto, "Helvetica Neue",
-    "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji",
-    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-family: Roboto, Arial, sans-serif, "Helvetica Neue",
 }
 
 
@@ -30,9 +28,6 @@ body {
   white-space-collapse: collapse;
   width: auto;
 }
-
-/* Menu items */
-.menu-items {}
 
 /* Data upload progress bar */
 span.btn.btn-default.btn-file {
