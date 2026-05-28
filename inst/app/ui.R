@@ -35,6 +35,7 @@ ui <- tagList(
         ),
         tags$a(
           href = "https://mphimo.github.io/mwana/",
+          target = "_blank",
           tags$span(
             tags$img(src = "logo.png"),
           )
@@ -99,6 +100,7 @@ ui <- tagList(
                 ##### Right side: logo ----
                 tags$a(
                   href = "https://mphimo.github.io/mwana/",
+                  target = "_blank",
                   tags$img(
                     src = "logo.png",
                     height = "160px",
@@ -123,6 +125,7 @@ ui <- tagList(
                   ",
                 tags$a(
                   href = "https://mphimo.github.io/mwana/",
+                  target = "_blank",
                   tags$code("mwana")
                 ),
                 "for non-R users."
@@ -349,12 +352,14 @@ ui <- tagList(
                   "Read more",
                   tags$a(
                     "here",
-                    href = "https://mphimo.github.io/mwana/dev/reference/age_ratio.html"
+                    href = "https://mphimo.github.io/mwana/dev/reference/age_ratio.html",
+                    target = "_blank",
                   ),
                   "and",
                   tags$a(
                     "here",
-                    href = "https://mphimo.github.io/mwana/dev/articles/prevalence.html#sec-prevalence-muac"
+                    href = "https://mphimo.github.io/mwana/dev/articles/prevalence.html#sec-prevalence-muac",
+                    target = "_blank",
                   ),
                   "."
                 ),
