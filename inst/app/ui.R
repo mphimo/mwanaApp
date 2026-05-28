@@ -65,7 +65,7 @@ ui <- tagList(
       ### Left sidebar for contents ----
       layout_sidebar(
         sidebar = tags$div(
-          style = "padding: 1rem;",
+          class = "table-contents",
           tags$h4("Contents"),
           tags$h6(tags$a(href = "#sec1", "Welcome")),
           tags$h6(tags$a(href = "#sec2", "Data Upload")),

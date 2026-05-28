@@ -9,7 +9,17 @@
 body {
   background-color: #f9fdfb;
   color: rgb(68, 68, 68);
-  font-family: Roboto, Arial, sans-serif, "Helvetica Neue",
+}
+
+p,
+li,
+h6,
+h4,
+h3,
+b,
+h6,
+span {
+  font-family: Roboto, Arial, sans-serif, "Helvetica Neue";
 }
 
 
@@ -96,3 +106,6 @@ a span img {
   right: 20px;
   font-family: Roboto, Arial, Helvetica, sans-serif;
 }
+
+
+/* ---- Main page ----------------------------------------------------------- */
