@@ -108,4 +108,65 @@ a span img {
 }
 
 
-/* ---- Main page ----------------------------------------------------------- */
+/* ---- Progress bar -------------------------------------------------------- */
+
+
+/* Data upload progress bar */
+span.btn.btn-default.btn-file {
+  fill: #004225 !important;
+  background-color: #004225;
+}
+
+/* Data upload progress bar */
+.progress-bar {
+  fill: #004225 !important;
+  background-color: #004225 !important;
+}
+
+
+/* ---- Radio Buttons ------------------------------------------------------- */
+
+
+/* Radio button labels */
+#wrangle_data-wrangle,
+#ipc_check-ipccheck,
+#plausible-method,
+#prevalence-amn_method_survey,
+#prevalence-amn_method_screening,
+#prevalence-source label {
+  font-size: 14px;
+}
+
+/* Buttons */
+.btn-primary {
+  background-color: #004225 !important;
+  border-color: #004225 !important;
+}
+
+.btn-primary:hover {
+  background-color: rgba(255, 255, 255, 0.7);
+  color: rgba(209, 197, 226, 0.8);
+}
+
+/* Radio buttons */
+.form-check-input:checked,
+.shiny-input-container .checkbox input:checked,
+.shiny-input-container .checkbox-inline input:checked,
+.shiny-input-container .radio input:checked,
+.shiny-input-container .radio-inline input:checked {
+  background-color: #004225;
+  border-color: #004225
+}
+
+
+/* ---- Pagination ---------------------------------------------------------- */
+
+/* Pagination of table under view data */
+
+.page-link.active,
+.active>.page-link {
+  z-index: 3;
+  color: var(--bs-pagination-active-color);
+  background-color: #004225;
+  border-color: #004225;
+}
