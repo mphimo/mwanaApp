@@ -352,13 +352,13 @@ ui <- tagList(
                   "Read more",
                   tags$a(
                     "here",
-                    href = "https://mphimo.github.io/mwana/dev/reference/age_ratio.html",
+                    href = "https://mphimo.github.io/mwana/reference/age_ratio.html",
                     target = "_blank",
                   ),
                   "and",
                   tags$a(
                     "here",
-                    href = "https://mphimo.github.io/mwana/dev/articles/prevalence.html#sec-prevalence-muac",
+                    href = "https://mphimo.github.io/mwana/articles/prevalence.html#sec-prevalence-muac",
                     target = "_blank",
                   ),
                   "."
