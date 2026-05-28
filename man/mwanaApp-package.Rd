@@ -6,7 +6,7 @@
 \alias{mwanaApp-package}
 \title{mwanaApp: mwana GUI}
 \description{
-A seamless graphical interface to the mwana R package for data wrangling, plausibility checks, and prevalence estimation.
+A seamless graphical interface to the mwana R package for data wrangling, plausibility checks, and prevalence estimation of wasting.
 }
 \seealso{
 Useful links:
