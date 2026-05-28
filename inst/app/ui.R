@@ -24,20 +24,19 @@ ui <- tagList(
   ),
   page_navbar(
     title = tags$div(
-      style = "display: flex; align-items: center; justify-content: space-between; width: 100%;",
+      class = "page-navbar",
 
       ### Left side: app name and logo ----
       tags$div(
-        style = "display: flex; align-items: center;",
+        class = "brand",
         tags$span(
+          class = "brand-span",
           "mwana",
-          style = "margin-right: 10px; font-family: Roboto, Arial, sans-serif; font-size: 50px;"
         ),
         tags$a(
           href = "https://mphimo.github.io/mwana/",
           tags$span(
-            tags$img(src = "logo.png", height = "40px"),
-            style = "margin-right: 20px;"
+            tags$img(src = "logo.png"),
           )
         )
       ),
