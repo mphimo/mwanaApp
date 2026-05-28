@@ -18,9 +18,10 @@ library(rlang)
 ui <- tagList(
   ### Link up with custom .css file ----
   tags$head(
-    #tags$meta(name = "description", content = "mwana App"),
+    tags$meta(charset = "UTF-8"),
+    tags$meta(name = "description", content = "mwana App"),
     tags$link(rel = "stylesheet", type = "text/css", href = "custom.css"), # external stylesheet
-    tags$link(rel = "icon", href = "logo.png")
+    tags$link(rel = "icon", href = "logo.png"),
   ),
   page_navbar(
     title = tags$div(
