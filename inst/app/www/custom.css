@@ -47,7 +47,6 @@ nav .container-fluid {
   color: rgba(255, 255, 255, 0.7);
 }
 
-
 a span {
   margin-right: 20px;
 }
@@ -65,6 +64,12 @@ a span img {
   color: rgba(255, 255, 255, 0.7);
   font-family: Roboto;
   font-size: 15px;
+}
+
+/* Emphasise active tab */
+
+.navbar-nav .nav-link.active {
+  color: rgba(255, 255, 255, 0.7);
 }
 
 /* Target tab lists on hover */
