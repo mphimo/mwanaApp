@@ -20,6 +20,7 @@ ui <- tagList(
   tags$head(
     tags$meta(charset = "UTF-8"),
     tags$meta(name = "description", content = "mwana App"),
+    tags$title("mwana App"),
     tags$link(rel = "stylesheet", type = "text/css", href = "custom.css"), # external stylesheet
     tags$link(rel = "icon", href = "logo.png"),
   ),
