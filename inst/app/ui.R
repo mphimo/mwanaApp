@@ -120,7 +120,7 @@ ui <- tagList(
                 "
                   This app is a lightweight, field-ready application
                   thoughtful designed to seamlessly streamline plausibility checks
-                  and wasting prevalence estimation of child anthropometric data,
+                  and wasting prevalence estimation of child anthropometric data
                   by automating key steps of the R package
                   ",
                 tags$a(
@@ -131,7 +131,7 @@ ui <- tagList(
                 "for non-R users."
               ),
               tags$p(
-                "The app is divided in five easy-to-navigate tabs, apart from
+                "The app is divided into five easy-to-navigate tabs, apart from
                   the Home - where you at right now.",
                 tags$ol(
                   tags$li(tags$b("Data Upload")),
@@ -156,7 +156,7 @@ ui <- tagList(
                     dataset saved in a comma-separated-value format (.csv); this is
                     the only accepted format. Click on the 'Browse' button to locate
                     the file to be uploaded from your computer; it is as simple as that.
-                    Once uploaded, the first 20 rows will be priviewed on the right side.
+                    Once uploaded, the first 20 rows will be priviewed on the right side of the tab.
                     "
                 ),
                 tags$ul(
@@ -165,7 +165,7 @@ ui <- tagList(
                     tags$p(
                       "
                         The data to be uploaded must have been tidy up in accordance
-                        to the below-described app's",
+                        to the below-described app ",
                       tags$b("input file"),
                       "and",
                       tags$b("input variable"),
@@ -180,7 +180,7 @@ ui <- tagList(
                             tags$b("File naming:"),
                             "the file name must use
                             underscore ( _ ) to separate words. Hyphen ( - ) or
-                            simple spaces will lead to errors along the uploading
+                            simple spaces could lead to errors along the uploading
                             process. Consider the following naming example:",
                             tags$em("my_file_to_upload.csv")
                           )
@@ -190,6 +190,23 @@ ui <- tagList(
                       tags$li(
                         tags$b("Input variable requirements"),
                         tags$ul(
+                          tags$li(
+                            tags$b("Date of data collection:"),
+                            "this is an optional variable. If provided, it is 
+                            used to calculate the child’s age in months. 
+                            The date format should be DD/MM/YYYY (e.g., 16/07/2023).  
+                            Variable names may follow any format. For longer names, 
+                            separate words with an underscore (e.g., survey_date)."
+                          ),
+                          tags$li(
+                            tags$b("Date of birth:"),
+                            "this is an optional variable. If provided, it is 
+                            used to calculate the child’s age in months. 
+                            The date format should be DD/MM/YYYY (e.g., 16/07/2023).
+                            Variable names may follow any format. For longer names, 
+                            separate words with an underscore (e.g., birth_date).
+                            "
+                          ),
                           tags$li(
                             tags$b("Age:"),
                             "values must be in months. The variable name
@@ -201,16 +218,28 @@ ui <- tagList(
                               for girls."
                           ),
                           tags$li(
+                            tags$b("Weight"),
+                            "child's weight in kilograms. The variable name must
+                             be written in lowercase ('weight')."
+                          ),
+                          tags$li(
+                            tags$b("Height"),
+                            "child's height in centimetres. The variable name must
+                             be written in lowercase ('height')."
+                          ),
+                          tags$li(
                             tags$b("MUAC:"),
                             "values must be in millimetres. Ensure there
                               are no strange numbers, such as '130.1'. The presence
-                              of decimal places will raise error in the data wrangling
-                              tab and hault the app."
+                              of decimal places will raise an error in the data wrangling
+                              tab and hault the app. The variable name
+                              must be written in lowercase ('muac')."
                           ),
                           tags$li(
                             tags$b("Oedema:"),
                             "values must be given in 'y' for yes,
-                              and 'n' for no."
+                              and 'n' for no. Variable names may follow any format. 
+                              For longer names, separate words with an underscore."
                           )
                         )
                       )
@@ -281,7 +310,7 @@ ui <- tagList(
                 style = "text-align: justify;",
                 tags$p(tags$b("Plausibility Check")),
                 tags$p(
-                  "As above-described, this tab depends on the previous tab.
+                  "As above described, this tab depends on the previous tab.
                     Select the same method as in the data wrangling. Thereafter,
                     supply the input fields with the corresponding variables
                     from the dataset. For this, a dropdown list of the variable
