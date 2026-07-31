@@ -65,28 +65,32 @@ mod_prevalence_display_input_variables <- function(
         )
       ),
       choices = c("", vars)
-    ),
-    shiny::selectInput(
-      inputId = ns("wts"),
-      label = shiny::tagList(
-        htmltools::tags$span(
-          "Survey weights",
-          style = "font-size: 14px; font-weight: bold;"
-        ),
-        htmltools::tags$div(
-          style = "font-size: 0.85em; color: #6c7574;",
-          "Final survey weights for weighted analysis"
-        )
-      ),
-      choices = c("", vars)
     )
   )
 
   #### Conditional inputs depending on source of data ----
   if (source == "survey") {
     inputs <- c(
+      ##### Display grouping variables ----
       inputs,
+
       list(
+        ##### Display input variable for survey weights ----
+        shiny::selectInput(
+          inputId = ns("wts"),
+          label = shiny::tagList(
+            htmltools::tags$span(
+              "Survey weights",
+              style = "font-size: 14px; font-weight: bold;"
+            ),
+            htmltools::tags$div(
+              style = "font-size: 0.85em; color: #6c7574;",
+              "Final survey weights for weighted analysis"
+            )
+          ),
+          choices = c("", vars)
+        ),
+
         if (isTRUE(indicator_surv == "muac")) {
           #### Display age ----
           shiny::tagList(
