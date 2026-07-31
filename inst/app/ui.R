@@ -120,7 +120,7 @@ ui <- tagList(
                 "
                   This app is a lightweight, field-ready application
                   thoughtful designed to seamlessly streamline plausibility checks
-                  and wasting prevalence estimation of child anthropometric data,
+                  and wasting prevalence estimation of child anthropometric data
                   by automating key steps of the R package
                   ",
                 tags$a(
@@ -131,7 +131,7 @@ ui <- tagList(
                 "for non-R users."
               ),
               tags$p(
-                "The app is divided in five easy-to-navigate tabs, apart from
+                "The app is divided into five easy-to-navigate tabs, apart from
                   the Home - where you at right now.",
                 tags$ol(
                   tags$li(tags$b("Data Upload")),
@@ -165,7 +165,7 @@ ui <- tagList(
                     tags$p(
                       "
                         The data to be uploaded must have been tidy up in accordance
-                        to the below-described app's",
+                        to the below-described app ",
                       tags$b("input file"),
                       "and",
                       tags$b("input variable"),
@@ -310,7 +310,7 @@ ui <- tagList(
                 style = "text-align: justify;",
                 tags$p(tags$b("Plausibility Check")),
                 tags$p(
-                  "As above-described, this tab depends on the previous tab.
+                  "As above described, this tab depends on the previous tab.
                     Select the same method as in the data wrangling. Thereafter,
                     supply the input fields with the corresponding variables
                     from the dataset. For this, a dropdown list of the variable
