@@ -1,4 +1,15 @@
-# mwanaApp 0.2.2
+# mwanaApp 0.2.2  
+
+### Bug fixes 
+
++ Removed the survey weights input field from the prevalence module's UI when 
+the selected data source is "screening" or "sentinel" (it is now shown only 
+for the "survey" source) (#45).
+
+### General updates 
++ Revised user-guide documentation to enhance clarity on type and format of the 
+input variables to the app.
++ Updated hyperlinks to open in a new browser tab.
 
 # mwanaApp 0.2.1
 
