@@ -12,7 +12,6 @@ A seamless graphical interface to the mwana R package for data wrangling, plausi
 Useful links:
 \itemize{
   \item \url{https://github.com/mphimo/mwanaApp}
-  \item \url{https://mphimo.github.io/mwanaApp/}
   \item Report bugs at \url{https://github.com/mphimo/mwanaApp/issues}
 }
 
