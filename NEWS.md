@@ -1,3 +1,5 @@
+# mwanaApp 0.2.2
+
 # mwanaApp 0.2.1
 
 ### Bug fixes

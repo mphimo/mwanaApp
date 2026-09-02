@@ -1,6 +1,6 @@
 Package: mwanaApp
 Title: mwana GUI
-Version: 0.2.1
+Version: 0.2.2
 Authors@R: 
     person(given = "Tomás", 
             family = "Zaba",
