@@ -2,16 +2,12 @@
 #  Test Suite: Module Data Upload
 # ==============================================================================
 
-
 ## ---- Module: Data Upload ----------------------------------------------------
 
-
-### Skip test on windows ----
-# if (identical(Sys.getenv("CI"), "true") && Sys.info()[["sysname"]] == "Windows") {
-#   skip("Skipping shinytest2 integration tests on Windows CI to reduce runtime")
-# }
-
 testthat::test_that("Data upload tab works as expected", {
+  ### Skip test on CRAN ----
+  testthat::skip_on_cran()
+
   ### Initialise app ----
   app <- shinytest2::AppDriver$new(
     app_dir = testthat::test_path("fixtures"),
@@ -46,23 +42,41 @@ testthat::test_that("Data upload tab works as expected", {
   )
 
   ### Test checks ----
-  testthat::expect_gte(object = column_names$input$`upload_data-upload`$size, 130756)
-  testthat::expect_equal(object = column_names$input$`upload_data-upload`$type, "text/csv")
+  testthat::expect_gte(
+    object = column_names$input$`upload_data-upload`$size,
+    130756
+  )
+  testthat::expect_equal(
+    object = column_names$input$`upload_data-upload`$type,
+    "text/csv"
+  )
   testthat::expect_true(object = column_names$output$`upload_data-fileUploaded`)
-  testthat::expect_true(app$get_js("$('#upload_data-uploadedDataTable').length > 0"))
+  testthat::expect_true(app$get_js(
+    "$('#upload_data-uploadedDataTable').length > 0"
+  ))
   expect_equal(
-    object = app$get_js("
+    object = app$get_js(
+      "
     $('#upload_data-uploadedDataTable thead th').map(function() {
       return $(this).text();
     }).get();
-  ")[1:10] |> as.character(),
+  "
+    )[1:10] |>
+      as.character(),
     expected = c(
-      "province", "strata", "cluster", "sex", "age", "weight", "height", 
-      "oedema", "muac", "wtfactor"
+      "province",
+      "strata",
+      "cluster",
+      "sex",
+      "age",
+      "weight",
+      "height",
+      "oedema",
+      "muac",
+      "wtfactor"
     )
   )
 
   #### Stop the app ----
   app$stop()
 })
-
