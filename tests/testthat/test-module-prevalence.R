@@ -69,6 +69,9 @@ testthat::test_that(desc = "Module works well to estimate weighted-WFHZ prevalen
   ### Click on Estime Prevalence button ----
   app$click(input = "prevalence-estimate")
   app$wait_for_value(output = "prevalence-results", timeout = 40000)
+  #### Donwload results ----
+  app$wait_for_idle(timeout = 40000)
+  results <- app$get_download(output = "prevalence-download_results")
 
   ### Capture JavaScript expressions to return results's cols and values ----
   js_cols <- "$('#prevalence-results thead th').map(function()
@@ -90,6 +93,15 @@ testthat::test_that(desc = "Module works well to estimate weighted-WFHZ prevalen
   testthat::expect_equal(length(app$get_js(js_cols)[1:19]), 19)
   testthat::expect_equal(as.numeric(weighted_pop), 292611)
   testthat::expect_equal(as.numeric(gam_prev), 6.1)
+  testthat::expect_equal(
+    object = basename(results),
+    paste0(
+      "mwana-amn-prevalence-survey-wfhz_",
+      Sys.Date(),
+      ".xlsx",
+      sep = ""
+    )
+  )
 
   ### Stop the app ----
   app$stop()
@@ -161,6 +173,9 @@ testthat::test_that(desc = "Module works well to estimate unweighted-WFHZ preval
   ### Click on Estime Prevalence button ----
   app$click(input = "prevalence-estimate")
   app$wait_for_value(output = "prevalence-results", timeout = 40000)
+  #### Donwload results ----
+  app$wait_for_idle(timeout = 40000)
+  results <- app$get_download(output = "prevalence-download_results")
 
   ### Capture JavaScript expressions to return results's cols and values ----
   js_cols <- "$('#prevalence-results thead th').map(function()
@@ -178,6 +193,15 @@ testthat::test_that(desc = "Module works well to estimate unweighted-WFHZ preval
   testthat::expect_equal(length(app$get_js(js_cols)[1:19]), 19)
   testthat::expect_equal(as.numeric(pop), 280)
   testthat::expect_equal(as.numeric(gam_prev), 6.1)
+  testthat::expect_equal(
+    object = basename(results),
+    paste0(
+      "mwana-amn-prevalence-survey-wfhz_",
+      Sys.Date(),
+      ".xlsx",
+      sep = ""
+    )
+  )
 
   ### Stop the app ----
   app$stop()
@@ -254,6 +278,9 @@ testthat::test_that(desc = "Module works well to estimate weighted-MUAC prevalen
   ### Click on Estime Prevalence button ----
   app$click(input = "prevalence-estimate")
   app$wait_for_value(output = "prevalence-results", timeout = 40000)
+  #### Donwload results ----
+  app$wait_for_idle(timeout = 40000)
+  results <- app$get_download(output = "prevalence-download_results")
 
   ### Capture JavaScript expressions to return results's cols and values ----
   js_cols <- "$('#prevalence-results thead th').map(function()
@@ -283,6 +310,15 @@ testthat::test_that(desc = "Module works well to estimate weighted-MUAC prevalen
   testthat::expect_equal(length(app$get_js(js_cols)[1:19]), 19)
   testthat::expect_equal(as.numeric(prev[2]), 7.7) # GAM
   testthat::expect_equal(as.numeric(weighted_pop), 307395)
+  testthat::expect_equal(
+    object = basename(results),
+    paste0(
+      "mwana-amn-prevalence-survey-muac_",
+      Sys.Date(),
+      ".xlsx",
+      sep = ""
+    )
+  )
 
   ### Stop the app ----
   app$stop()
@@ -359,6 +395,9 @@ testthat::test_that(desc = "Module works well to estimate unweighted-MUAC preval
   ### Click on Estime Prevalence button ----
   app$click(input = "prevalence-estimate")
   app$wait_for_value(output = "prevalence-results", timeout = 40000)
+  #### Donwload results ----
+  app$wait_for_idle(timeout = 40000)
+  results <- app$get_download(output = "prevalence-download_results")
 
   ### Capture JavaScript expressions to return results's cols and values ----
   js_cols <- "$('#prevalence-results thead th').map(function()
@@ -384,6 +423,15 @@ testthat::test_that(desc = "Module works well to estimate unweighted-MUAC preval
   testthat::expect_equal(length(app$get_js(js_cols)[1:19]), 19)
   testthat::expect_equal(as.numeric(prev), 8.0) # GAM
   testthat::expect_equal(as.numeric(pop), 300)
+  testthat::expect_equal(
+    object = basename(results),
+    paste0(
+      "mwana-amn-prevalence-survey-muac_",
+      Sys.Date(),
+      ".xlsx",
+      sep = ""
+    )
+  )
 
   ### Stop the app ----
   app$stop()
@@ -460,6 +508,9 @@ testthat::test_that(desc = "Module works well to estimate weighted-combined prev
   ### Click on Estime Prevalence button ----
   app$click(input = "prevalence-estimate")
   app$wait_for_value(output = "prevalence-results", timeout = 40000)
+  #### Donwload results ----
+  app$wait_for_idle(timeout = 40000)
+  results <- app$get_download(output = "prevalence-download_results")
 
   ### Capture JavaScript expressions to return results's cols and values ----
   js_cols <- "$('#prevalence-results thead th').map(function()
@@ -481,6 +532,15 @@ testthat::test_that(desc = "Module works well to estimate weighted-combined prev
   testthat::expect_equal(length(app$get_js(js_cols)[1:19]), 19)
   testthat::expect_equal(as.numeric(prev[2]), 10.8) # GAM
   testthat::expect_equal(as.numeric(weighted_pop), 288534)
+  testthat::expect_equal(
+    object = basename(results),
+    paste0(
+      "mwana-amn-prevalence-survey-combined_",
+      Sys.Date(),
+      ".xlsx",
+      sep = ""
+    )
+  )
 
   ### Stop the app ----
   app$stop()
@@ -557,6 +617,9 @@ testthat::test_that(desc = "Module works well to estimate unweighted-combined pr
   ### Click on Estime Prevalence button ----
   app$click(input = "prevalence-estimate")
   app$wait_for_value(output = "prevalence-results", timeout = 40000)
+  #### Donwload results ----
+  app$wait_for_idle(timeout = 40000)
+  results <- app$get_download(output = "prevalence-download_results")
 
   ### Capture JavaScript expressions to return results's cols and values ----
   js_cols <- "$('#prevalence-results thead th').map(function()
@@ -574,6 +637,15 @@ testthat::test_that(desc = "Module works well to estimate unweighted-combined pr
   testthat::expect_equal(length(app$get_js(js_cols)[1:19]), 19)
   testthat::expect_equal(as.numeric(prev), 10.5) # GAM
   testthat::expect_equal(as.numeric(pop), 276)
+  testthat::expect_equal(
+    object = basename(results),
+    paste0(
+      "mwana-amn-prevalence-survey-combined_",
+      Sys.Date(),
+      ".xlsx",
+      sep = ""
+    )
+  )
 
   ### Stop the app ----
   app$stop()
@@ -656,6 +728,9 @@ testthat::test_that(desc = "Module works well to estimate prevalence from screen
   ### Click on Estime Prevalence button ----
   app$click(input = "prevalence-estimate")
   app$wait_for_value(output = "prevalence-results", timeout = 40000)
+  #### Donwload results ----
+  app$wait_for_idle(timeout = 40000)
+  results <- app$get_download(output = "prevalence-download_results")
 
   ### Capture JavaScript expressions to return results's cols and values ----
   js_cols <- "$('#prevalence-results thead th').map(function()
@@ -685,6 +760,15 @@ testthat::test_that(desc = "Module works well to estimate prevalence from screen
   testthat::expect_equal(as.numeric(prev_unit_a)[2], 1.2) # SAM
   testthat::expect_equal(as.numeric(prev_unit_a)[3], 5.3) # MAM
   testthat::expect_equal(as.numeric(prev_unit_b), 12.4) # Age-weighted GAM
+  testthat::expect_equal(
+    object = basename(results),
+    paste0(
+      "mwana-amn-prevalence-screening-age-avail_",
+      Sys.Date(),
+      ".xlsx",
+      sep = ""
+    )
+  )
 
   ### Stop the app ----
   app$stop()
@@ -767,6 +851,9 @@ testthat::test_that(desc = "Prevalence tab works as expected when age is given i
   app$click(input = "prevalence-estimate")
   #### Wait until output has been rendered ----
   app$wait_for_value(output = "prevalence-results", timeout = 40000)
+  #### Donwload results ----
+  app$wait_for_idle(timeout = 40000)
+  results <- app$get_download(output = "prevalence-download_results")
 
   ### Capture JavaScript expressions to return results's cols and values ----
   js_cols <- "$('#prevalence-results thead th').map(function()
@@ -796,6 +883,15 @@ testthat::test_that(desc = "Prevalence tab works as expected when age is given i
   testthat::expect_equal(as.numeric(prev_unit_a)[2], 1.1) # SAM
   testthat::expect_equal(as.numeric(prev_unit_a)[3], 5.2) # MAM
   testthat::expect_equal(as.numeric(prev_unit_b), 12.6) # Age-weighted GAM
+  testthat::expect_equal(
+    object = basename(results),
+    paste0(
+      "mwana-amn-prevalence-screening-age-notavail_",
+      Sys.Date(),
+      ".xlsx",
+      sep = ""
+    )
+  )
 
   ### Stop the app ----
   app$stop()
