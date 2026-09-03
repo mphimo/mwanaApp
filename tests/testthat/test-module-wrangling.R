@@ -7,6 +7,9 @@
 
 
 testthat::test_that(desc = "Server data wrangling works as expected for WFHZ", {
+  ### Skip test on CRAN ----
+  testthat::skip_on_cran()
+
   ## Initialise app ----
   app <- shinytest2::AppDriver$new(
     app_dir = testthat::test_path("fixtures"),
@@ -68,6 +71,9 @@ testthat::test_that(desc = "Server data wrangling works as expected for WFHZ", {
 ### When user supplies dos and dob for age wrangling ----
 
 testthat::test_that(desc = "Server data wrangling wrangles age correctly in WFHZ", {
+  ### Skip test on CRAN ----
+  testthat::skip_on_cran()
+
   ## Initialise app ----
   app <- shinytest2::AppDriver$new(
     app_dir = testthat::test_path("fixtures"),
@@ -142,6 +148,9 @@ testthat::test_that(desc = "Server data wrangling wrangles age correctly in WFHZ
 
 
 testthat::test_that(desc = "Server data wrangling works as expected for MFAZ", {
+  ### Skip test on CRAN ----
+  testthat::skip_on_cran()
+
   ## Initialise app ----
   app <- shinytest2::AppDriver$new(
     app_dir = testthat::test_path("fixtures"),
@@ -204,6 +213,9 @@ testthat::test_that(desc = "Server data wrangling works as expected for MFAZ", {
 
 ### When user supplies dos and dob for age wrangling ----
 testthat::test_that(desc = "Server data wrangling wrangles age correctly in MFAZ", {
+  ### Skip test on CRAN ----
+  testthat::skip_on_cran()
+
   ## Initialise app ----
   app <- shinytest2::AppDriver$new(
     app_dir = testthat::test_path("fixtures"),
@@ -279,6 +291,9 @@ testthat::test_that(desc = "Server data wrangling wrangles age correctly in MFAZ
 testthat::test_that(
   desc = "Server data wrangling works as expected for raw MUAC values",
   code = {
+    ### Skip test on CRAN ----
+    testthat::skip_on_cran()
+
     #### Initialise app ----
     app <- shinytest2::AppDriver$new(
       app_dir = testthat::test_path("fixtures"),
@@ -345,6 +360,9 @@ testthat::test_that(
 testthat::test_that(
   desc = "Server data wrangling works as expected for combined wrangling",
   {
+    ### Skip test on CRAN ----
+    testthat::skip_on_cran()
+
     ## Initialise app ----
     app <- shinytest2::AppDriver$new(
       app_dir = testthat::test_path("fixtures"),
@@ -402,6 +420,9 @@ testthat::test_that(
 ### When user supplies dos and dob for age wrangling ----
 testthat::test_that(desc = "Server data wrangling wrangles age correctly in
 combined data wrangling", {
+  ### Skip test on CRAN ----
+  testthat::skip_on_cran()
+
   ## Initialise app ----
   app <- shinytest2::AppDriver$new(
     app_dir = testthat::test_path("fixtures"),
