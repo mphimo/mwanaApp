@@ -8,11 +8,10 @@ Authors@R:
            email = "tomas.zaba@outlook.com", 
            comment = c(ORCID = "0000-0002-7079-3574")
     )
-Description: A seamless graphical interface to the 'mwana' R package for data 
+Description: A graphical interface to the 'mwana' R package for data 
    wrangling, plausibility checks, and prevalence estimation of wasting.
 License: GPL (>= 3)
 Encoding: UTF-8
-LazyData: true
 Language: en-GB
 Roxygen: list(markdown = TRUE)
 URL: https://github.com/mphimo/mwanaApp
