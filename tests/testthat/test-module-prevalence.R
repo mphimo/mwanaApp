@@ -6,6 +6,9 @@
 
 ### WFHZ weighted prevalence ----
 testthat::test_that(desc = "Module works well to estimate weighted-WFHZ prevalence from survey", code = {
+  ### Skip test on CRAN ----
+  testthat::skip_on_cran()
+
   ### Initialise mwana app ----
   app <- shinytest2::AppDriver$new(
     app_dir = testthat::test_path("fixtures"),
@@ -95,6 +98,9 @@ testthat::test_that(desc = "Module works well to estimate weighted-WFHZ prevalen
 
 ### WFHZ unweighted prevalence ----
 testthat::test_that(desc = "Module works well to estimate unweighted-WFHZ prevalence from survey", code = {
+  ### Skip test on CRAN ----
+  testthat::skip_on_cran()
+
   ### Initialise mwana app ----
   app <- shinytest2::AppDriver$new(
     app_dir = testthat::test_path("fixtures"),
@@ -180,6 +186,9 @@ testthat::test_that(desc = "Module works well to estimate unweighted-WFHZ preval
 
 ### MUAC weighted prevalence ----
 testthat::test_that(desc = "Module works well to estimate weighted-MUAC prevalence from survey", code = {
+  ### Skip test on CRAN ----
+  testthat::skip_on_cran()
+
   ### Initialise mwana app ----
   app <- shinytest2::AppDriver$new(
     app_dir = testthat::test_path("fixtures"),
@@ -282,6 +291,9 @@ testthat::test_that(desc = "Module works well to estimate weighted-MUAC prevalen
 
 ### MUAC unweighted prevalence ----
 testthat::test_that(desc = "Module works well to estimate unweighted-MUAC prevalence from survey", code = {
+  ### Skip test on CRAN ----
+  testthat::skip_on_cran()
+
   ### Initialise mwana app ----
   app <- shinytest2::AppDriver$new(
     app_dir = testthat::test_path("fixtures"),
@@ -380,6 +392,9 @@ testthat::test_that(desc = "Module works well to estimate unweighted-MUAC preval
 
 ### Combined weighted prevalence ----
 testthat::test_that(desc = "Module works well to estimate weighted-combined prevalence from survey", code = {
+  ### Skip test on CRAN ----
+  testthat::skip_on_cran()
+
   ### Initialise mwana app ----
   app <- shinytest2::AppDriver$new(
     app_dir = testthat::test_path("fixtures"),
@@ -474,6 +489,9 @@ testthat::test_that(desc = "Module works well to estimate weighted-combined prev
 
 ### Combined unweighted prevalence ----
 testthat::test_that(desc = "Module works well to estimate unweighted-combined prevalence from survey", code = {
+  ### Skip test on CRAN ----
+  testthat::skip_on_cran()
+
   ### Initialise mwana app ----
   app <- shinytest2::AppDriver$new(
     app_dir = testthat::test_path("fixtures"),
@@ -565,6 +583,9 @@ testthat::test_that(desc = "Module works well to estimate unweighted-combined pr
 
 ### When age is available ----
 testthat::test_that(desc = "Module works well to estimate prevalence from screening", code = {
+  ### Skip test on CRAN ----
+  testthat::skip_on_cran()
+
   ### Initialise mwana app ----
   app <- shinytest2::AppDriver$new(
     app_dir = testthat::test_path("fixtures"),
@@ -671,6 +692,9 @@ testthat::test_that(desc = "Module works well to estimate prevalence from screen
 
 ### When age is given in categories ----
 testthat::test_that(desc = "Prevalence tab works as expected when age is given in categories", code = {
+  ### Skip test on CRAN ----
+  testthat::skip_on_cran()
+
   #### Initialise app ----
   app <- shinytest2::AppDriver$new(
     app_dir = testthat::test_path("fixtures"),
