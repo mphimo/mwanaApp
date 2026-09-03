@@ -1,6 +1,6 @@
 
 
-# mwanaApp: A seamless graphical interface to the mwana R package for data wrangling, plausibility checks, and prevalence estimation
+# mwanaApp: A graphical interface to the `mwana` R package for data wrangling, plausibility checks, and prevalence estimation of wasting
 
 <!-- badges: start -->
 
@@ -33,7 +33,7 @@ The App can be installed from GitHub:
 
 ``` r
 # First install remotes package with: install.package("remotes")
-# The install mwana package from GitHub with: 
+# The install mwana package from GitHub with:
 remotes::install_github(repo = "mphimo/mwanaApp", dependencies = TRUE)
 ```
 
