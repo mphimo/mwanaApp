@@ -4,9 +4,9 @@
 \name{mwanaApp-package}
 \alias{mwanaApp}
 \alias{mwanaApp-package}
-\title{mwanaApp: mwana GUI}
+\title{mwanaApp: Graphical User Interface to 'mwana'}
 \description{
-A seamless graphical interface to the mwana R package for data wrangling, plausibility checks, and prevalence estimation of wasting.
+A graphical interface to the 'mwana' R package for data wrangling, plausibility checks, and prevalence estimation of wasting.
 }
 \seealso{
 Useful links:
